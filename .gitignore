@@ -44,6 +44,7 @@ AGENTS.md
 
 # 构建产物与工具缓存
 .next
+/next-env.d.ts
 out
 dist
 *.tsbuildinfo

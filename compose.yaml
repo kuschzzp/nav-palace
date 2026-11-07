@@ -1,0 +1,31 @@
+services:
+  app:
+    build:
+      context: .
+    restart: unless-stopped
+    # 转发退出信号并回收子进程，便于容器正常停止。
+    init: true
+    # 默认仅监听本机；需要公网预览时通过 HOST_IP 和 PORT 指定绑定地址。
+    ports:
+      - "${HOST_IP:-127.0.0.1}:${PORT:-3000}:3000"
+    environment:
+      NODE_ENV: production
+      # 应填写浏览器实际访问的地址，供会话与同源校验使用。
+      BETTER_AUTH_URL: "${BETTER_AUTH_URL:-http://127.0.0.1:3000}"
+      # 缺少密钥时立即报错，避免用空密钥启动；通过 --env-file .env.local 传入。
+      BETTER_AUTH_SECRET: "${BETTER_AUTH_SECRET:?Run npm run setup:env and pass --env-file .env.local}"
+      SETUP_TOKEN: "${SETUP_TOKEN:?Run npm run setup:env and pass --env-file .env.local}"
+      DATABASE_PATH: /app/data/nav-palace.db
+    # 同时持久化 SQLite 数据库和上传图片，重建镜像不会覆盖这些数据。
+    volumes:
+      - nav-palace-data:/app/data
+    # 通过首页请求检查应用是否能正常响应，为首次启动预留缓冲时间。
+    healthcheck:
+      test: ["CMD", "node", "-e", "fetch('http://127.0.0.1:3000/').then(r => process.exit(r.ok ? 0 : 1)).catch(() => process.exit(1))"]
+      interval: 30s
+      timeout: 5s
+      start_period: 30s
+      retries: 3
+
+volumes:
+  nav-palace-data:

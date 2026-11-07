@@ -1,0 +1,51 @@
+{
+  "name": "nav-palace",
+  "version": "0.1.0",
+  "private": true,
+  "description": "A small home for everything you create.",
+  "license": "Apache-2.0",
+  "engines": { "node": ">=22.16.0" },
+  "scripts": {
+    "dev": "next dev --hostname 127.0.0.1",
+    "build": "next build",
+    "start": "node scripts/start.mjs",
+    "typecheck": "tsc --noEmit",
+    "lint": "eslint .",
+    "test": "tsx --test tests/*.test.ts",
+    "setup:env": "node scripts/setup-env.mjs",
+    "assets:images": "node scripts/optimize-images.mjs",
+    "assets:fonts": "python3 scripts/subset-fonts.py",
+    "db:backup": "node scripts/backup.mjs"
+  },
+  "dependencies": {
+    "@fontsource-variable/noto-sans-sc": "latest",
+    "@fontsource-variable/noto-serif-sc": "latest",
+    "@phosphor-icons/react": "^2.1.10",
+    "@radix-ui/react-dialog": "latest",
+    "@radix-ui/react-slot": "latest",
+    "better-auth": "1.7.14",
+    "better-sqlite3": "13.0.3",
+    "class-variance-authority": "^0.7.1",
+    "clsx": "^2.1.1",
+    "drizzle-orm": "0.45.4",
+    "next": "16.4.3",
+    "react": "19.3.1",
+    "react-dom": "19.3.1",
+    "server-only": "^0.0.1",
+    "sharp": "0.35.5",
+    "tailwind-merge": "latest",
+    "zod": "^4.3.6"
+  },
+  "devDependencies": {
+    "@tailwindcss/postcss": "^4.3.0",
+    "@types/better-sqlite3": "latest",
+    "@types/node": "^22.0.0",
+    "@types/react": "^19.0.0",
+    "@types/react-dom": "^19.0.0",
+    "eslint": "^9.0.0",
+    "eslint-config-next": "16.4.3",
+    "tailwindcss": "^4.3.0",
+    "tsx": "latest",
+    "typescript": "^5.9.3"
+  }
+}

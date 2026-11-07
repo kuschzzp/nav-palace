@@ -1,0 +1,9 @@
+Use case: logo-brand
+Asset type: original square website logo icon, koi / 游鱼知乐.
+Primary request: A single original minimal Oriental ink and woodcut koi fish emblem. One fish only, seen from above, with a plump curved body flowing in a dynamic C-shaped arc, small broad side fins, a strongly simplified fan tail, and a small cinnabar red patch near its head. A very small eye may be cut out as negative space. Compact lyrical movement with no scales or ornamental detail.
+Scene/backdrop: genuinely transparent alpha background.
+Style/medium: flat bold hand-cut woodblock silhouette with gently organic ink contours, crisp broad shapes.
+Composition/framing: one centered compact fish mark filling 75–85 percent of square canvas; strong open C-shaped flow, clear at 32px.
+Color palette: warm near-black #211f1a and one small accent of cinnabar #b83224 only.
+Constraints: original standalone icon, single fish, no scales, broad recognizable silhouette, actual transparent background.
+Avoid: text, letters, writing, Chinese characters, pseudo-calligraphy, seals, stamps, extra fish, yin-yang pair, dragons, whiskers, thin fins, scales, waves, ponds, scenery, borders, paper texture, solid background, gradients, glow, shadow, 3D.

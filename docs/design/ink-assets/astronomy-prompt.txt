@@ -1,0 +1,10 @@
+Use case: stylized-concept.
+Asset type: standalone website cover illustration titled conceptually "星河观象" (DO NOT render any title or lettering).
+Primary request: a refined ancient Chinese armillary sphere, a beautiful compact astronomical observing instrument with several concentric orbital rings around a small central orb, resting on a simple traditional stand. Two thin closed thread-bound Chinese books rest at its foot. Three or four tiny vermilion red star-like accent dots float near the upper edge, extremely restrained.
+Style/medium: editorial Chinese ink woodcut, black sumi ink dry-brush contours, rough carved hatching, granular print texture with warm paper-colored negative spaces inside the objects; only matte black and vermilion red (#b83224 family), matching a sophisticated washi-paper Chinese ink website theme. Bold, clearly readable silhouette, handcrafted block-print feel, elegant rather than technical.
+Composition: center the complete cohesive object group, about 78-82 percent of canvas width and height, approximately 8-12 percent clean margin at all edges; wide 8:7 composition. Keep a slight three-quarter angle so the nested rings read as a dimensional instrument. No oversized background discs and no empty landscape.
+Background: actual RGBA transparent background, nothing behind or around the isolated subject; no white rectangle, no paper sheet background, no checkerboard painted into the image, no cast background shadow.
+Constraints: no people, no full sky, no starscape, no border, no text, no letters, no digits, no calligraphic seal, no logos, no watermark, no modern gradients, no 3D render. Produce a single beautiful original raster cutout, not a collage.
+
+Built-in ImageGen, transparent_background=true. Source: /Users/kusch/.codex/generated_images/01a1af4a-2161-7981-8bfe-377f58669b22/exec-321d6999-9ad5-4a66-a662-2ab5f26c9518.png
+Mechanical processing: Sharp resize 800x700 fit=contain background transparent, WebP quality=90 alphaQuality=100.

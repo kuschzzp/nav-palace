@@ -1,0 +1,47 @@
+/* 由 scripts/optimize-images.mjs 自动生成；仅替换图片来源，布局沿用现有样式。 */
+:root {
+  --paper-image: url("/images/optimized/ink-paper-768-598e7a3b16-be21662aaa29.webp");
+  --sun-pine-image: url("/images/optimized/ink-sun-pine-1440-90987ffd72-b93ac9d330c4.webp");
+  --plum-stone-image: url("/images/optimized/ink-plum-stone-500-217f419337-895bec1c1094.webp");
+  --writing-image: url("/images/optimized/ink-writing-480-caa2ce5909-a40c5ae8bbf7.webp");
+}
+@media (min-width: 701px) and (max-width: 1100px) {
+:root {
+  --paper-image: url("/images/optimized/ink-paper-768-598e7a3b16-be21662aaa29.webp");
+  --sun-pine-image: url("/images/optimized/ink-sun-pine-960-90987ffd72-0e086391f41c.webp");
+  --plum-stone-image: url("/images/optimized/ink-plum-stone-500-217f419337-895bec1c1094.webp");
+  --writing-image: url("/images/optimized/ink-writing-480-caa2ce5909-a40c5ae8bbf7.webp");
+}
+}
+@media (max-width: 700px) {
+:root {
+  --paper-image: url("/images/optimized/ink-paper-768-598e7a3b16-be21662aaa29.webp");
+  --sun-pine-image: url("/images/optimized/ink-sun-pine-480-90987ffd72-fe17a387c6eb.webp");
+  --plum-stone-image: url("/images/optimized/ink-plum-stone-240-217f419337-c76766f1c8f4.webp");
+  --writing-image: url("/images/optimized/ink-writing-480-caa2ce5909-a40c5ae8bbf7.webp");
+}
+}
+@supports (background-image: image-set(url("x.avif") type("image/avif"))) {
+:root {
+  --paper-image: image-set(url("/images/optimized/ink-paper-768-598e7a3b16-00c633a63715.avif") type("image/avif"), url("/images/optimized/ink-paper-768-598e7a3b16-be21662aaa29.webp") type("image/webp"));
+  --sun-pine-image: image-set(url("/images/optimized/ink-sun-pine-1440-90987ffd72-f69788947a8d.avif") type("image/avif"), url("/images/optimized/ink-sun-pine-1440-90987ffd72-b93ac9d330c4.webp") type("image/webp"));
+  --plum-stone-image: image-set(url("/images/optimized/ink-plum-stone-500-217f419337-b4f74e3b17fc.avif") type("image/avif"), url("/images/optimized/ink-plum-stone-500-217f419337-895bec1c1094.webp") type("image/webp"));
+  --writing-image: image-set(url("/images/optimized/ink-writing-480-caa2ce5909-e79917630c07.avif") type("image/avif"), url("/images/optimized/ink-writing-480-caa2ce5909-a40c5ae8bbf7.webp") type("image/webp"));
+}
+@media (min-width: 701px) and (max-width: 1100px) {
+:root {
+  --paper-image: image-set(url("/images/optimized/ink-paper-768-598e7a3b16-00c633a63715.avif") type("image/avif"), url("/images/optimized/ink-paper-768-598e7a3b16-be21662aaa29.webp") type("image/webp"));
+  --sun-pine-image: image-set(url("/images/optimized/ink-sun-pine-960-90987ffd72-29767e770552.avif") type("image/avif"), url("/images/optimized/ink-sun-pine-960-90987ffd72-0e086391f41c.webp") type("image/webp"));
+  --plum-stone-image: image-set(url("/images/optimized/ink-plum-stone-500-217f419337-b4f74e3b17fc.avif") type("image/avif"), url("/images/optimized/ink-plum-stone-500-217f419337-895bec1c1094.webp") type("image/webp"));
+  --writing-image: image-set(url("/images/optimized/ink-writing-480-caa2ce5909-e79917630c07.avif") type("image/avif"), url("/images/optimized/ink-writing-480-caa2ce5909-a40c5ae8bbf7.webp") type("image/webp"));
+}
+}
+@media (max-width: 700px) {
+:root {
+  --paper-image: image-set(url("/images/optimized/ink-paper-768-598e7a3b16-00c633a63715.avif") type("image/avif"), url("/images/optimized/ink-paper-768-598e7a3b16-be21662aaa29.webp") type("image/webp"));
+  --sun-pine-image: image-set(url("/images/optimized/ink-sun-pine-480-90987ffd72-10fe29d39747.avif") type("image/avif"), url("/images/optimized/ink-sun-pine-480-90987ffd72-fe17a387c6eb.webp") type("image/webp"));
+  --plum-stone-image: image-set(url("/images/optimized/ink-plum-stone-240-217f419337-13cf11b23507.avif") type("image/avif"), url("/images/optimized/ink-plum-stone-240-217f419337-c76766f1c8f4.webp") type("image/webp"));
+  --writing-image: image-set(url("/images/optimized/ink-writing-480-caa2ce5909-e79917630c07.avif") type("image/avif"), url("/images/optimized/ink-writing-480-caa2ce5909-a40c5ae8bbf7.webp") type("image/webp"));
+}
+}
+}

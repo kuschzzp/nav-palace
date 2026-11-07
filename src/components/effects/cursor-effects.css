@@ -1,0 +1,79 @@
+[data-pointer-style="cinnabar-brush"] {
+  --portal-cursor: url("/cursors/cinnabar-brush.svg") 4 4, auto;
+  --portal-cursor-action: url("/cursors/cinnabar-brush-action.svg") 8 8, pointer;
+}
+[data-pointer-style="paper-kite"] {
+  --portal-cursor: url("/cursors/paper-kite.svg") 4 4, auto;
+  --portal-cursor-action: url("/cursors/paper-kite-action.svg") 8 8, pointer;
+}
+[data-pointer-style="plum-sprig"] {
+  --portal-cursor: url("/cursors/plum-sprig.svg") 4 4, auto;
+  --portal-cursor-action: url("/cursors/plum-sprig-action.svg") 8 8, pointer;
+}
+
+@media (any-pointer: fine) {
+  :where(.portal-page, .cursor-preview)[data-pointer-style]:not([data-pointer-style="system"]) {
+    cursor: var(--portal-cursor, auto);
+  }
+  /* 可点击元素使用同一款指针的标记版，选字和禁用控件仍保留原有反馈。 */
+  :where([data-pointer-style]:not([data-pointer-style="system"])) :where(h1, h2, h3, p, input, textarea, [contenteditable="true"]) { cursor: text; }
+  :where([data-pointer-style]:not([data-pointer-style="system"])) :is(a[href], button:enabled, summary):not([aria-disabled="true"]) {
+    cursor: var(--portal-cursor-action, pointer);
+  }
+  :where([data-pointer-style]:not([data-pointer-style="system"])) :where(select:enabled) { cursor: pointer; }
+  :where([data-pointer-style]:not([data-pointer-style="system"])) :where(a[href], button, summary) :where(h1, h2, h3, p) { cursor: inherit; }
+  :where([data-pointer-style]:not([data-pointer-style="system"])) dialog { cursor: auto; }
+}
+
+.cursor-scatter { position: fixed; inset: 0; z-index: 5; overflow: hidden; pointer-events: none; }
+.cursor-burst { position: absolute; animation: cursor-burst-fade 620ms linear both; }
+.cursor-fragment {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: var(--cursor-fragment-size);
+  height: var(--cursor-fragment-size);
+  animation: var(--cursor-fragment-animation) 600ms ease-out both;
+}
+[data-cursor-burst="cinnabar-brush"] { --cursor-fragment-animation: cursor-ink-splash; }
+[data-cursor-burst="cinnabar-brush"] .cursor-fragment {
+  border-radius: 55% 45% 61% 39%;
+  background: #b83224;
+  box-shadow: 0 0 0 1px #ffe9cfb0;
+}
+[data-cursor-burst="cinnabar-brush"] .cursor-fragment:nth-child(odd) { background: #8e271d; }
+[data-cursor-burst="paper-kite"] { --cursor-fragment-animation: cursor-paper-flip; }
+[data-cursor-burst="paper-kite"] .cursor-fragment {
+  clip-path: polygon(0 10%, 100% 40%, 18% 100%);
+  background: #bc7425;
+}
+[data-cursor-burst="paper-kite"] .cursor-fragment:nth-child(even) { background: #fff1cb; }
+[data-cursor-burst="paper-kite"] .cursor-fragment:nth-child(3n) { background: #e4a84f; }
+[data-cursor-burst="plum-sprig"] { --cursor-fragment-animation: cursor-plum-tumble; }
+[data-cursor-burst="plum-sprig"] .cursor-fragment {
+  border-radius: 72% 40% 68% 40%;
+  background: #a82738;
+  box-shadow: inset -2px -1px #f49b9b, 0 0 0 1px #fff1dd9c;
+}
+[data-cursor-burst="plum-sprig"] .cursor-fragment:nth-child(even) { background: #d65c6c; }
+
+@keyframes cursor-burst-fade {
+  0%, 35% { opacity: 1; }
+  to { opacity: 0; }
+}
+@keyframes cursor-ink-splash {
+  from { transform: translate(-50%, -50%) scale(.35); }
+  42% { transform: translate(var(--cursor-fragment-x), var(--cursor-fragment-y)) scale(1); }
+  to { transform: translate(calc(var(--cursor-fragment-x) * 1.25), calc(var(--cursor-fragment-y) * 1.1 + 6px)) scale(.48); }
+}
+@keyframes cursor-paper-flip {
+  from { transform: translate(-50%, -50%) scale(.45); }
+  47% { transform: translate(var(--cursor-fragment-x), var(--cursor-fragment-y)) rotate(85deg) rotateY(45deg); }
+  to { transform: translate(calc(var(--cursor-fragment-x) * 1.35), calc(var(--cursor-fragment-y) + 22px)) rotate(var(--cursor-fragment-spin)) rotateY(155deg) scale(.74); }
+}
+@keyframes cursor-plum-tumble {
+  from { transform: translate(-50%, -50%) scale(.45); }
+  46% { transform: translate(var(--cursor-fragment-x), var(--cursor-fragment-y)) rotate(70deg); }
+  to { transform: translate(calc(var(--cursor-fragment-x) * .7 + 12px), calc(var(--cursor-fragment-y) + 35px)) rotate(var(--cursor-fragment-spin)) scale(.74); }
+}
+@media (prefers-reduced-motion: reduce) { .cursor-scatter { visibility: hidden; } }

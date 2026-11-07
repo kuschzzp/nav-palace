@@ -1,0 +1,33 @@
+/* 氛围是纯装饰，不拦截内容操作；不再承担首页导航或背景样式。 */
+.ambient-scene { position: fixed; inset: 0; z-index: 0; pointer-events: none; overflow: hidden; }
+.ambient-particle { position: absolute; top: -40px; display: block; opacity: 0; animation: var(--ambient-fall, ambient-ink-fall) var(--ambient-duration) linear var(--ambient-delay) infinite; }
+.ambient-symbol { display: block; width: 100%; height: 100%; object-fit: contain; }
+.ambient-particle > .ambient-symbol { animation: var(--ambient-turn, ambient-ink-turn) var(--ambient-turn-duration, 8s) ease-in-out var(--ambient-delay) infinite alternate; }
+
+/* 三款飘落物在纸面和朱红背景上都保留清晰轮廓，后台缩略图复用配色。 */
+[data-ambient-effect="golden-leaves"] { --ambient-fall: ambient-visible-fall; --ambient-turn-duration: 3.2s; color: #ba731f; }
+[data-ambient-effect="golden-leaves"] :nth-child(3n) > .ambient-symbol { color: #c28c2c; }
+[data-ambient-effect="golden-leaves"] :nth-child(3n + 1) > .ambient-symbol { color: #9b4f22; }
+[data-ambient-effect="paper-snow"] { --ambient-fall: ambient-visible-fall; --ambient-turn: ambient-snow-spin; --ambient-turn-duration: 9s; color: #507d9d; }
+[data-ambient-effect="paper-snow"] .ambient-symbol { filter: drop-shadow(0 0 1px #fff); }
+[data-ambient-effect="ink-feathers"] { --ambient-fall: ambient-visible-fall; --ambient-turn: ambient-feather-sway; --ambient-turn-duration: 2.8s; color: #4c4540; }
+
+@keyframes ambient-ink-fall {
+  0% { transform: translate3d(0, -4vh, 0); opacity: 0; }
+  10% { opacity: .38; }
+  86% { opacity: .3; }
+  100% { transform: translate3d(var(--ambient-drift), calc(100svh + 75px), 0); opacity: 0; }
+}
+@keyframes ambient-ink-turn { from { transform: rotate(-35deg) rotateY(0deg); } to { transform: rotate(105deg) rotateY(145deg); } }
+@keyframes ambient-visible-fall {
+  0% { transform: translate3d(0, 0, 0); opacity: 0; }
+  8%, 91% { opacity: .86; }
+  30% { transform: translate3d(calc(var(--ambient-drift) * -.18), 33svh, 0); }
+  62% { transform: translate3d(calc(var(--ambient-drift) * .72), 66svh, 0); }
+  100% { transform: translate3d(var(--ambient-drift), calc(100svh + 75px), 0); opacity: 0; }
+}
+@keyframes ambient-snow-spin { to { transform: rotate(180deg); } }
+@keyframes ambient-feather-sway { from { transform: rotate(-56deg) rotateY(8deg); } to { transform: rotate(26deg) rotateY(48deg); } }
+.ambient-scene[data-paused="true"] * { animation-play-state: paused; }
+@media (max-width: 600px) { .ambient-particle[data-mobile-hidden="true"] { display: none; animation: none; } }
+@media (prefers-reduced-motion: reduce) { .ambient-scene { display: none; } .ambient-scene * { animation: none; } }

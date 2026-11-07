@@ -1,0 +1,16 @@
+# 依赖与构建产物在镜像内生成，不使用宿主机的版本。
+node_modules
+.next
+.git
+# 密钥和运行数据通过环境变量与持久卷提供，禁止打入镜像。
+.env*
+data
+backups
+AGENTS.md
+docs/design
+*.tsbuildinfo
+tests
+.npm-cache
+docs/qa
+# 保留仓库中的原始 PNG，但镜像只携带页面使用的优化图片。
+public/images/*.png

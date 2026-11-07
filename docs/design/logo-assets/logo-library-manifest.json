@@ -1,0 +1,92 @@
+[
+  {
+    "name": "mountain-moon",
+    "label": "山月入印",
+    "path": "/images/logos/mountain-moon.webp",
+    "width": 256,
+    "height": 256,
+    "hasAlpha": true,
+    "bytes": 7834
+  },
+  {
+    "name": "pine",
+    "label": "松风有信",
+    "path": "/images/logos/pine.webp",
+    "width": 256,
+    "height": 256,
+    "hasAlpha": true,
+    "bytes": 12394
+  },
+  {
+    "name": "bamboo",
+    "label": "竹影清韵",
+    "path": "/images/logos/bamboo.webp",
+    "width": 256,
+    "height": 256,
+    "hasAlpha": true,
+    "bytes": 8976
+  },
+  {
+    "name": "crane",
+    "label": "云鹤舒翼",
+    "path": "/images/logos/crane.webp",
+    "width": 256,
+    "height": 256,
+    "hasAlpha": true,
+    "bytes": 10754
+  },
+  {
+    "name": "lotus",
+    "label": "莲心一瓣",
+    "path": "/images/logos/lotus.webp",
+    "width": 256,
+    "height": 256,
+    "hasAlpha": true,
+    "bytes": 8172
+  },
+  {
+    "name": "koi",
+    "label": "游鱼知乐",
+    "path": "/images/logos/koi.webp",
+    "width": 256,
+    "height": 256,
+    "hasAlpha": true,
+    "bytes": 7772
+  },
+  {
+    "name": "sail",
+    "label": "云帆向远",
+    "path": "/images/logos/sail.webp",
+    "width": 256,
+    "height": 256,
+    "hasAlpha": true,
+    "bytes": 8574
+  },
+  {
+    "name": "fan",
+    "label": "清风折扇",
+    "path": "/images/logos/fan.webp",
+    "width": 256,
+    "height": 256,
+    "hasAlpha": true,
+    "bytes": 7224
+  },
+  {
+    "name": "tea",
+    "label": "一盏闲茶",
+    "path": "/images/logos/tea.webp",
+    "width": 256,
+    "height": 256,
+    "hasAlpha": true,
+    "bytes": 7096
+  },
+  {
+    "name": "cloud",
+    "label": "云起有时",
+    "path": "/images/logos/cloud.webp",
+    "width": 256,
+    "height": 256,
+    "hasAlpha": true,
+    "bytes": 13770
+  }
+]

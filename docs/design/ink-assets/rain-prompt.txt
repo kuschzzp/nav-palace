@@ -1,0 +1,12 @@
+Use case: stylized-concept
+Asset type: one independent transparent illustration for a Chinese personal website cover library, final display canvas 800x700.
+Primary request: create "竹影听雨" as a new companion illustration to a black-ink and vermilion woodcut art collection. Depict an elegantly half-leaning vermilion oil-paper umbrella, a small grouping of slender black-ink bamboo stems and leaves, and a modest stone step with a few sparse ink rain strokes.
+Style/medium: traditional Chinese dry-brush ink combined with vintage hand-carved woodblock printing, rough black ink edges, granular speckles and natural paper-colored negative shapes WITHIN objects, quiet poetic editorial illustration. Strong graphic silhouettes, finely articulated umbrella ribs and bamboo leaves, limited detail suited to a website thumbnail.
+Composition/framing: complete self-contained object arrangement centered, umbrella angled in the lower-middle and bamboo rising behind it; balanced near-square silhouette with roughly 8-12 percent clear outer margins. No scene extending to the canvas edge.
+Color palette: predominantly near-black sumi ink; a restrained vermilion red umbrella canopy and tiny red accents, no other colors.
+Background: genuinely transparent alpha, including all surrounding empty space; no cream rectangle, no white page, no checkerboard painted into the image.
+Constraints: no people, no faces, no letters or Chinese calligraphy, no seal, no text, no watermark, no border, no full landscape backdrop, no gradient, no photorealism, no 3D, no UI mockup. Keep all illustration contours intact, do not crop the umbrella or bamboo.
+
+Generator: built-in image_gen; transparent_background=true.
+Source: /Users/kusch/.codex/generated_images/01a1af4c-903b-7250-b9a3-1d287a385a9d/exec-652e2ccd-44d7-4323-81cb-c211cd211fd9.png
+Mechanical processing: Sharp resize within 680x595, centered on 800x700 transparent canvas; WebP quality 88 alphaQuality 100 effort 6.

@@ -1,0 +1,9 @@
+Use case: logo-brand
+Asset type: original square website logo icon, crane / 云鹤舒翼.
+Primary request: A single original minimal Oriental ink and woodcut crane emblem. An elegant flying crane drawn in a few strong bold ink forms, with graceful simplified broad wings extended, a curved neck and small head. No thin long legs. One tiny cinnabar red crown accent. Calm, refined, distinctive silhouette.
+Scene/backdrop: genuinely transparent alpha background.
+Style/medium: flat hand-cut woodblock silhouette with very restrained ink edge character; no paper or canvas.
+Composition/framing: one centered compact crane symbol filling 75–85 percent of square canvas, balanced negative space, recognizable and crisp as a 32px website logo.
+Color palette: warm near-black #211f1a and a small accent of cinnabar #b83224 only.
+Constraints: original standalone icon, broad strokes, minimal internal detail, actual transparent background.
+Avoid: text, letters, writing, Chinese characters, pseudo-calligraphy, seals, stamp blocks, existing logos, thin feathers, thin legs, scenery, clouds, borders, paper texture, background color, gradients, glow, shadow, 3D.

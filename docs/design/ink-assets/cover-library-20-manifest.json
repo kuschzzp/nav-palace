@@ -1,0 +1,162 @@
+[
+  {
+    "label": "文墨手记",
+    "image": "/images/ink/writing.webp",
+    "width": 800,
+    "height": 700,
+    "hasAlpha": true,
+    "bytes": 120908
+  },
+  {
+    "label": "银杏一签",
+    "image": "/images/ink/choice.webp",
+    "width": 800,
+    "height": 700,
+    "hasAlpha": true,
+    "bytes": 94176
+  },
+  {
+    "label": "尺素来信",
+    "image": "/images/ink/mail.webp",
+    "width": 800,
+    "height": 700,
+    "hasAlpha": true,
+    "bytes": 93586
+  },
+  {
+    "label": "书山问学",
+    "image": "/images/ink/knowledge.webp",
+    "width": 800,
+    "height": 700,
+    "hasAlpha": true,
+    "bytes": 139830
+  },
+  {
+    "label": "百工器物",
+    "image": "/images/ink/tools.webp",
+    "width": 800,
+    "height": 700,
+    "hasAlpha": true,
+    "bytes": 114320
+  },
+  {
+    "label": "山水行旅",
+    "image": "/images/ink/landscape.webp",
+    "width": 800,
+    "height": 700,
+    "hasAlpha": true,
+    "bytes": 171598
+  },
+  {
+    "label": "清茶闲叙",
+    "image": "/images/ink/tea.webp",
+    "width": 800,
+    "height": 700,
+    "hasAlpha": true,
+    "bytes": 150126
+  },
+  {
+    "label": "云帆远航",
+    "image": "/images/ink/sailing.webp",
+    "width": 800,
+    "height": 700,
+    "hasAlpha": true,
+    "bytes": 129056
+  },
+  {
+    "label": "星河观象",
+    "image": "/images/ink/astronomy.webp",
+    "width": 800,
+    "height": 700,
+    "hasAlpha": true,
+    "bytes": 180626
+  },
+  {
+    "label": "竹影听雨",
+    "image": "/images/ink/rain.webp",
+    "width": 800,
+    "height": 700,
+    "hasAlpha": true,
+    "bytes": 131164
+  },
+  {
+    "label": "琴声雅集",
+    "image": "/images/ink/guqin.webp",
+    "width": 800,
+    "height": 700,
+    "hasAlpha": true,
+    "bytes": 97924
+  },
+  {
+    "label": "纹枰对弈",
+    "image": "/images/ink/go.webp",
+    "width": 800,
+    "height": 700,
+    "hasAlpha": true,
+    "bytes": 116864
+  },
+  {
+    "label": "锦鲤游墨",
+    "image": "/images/ink/koi.webp",
+    "width": 800,
+    "height": 700,
+    "hasAlpha": true,
+    "bytes": 142608
+  },
+  {
+    "label": "鹤舞云间",
+    "image": "/images/ink/crane.webp",
+    "width": 800,
+    "height": 700,
+    "hasAlpha": true,
+    "bytes": 128246
+  },
+  {
+    "label": "荷风清韵",
+    "image": "/images/ink/lotus.webp",
+    "width": 800,
+    "height": 700,
+    "hasAlpha": true,
+    "bytes": 86368
+  },
+  {
+    "label": "炉香静思",
+    "image": "/images/ink/incense.webp",
+    "width": 800,
+    "height": 700,
+    "hasAlpha": true,
+    "bytes": 143486
+  },
+  {
+    "label": "灯火长明",
+    "image": "/images/ink/lantern.webp",
+    "width": 800,
+    "height": 700,
+    "hasAlpha": true,
+    "bytes": 111562
+  },
+  {
+    "label": "镜里拾光",
+    "image": "/images/ink/camera.webp",
+    "width": 800,
+    "height": 700,
+    "hasAlpha": true,
+    "bytes": 139996
+  },
+  {
+    "label": "秋叶藏诗",
+    "image": "/images/ink/maple.webp",
+    "width": 800,
+    "height": 700,
+    "hasAlpha": true,
+    "bytes": 159292
+  },
+  {
+    "label": "云梦小筑",
+    "image": "/images/ink/pavilion.webp",
+    "width": 800,
+    "height": 700,
+    "hasAlpha": true,
+    "bytes": 123358
+  }
+]

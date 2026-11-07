@@ -1,0 +1,26 @@
+{
+  // tsconfig 支持 JSONC；保持严格检查，实际代码输出交给 Next.js 构建。
+  "compilerOptions": {
+    "target": "ES2022",
+    "lib": ["dom", "dom.iterable", "esnext"],
+    "allowJs": true,
+    "skipLibCheck": true,
+    "strict": true,
+    "noEmit": true,
+    "esModuleInterop": true,
+    "module": "esnext",
+    // 与 Next.js 的打包器保持一致，解析依赖的导出条件。
+    "moduleResolution": "bundler",
+    "resolveJsonModule": true,
+    "isolatedModules": true,
+    "jsx": "react-jsx",
+    // 复用本地类型检查缓存；缓存文件不纳入版本管理。
+    "incremental": true,
+    "plugins": [{ "name": "next" }],
+    // 将 @/ 映射到 src，避免组件和路由中出现过长的相对路径。
+    "paths": { "@/*": ["./src/*"] }
+  },
+  // 包含 Next.js 自动生成的路由类型，开发和生产构建均参与检查。
+  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts", ".next/dev/types/**/*.ts"],
+  "exclude": ["node_modules"]
+}

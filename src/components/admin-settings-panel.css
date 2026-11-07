@@ -1,0 +1,62 @@
+.admin-settings-panel { min-width: 0; }
+/* 设置分区像书页目录：细线与朱砂落款，不使用胶囊式标签。 */
+.admin-settings-tabs { display: flex; gap: 5px; overflow-x: auto; padding: 0; margin-bottom: 28px; border-bottom: 1px solid var(--admin-line, #d9d0bf); scrollbar-width: thin; }
+.admin-settings-tabs > button { display: flex; align-items: center; justify-content: center; flex-shrink: 0; gap: 8px; min-height: 46px; padding: 10px 19px 13px; border: 0; border-bottom: 2px solid transparent; border-radius: 0; color: #887358; background: transparent; font-size: 12px; font-weight: 500; cursor: pointer; transition: color 160ms ease, border-color 160ms ease; }
+.admin-settings-tabs > button:hover { color: #b83224; }
+.admin-settings-tabs > button[aria-selected="true"] { color: #a83224; border-bottom-color: #b83224; }
+.admin-settings-tabs > button:focus-visible, .admin-settings-tabpanel:focus-visible { outline: 2px solid #b83224; outline-offset: 3px; }
+.admin-settings-tabs > button:disabled { opacity: .55; cursor: wait; }
+.admin-settings-tabpanel[hidden] { display: none; }
+.admin-settings-heading { margin-bottom: 26px; padding-left: 14px; border-left: 2px solid #b83224; }
+.admin-settings-heading h2 { margin: 0 0 8px; color: #403024; font-family: var(--font-display); font-size: 18px; font-weight: 500; }
+.admin-settings-heading p { margin: 0; color: #927b5c; font-size: 11px; line-height: 1.9; }
+.admin-settings-content { max-width: 920px; }
+.admin-settings-content > .field:has(textarea) textarea { min-height: 110px; }
+.admin-settings-media-grid { display: grid; grid-template-columns: minmax(0, 1fr); max-width: 520px; align-items: start; }
+/* Logo 增加后按缩略图分栏，避免每个候选独占一行拉长设置页。 */
+.admin-settings-media-grid .cover-picker { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+.admin-settings-media-grid .cover-picker img { height: 68px; }
+.admin-settings-media-grid .cover-picker button:focus-visible { outline: 2px solid #b83224; outline-offset: 2px; }
+.admin-settings-media-grid .cover-picker .default-logo-option { flex-direction: column; gap: 3px; font-size: 10px; }
+.admin-settings-media-grid .image-picker-logo .image-current-preview img { height: 200px; object-fit: contain; }
+.admin-settings-media-grid .image-picker-logo .image-preview-placeholder { min-height: 200px; }
+.admin-settings-effects-grid { display: grid; grid-template-columns: minmax(0, 1fr); gap: 26px; max-width: 650px; align-items: start; }
+.admin-settings-effect-block { min-width: 0; }
+.admin-settings-effect-block h3 { margin: 0 0 15px; color: #6d5538; font-family: var(--font-display); font-size: 14px; font-weight: 500; }
+.admin-settings-countdown { display: grid; gap: 8px; width: min(100%,420px); }
+.admin-settings-countdown > label { color: #6d5940; font-size: 12px; font-weight: 500; }
+.admin-settings-countdown-controls { display: grid; grid-template-columns: minmax(0,1fr) 64px; align-items: center; column-gap: 14px; }
+.admin-settings-countdown input[type="range"] {
+  appearance: none;
+  width: 100%;
+  height: 44px;
+  margin: 0;
+  border-radius: 3px;
+  background: linear-gradient(to right, #b83224 var(--countdown-fill), #dcc6aa var(--countdown-fill)) center / 100% 6px no-repeat;
+  cursor: pointer;
+}
+.admin-settings-countdown input[type="range"]::-webkit-slider-thumb { appearance: none; width: 20px; height: 20px; border: 3px solid #fffaf0; border-radius: 50%; background: #b83224; box-shadow: 0 1px 5px #5a351b50; }
+.admin-settings-countdown input[type="range"]::-moz-range-thumb { box-sizing: border-box; width: 20px; height: 20px; border: 3px solid #fffaf0; border-radius: 50%; background: #b83224; box-shadow: 0 1px 5px #5a351b50; }
+.admin-settings-countdown input[type="range"]:focus-visible { outline-offset: 2px; }
+.admin-settings-countdown input[type="range"]:disabled { opacity: .55; cursor: not-allowed; }
+.admin-settings-countdown output { display: grid; min-height: 34px; place-items: center; border: 1px solid #b8322440; border-radius: 3px; background: #b832240a; color: #9b3024; font-size: 14px; font-weight: 600; font-variant-numeric: tabular-nums; }
+.admin-settings-countdown-bounds { display: flex; justify-content: space-between; color: #80694d; font-size: 11px; }
+.admin-settings-countdown > small { color: #80694d; font-size: 11px; line-height: 1.7; }
+.admin-settings-actions { display: flex; align-items: center; justify-content: space-between; gap: 20px; border-top: 1px solid var(--admin-line, #d9d0bf); margin-top: 5px; padding-top: 22px; }
+.admin-settings-draft-state { color: #9a8261; font-size: 10px; line-height: 1.8; }
+.admin-settings-actions .ui-button { flex-shrink: 0; min-width: 154px; }
+.admin-settings-security { max-width: 570px; }
+.admin-settings-access-state { display: flex; align-items: center; gap: 9px; color: #9b7139; font-size: 11px; line-height: 1.8; }
+.admin-settings-access-state.is-configured { color: #776042; }
+.admin-settings-security-help { margin: 0; color: #927a5b; font-size: 11px; line-height: 1.95; }
+.admin-settings-password-actions { padding-top: 3px; }
+@media (max-width: 700px) {
+  .admin-settings-tabs { gap: 3px; margin-bottom: 22px; }
+  .admin-settings-tabs > button { gap: 6px; padding-inline: 12px; }
+  .admin-settings-content .form-columns { grid-template-columns: minmax(0, 1fr); }
+  .admin-settings-actions { align-items: flex-start; flex-direction: column; gap: 12px; }
+  .admin-settings-actions .ui-button { align-self: flex-end; }
+}
+@media (max-width: 400px) {
+  .admin-settings-media-grid .cover-picker { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+}

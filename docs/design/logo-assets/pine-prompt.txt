@@ -1,0 +1,8 @@
+Use case: logo-brand
+Asset type: original standalone website logo, square transparent PNG.
+Primary request: An original minimalist Eastern ink and woodcut emblem of a windswept pine tree: one strong gently leaning trunk, just three bold compact asymmetrical foliage masses, a small broad root base. Elegant recognizable pine silhouette, quiet and resilient.
+Style/medium: thick simple brush-cut silhouette, restrained Chinese ink sensibility, vector-friendly edges with slight organic variation. Strong clean silhouette recognizable at 32px; avoid individual needles.
+Composition/framing: centered isolated mark filling 75-85 percent of a square canvas, large simple forms, ample even transparent margin.
+Color palette: near-black ink #211f1a only.
+Background: genuinely fully transparent alpha outside the subject.
+Constraints: original design; no words, no letters, no characters, no calligraphy, no seals or fake seal writing, no decorative stamp text, no paper texture, no colored background, no gradients, no shadow, no scene, no ground landscape, no watermark, no physical mockup.

@@ -1,0 +1,83 @@
+/* 只增强显式标记的四个后台主操作。
+   静止时保留纸面按钮；仅交互时出现朱砂印面上的温润反光。 */
+button[data-specular-action="true"][data-specular] {
+  isolation: isolate;
+  transition: background-color 160ms ease, opacity 160ms ease, transform 180ms ease, box-shadow 180ms ease;
+}
+button[data-specular-action="true"][data-specular-position="relative"] { position: relative; }
+
+/* 1.5px 双瓣边缘追光比原版更清晰；遮罩只绘制边缘，不覆盖底色。 */
+button[data-specular-action="true"][data-specular]::before {
+  content: "";
+  position: absolute;
+  z-index: 2;
+  inset: 0;
+  padding: 1.5px;
+  border-radius: inherit;
+  pointer-events: none;
+  background: conic-gradient(from calc(var(--specular-angle, -45deg) - 60deg), transparent 0deg, #ffffff28 18deg, #fff2d5 40deg, #fff2d5 75deg, #ffffff28 102deg, transparent 120deg, transparent 180deg, #ffffff18 198deg, #ffdeb29e 220deg, #ffdeb29e 255deg, #ffffff18 282deg, transparent 300deg, transparent 360deg);
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  opacity: 0;
+  transition: opacity 160ms ease;
+}
+
+/* 内反光位于文字下方。斜光仅进入时扫过一次；其余时间只跟随鼠标，
+   不循环播放，也不为每个按钮新增帧循环或合成层。 */
+button[data-specular-action="true"][data-specular]::after {
+  content: "";
+  position: absolute;
+  z-index: -1;
+  inset: 0;
+  border-radius: inherit;
+  pointer-events: none;
+  background-image: radial-gradient(ellipse at var(--specular-x, 18%) var(--specular-y, 14%), #ffe5c185 0%, #fff1d520 34%, transparent 72%), linear-gradient(110deg, transparent 36%, #ffffff0a 40%, #fff1d594 46%, #ffffff0a 52%, transparent 56%);
+  background-size: 100% 100%, 260% 100%;
+  background-position: center, 100% 0;
+  background-repeat: no-repeat;
+  opacity: 0;
+  transition: opacity 180ms ease;
+}
+button[data-specular-action="true"][data-specular-active]:not(:disabled):not([aria-disabled="true"])::before { opacity: 1; }
+button[data-specular-action="true"][data-specular-active]:not(:disabled):not([aria-disabled="true"])::after { opacity: .72; }
+button[data-specular-action="true"][data-specular-pressed]:not(:disabled):not([aria-disabled="true"])::after { opacity: .9; }
+
+@media (prefers-reduced-motion: no-preference) and (hover: hover) and (pointer: fine) {
+  /* 静止与悬停通过高度和阴影明确区分，布局占位、底色与轮廓不变。 */
+  button[data-specular-action="true"][data-specular-active]:not(:disabled):not([aria-disabled="true"]) {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 12px #6d201b26, 0 2px 0 #7d241b, inset 0 1px 0 #ffddbb36;
+  }
+  button[data-specular-action="true"][data-specular-active]:not(:disabled):not([aria-disabled="true"])::after {
+    animation: admin-specular-sweep 680ms cubic-bezier(.2, .65, .3, 1) 1 both;
+  }
+  button[data-specular-action="true"][data-specular]:is([data-specular-pressed], :active):not(:disabled):not([aria-disabled="true"]) {
+    transform: translateY(0);
+    box-shadow: 0 1px 0 #7d241b, inset 0 2px 3px #5f171b33;
+    transition-duration: 90ms;
+  }
+}
+@keyframes admin-specular-sweep {
+  from { background-position: center, 0% 0; }
+  to { background-position: center, 100% 0; }
+}
+
+@supports not ((mask-composite: exclude) or (-webkit-mask-composite: xor)) {
+  button[data-specular-action="true"][data-specular]::before { display: none; }
+}
+@media (prefers-reduced-motion: reduce), (hover: none), (pointer: coarse), (forced-colors: active) {
+  button[data-specular-action="true"][data-specular]::before,
+  button[data-specular-action="true"][data-specular]::after { display: none; }
+}
+@media (prefers-reduced-motion: reduce) {
+  button[data-specular-action="true"][data-specular] { transition: background-color 160ms ease, opacity 160ms ease; }
+}
+@media (forced-colors: active) {
+  button[data-specular-action="true"][data-specular] {
+    transform: none;
+    box-shadow: none;
+    transition: none;
+  }
+}

@@ -1,0 +1,19 @@
+/* 网站编辑器为100/101层；素材选择为110/111层，裁剪仍使用120/121层。 */
+.media-picker-overlay { position: fixed; inset: 0; z-index: 110; background: #2c211670; backdrop-filter: blur(3px); }
+.media-picker-dialog { position: fixed; z-index: 111; left: 50%; top: 50%; transform: translate(-50%, -50%); display: flex; flex-direction: column; width: min(640px, calc(100% - 32px)); max-height: calc(100svh - 40px); padding: 0; border: 1px solid #d4c2a5; border-top: 3px solid #b83224; border-radius: 5px; background: #f9f4e9 var(--paper-image) repeat; color: #413326; font-family: var(--font-body); box-shadow: 0 24px 90px #34231540; overflow: hidden; }
+.media-picker-heading { flex-shrink: 0; padding: 25px 28px 18px; border-bottom: 1px solid #dfd0b8; }
+.media-picker-title { margin: 0 34px 6px 0; font-family: var(--font-display); font-size: 23px; font-weight: 500; line-height: 1.6; }
+.media-picker-description { margin: 0; color: #8b7354; font-size: 12px; line-height: 1.8; }
+.media-picker-body { min-height: 0; padding: 22px 28px; overflow-y: auto; overscroll-behavior: contain; }
+.media-picker-footer { flex-shrink: 0; display: flex; justify-content: flex-end; gap: 10px; padding: 17px 28px; border-top: 1px solid #dfd0b8; background: #f2e8d8; }
+.media-picker-close { position: absolute; right: 17px; top: 20px; display: grid; place-items: center; width: 34px; height: 34px; border: 0; border-radius: 50%; color: #947851; background: #eee2cf; }
+.media-picker-close:hover:not(:disabled) { background: #e7d8bf; color: #b83224; }
+.media-picker-close:disabled { opacity: .5; cursor: not-allowed; }
+@media (max-width: 500px) {
+  .media-picker-dialog { max-height: calc(100svh - 24px); width: calc(100% - 24px); }
+  .media-picker-heading { padding: 22px 20px 15px; }
+  .media-picker-title { font-size: 21px; }
+  .media-picker-body { padding: 18px 20px; }
+  .media-picker-footer { padding: 14px 20px max(14px, env(safe-area-inset-bottom)); }
+  .media-picker-footer > button { flex: 1; }
+}

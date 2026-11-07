@@ -1,0 +1,57 @@
+.pointer-options {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 10px;
+  margin: 0;
+  padding: 0;
+  min-width: 0;
+  border: 0;
+}
+.pointer-option {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  min-width: 0;
+  min-height: 68px;
+  padding: 9px 12px;
+  border: 1px solid #d8d0c0;
+  border-radius: 4px;
+  background: #fbf7ef;
+  cursor: pointer;
+}
+.pointer-option:hover { border-color: #c2ab94; }
+.pointer-option:has(:checked) { border-color: #b83224; background: #f4e7dc; }
+.pointer-option:has(:focus-visible) { outline: 2px solid #b83224; outline-offset: 3px; }
+.pointer-option:has(:disabled) { cursor: not-allowed; opacity: .6; }
+.pointer-option-art { display: grid; place-items: center; flex: 0 0 40px; height: 40px; border-radius: 3px; background: #eee5d6; color: #6d5940; }
+.pointer-option-copy, .cursor-preview-copy { display: grid; gap: 4px; }
+.pointer-option-copy { padding-inline-end: 6px; }
+.pointer-option-copy strong { font-size: 12px; font-weight: 500; color: #332d25; }
+.pointer-option-copy small { font-size: 10px; line-height: 1.65; color: #817566; }
+.pointer-option-check { position: absolute; inset: 6px 6px auto auto; color: #b83224; }
+.pointer-scatter-option { display: inline-flex; align-items: center; gap: 7px; margin-block: 14px 9px; min-height: 24px; font-size: 12px; color: #473b2e; }
+.pointer-scatter-option input { accent-color: #b83224; }
+.pointer-scatter-option:has(:disabled) { opacity: .6; }
+.cursor-preview {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  min-height: 88px;
+  padding: 15px;
+  border: 1px solid #d8d0c0;
+  border-radius: 4px;
+  background: linear-gradient(110deg, #f0e7d7 0 64%, #a93025 64%);
+}
+.cursor-preview-copy { color: #473b2e; }
+.cursor-preview-copy strong { font-size: 12px; font-weight: 500; }
+.cursor-preview-copy small { max-width: 29ch; font-size: 10px; line-height: 1.65; }
+.cursor-preview > button { flex-shrink: 0; min-height: 36px; padding-inline: 8px; border: 0; background: transparent; color: #fff8e9; font-size: 11px; text-decoration: underline; text-underline-offset: 4px; }
+.cursor-preview > button:focus-visible { outline-color: #fff8e9; }
+.pointer-picker-hint { margin: 8px 0 0; color: #817566; font-size: 10px; line-height: 1.8; }
+@media (max-width: 420px) {
+  .pointer-option { gap: 6px; padding-inline: 7px; }
+  .pointer-option-art { flex-basis: 34px; height: 34px; }
+  .cursor-preview-copy { max-width: 53%; }
+}

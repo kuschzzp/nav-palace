@@ -33,9 +33,10 @@ COPY --from=builder --chown=node:node /app/.next/standalone ./
 COPY --from=builder --chown=node:node /app/.next/static ./.next/static
 COPY --from=builder --chown=node:node /app/public ./public
 COPY --from=builder --chown=node:node /app/scripts/backup.mjs ./scripts/backup.mjs
+COPY --from=builder --chown=node:node /app/scripts/docker-start.mjs ./scripts/docker-start.mjs
 COPY --from=builder --chown=node:node /app/LICENSE /app/NOTICE.md ./
 
 # 用非 root 用户运行，数据目录需保持该用户可写。
 USER node
 EXPOSE 3000
-CMD ["node", "server.js"]
+CMD ["node", "scripts/docker-start.mjs"]

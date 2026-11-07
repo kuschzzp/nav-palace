@@ -53,7 +53,7 @@ Better Auth 负责密码哈希验证与 Cookie 会话。后台页面和写接口
 
 ## 持久化与备份
 
-Docker 只运行应用容器，数据库放在 `/app/data/nav-palace.db`，上传文件放在 `/app/data/uploads`，二者由现有 `nav-palace-data` 卷持久化。运行用户为 UID/GID `1000:1000` 的 `node`。
+Docker 只运行应用容器，数据库、上传文件和运行凭据都位于 `/app/data`，由 `nav-palace-data` 卷持久化。运行用户为 UID/GID `1000:1000` 的 `node`。镜像启动脚本在首次运行时写入 `.nav-palace-runtime.json`，并在管理员创建前将初始化地址和令牌输出到容器日志。
 
 `scripts/backup.mjs` 使用 SQLite 在线备份 API，生成包含站点、设置、账号、会话与私密访问密码哈希的一致数据库快照。上传文件需要另行备份、恢复 `uploads` 文件夹；后台 JSON 导出包含全部站点和设置，包括私密站点地址，但不含任何密码哈希，不是完整恢复材料。恢复数据库必须先停止应用，并避免旧 WAL/SHM 文件与快照混用。详细步骤见 README。
 

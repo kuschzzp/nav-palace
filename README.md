@@ -27,18 +27,52 @@ npm run dev
 
 ## Docker 部署
 
+### 使用预构建镜像
+
+部署服务器只需 Docker 和 Compose。以下步骤使用已经发布的镜像。
+
+1. 创建部署目录，并把本项目的 [compose.yaml](compose.yaml) 复制到该目录。
+
+   ```bash
+   mkdir -p ~/nav-palace
+   cd ~/nav-palace
+   ```
+
+2. 在 `compose.yaml` 同目录手动创建 `.env`，将镜像地址和域名换成你的实际值。Compose 会自动读取这个文件。
+
+   ```dotenv
+   NAV_PALACE_IMAGE=registry.example.com/your-org/nav-palace:1.0.0
+   BETTER_AUTH_URL=https://nav.example.com
+   HOST_IP=127.0.0.1
+   PORT=3000
+   ```
+
+   `BETTER_AUTH_URL` 是浏览器实际访问的完整地址。反向代理与应用在同一台服务器时，可以保留 `HOST_IP=127.0.0.1`，让代理转发到 `127.0.0.1:3000`。如果直接通过服务器 IP 访问，把 `HOST_IP` 改为 `0.0.0.0`，并在 `BETTER_AUTH_URL` 中填入实际 IP 和映射端口，例如 `http://10.211.55.10:3000`。
+
+3. 拉取镜像并启动容器，然后检查状态和启动日志。
+
+   ```bash
+   docker compose up -d --pull always
+   docker compose ps
+   docker compose logs app
+   ```
+
+4. 打开日志中显示的 `/admin/setup` 地址，用日志中的 `SETUP_TOKEN` 创建管理员，之后通过 `/admin` 登录。首次启动时，容器会自动生成认证密钥和初始化令牌，并将它们保存到命名卷。
+
+更新时，在 `.env` 里修改 `NAV_PALACE_IMAGE`，再执行 `docker compose up -d --pull always`。沿用原部署目录和数据卷，数据库、上传文件与凭据会继续使用。旧部署升级时，可以把原有的 `BETTER_AUTH_SECRET` 和 `SETUP_TOKEN` 一并写入 `.env`，新版容器首次启动时会将它们保存到数据卷。
+
+### 从源码制作镜像
+
+在有源码的机器上构建并发布镜像。部署服务器在 `.env` 中使用相同的镜像标签。
+
 ```bash
-npm run setup:env
-docker compose --env-file .env.local up -d --build
+docker build -t registry.example.com/your-org/nav-palace:1.0.0 .
+docker push registry.example.com/your-org/nav-palace:1.0.0
 ```
-
-在 `.env.local` 中，`HOST_IP` 控制宿主机监听地址，默认 `127.0.0.1`。`PORT` 控制宿主机端口，默认 `3000`，容器内固定使用 `3000`。需要通过服务器 IP 直接访问时，可将 `HOST_IP` 设为 `0.0.0.0`。
-
-通过域名部署时，将 `BETTER_AUTH_URL` 设为浏览器实际访问的完整 HTTPS 地址。反向代理与应用在同一台服务器上时，`HOST_IP` 可保留 `127.0.0.1`。其他配置见 [.env.example](.env.example)。
 
 ## 数据与备份
 
-本地数据默认存放在 `data/`，Docker 使用 `nav-palace-data` 持久化卷。升级前用 `npm run db:backup` 生成数据库快照，另行备份同级 `uploads/` 目录，并妥善保管 `.env.local`。
+本地数据默认存放在 `data/`，Docker 使用 `nav-palace-data` 持久化卷。Docker 部署可用 `docker compose exec app node scripts/backup.mjs /app/data/nav-palace-backup.db` 生成数据库快照。完整备份还需保留卷内的 `uploads/` 和 `.nav-palace-runtime.json`，后者包含用于恢复登录和初始化的凭据。
 
 后台 JSON 导出用于迁移网站与站点设置。完整迁移还需 SQLite 快照和上传目录。
 

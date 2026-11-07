@@ -194,4 +194,16 @@ body:has(.portal-about[open]) { overflow: hidden; }
   .portal-corner { width: 180px; height: 155px; left: -55px; top: 500px; opacity: .65; }
   .portal-footer { padding-bottom: 17px; }
 }
+/* 三个入口只占一行，按视口给页头、页脚和错落留出空间。 */
+@media (min-width:1051px) and (height > 900px) {
+  .portal-page:has(.site-grid[data-count='3']) {
+    --three-card-stagger: clamp(34px, calc(34px + (100svh - 900px) * 1.2), 250px);
+    --portal-card-height: clamp(420px, calc(100svh - 270px - var(--three-card-stagger) * .25), 780px);
+  }
+  .site-grid[data-count='3'] > .portal-card-enter:nth-child(2) { --card-offset: calc(var(--three-card-stagger) * .6); }
+  .site-grid[data-count='3'] > .portal-card-enter:nth-child(3) { --card-offset: var(--three-card-stagger); }
+  .portal-page:has(.site-grid[data-count='3']) .hero-intro:not([data-long='true']) h1 {
+    font-size: min(clamp(72px, 8.1vw, 122px), calc((100svh - 360px) / 5.2));
+  }
+}
 @media (prefers-reduced-motion:reduce) { html { scroll-behavior: auto; } .portal-page *, .portal-page *::before, .portal-page *::after, .departure-page *, .departure-page *::before, .departure-page *::after { animation: none !important; transition: none !important; } .departure-plane { display: none; } }

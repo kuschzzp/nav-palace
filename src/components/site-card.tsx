@@ -1,13 +1,13 @@
 "use client";
 
 import { useId, useLayoutEffect, useRef, useState } from "react";
-import { ArrowCounterClockwise, ArrowRight, ArrowsClockwise, LockKey } from "@phosphor-icons/react";
+import { ArrowRight, LockKey } from "@phosphor-icons/react";
 import { SiteIcon } from "@/components/site-icon";
 import { AssetImage } from "@/components/asset-image";
 import type { Site } from "@/lib/types";
 import "./site-card.css";
 
-/** 导航与翻面是两个独立操作：卡面直接访问网站，角落按钮查看介绍。 */
+/** 点击插画翻转整张卡片，点击下方的文字或箭头访问站点。 */
 export function SiteCard({ site, index = 0, columns = 4 }: { site: Site; index?: number; columns?: number }) {
   const [flipped, setFlipped] = useState(false);
   const card = useRef<HTMLElement>(null);
@@ -47,19 +47,20 @@ export function SiteCard({ site, index = 0, columns = 4 }: { site: Site; index?:
       data-flipped={flipped}
       data-site-position={index + 1}
       aria-label={site.name}
-      onKeyDown={(event) => {
-        if (event.key === "Escape" && flipped) {
-          event.preventDefault();
-          event.stopPropagation();
-          turn(false);
-        }
-      }}
     >
       <div className="site-card-rotor">
         {/* 隐藏面仍参与 3D 绘制，但不能接收点击、Tab 焦点或读屏访问。 */}
         <div className="site-card-face site-card-front" aria-hidden={flipped} inert={flipped}>
-          <a className="site-card-visit" href={href} target={target} rel={rel} aria-label={visitLabel}>
-            <span className="site-card-number" aria-hidden="true">{String(index + 1).padStart(2, "0")}</span>
+          <button
+            ref={frontControl}
+            className="site-card-cover"
+            type="button"
+            title="查看站点介绍"
+            aria-label={`翻转${site.name}，查看介绍`}
+            aria-controls={detailsId}
+            aria-expanded={flipped}
+            onClick={() => turn(true)}
+          >
             {/* 墨绘素材与可配置文字分离，上传封面仍由浏览器正常加载。 */}
             <AssetImage
               className="site-card-art"
@@ -74,37 +75,36 @@ export function SiteCard({ site, index = 0, columns = 4 }: { site: Site; index?:
               fetchPriority={index === 0 ? "high" : "auto"}
               decoding="async"
             />
-            <div className="site-card-front-copy">
-              <h3 title={site.name}><span>{site.name}</span>{site.requiresPassword && <LockKey className="site-card-private" size={15} aria-label="私密站点" />}</h3>
-              {site.description && <p>{site.description}</p>}
-              <span className="site-card-action"><span className="sr-only">前往站点</span><ArrowRight size={22} aria-hidden="true" /></span>
-            </div>
+          </button>
+          <a className="site-card-front-copy" href={href} target={target} rel={rel} aria-label={visitLabel}>
+            <h3 title={site.name}><span>{site.name}</span>{site.requiresPassword && <LockKey className="site-card-private" size={15} aria-label="私密站点" />}</h3>
+            {site.description && <p>{site.description}</p>}
+            <span className="site-card-action"><ArrowRight size={22} aria-hidden="true" /></span>
           </a>
-          <button
-            ref={frontControl}
-            className="site-card-turn"
-            type="button"
-            title="查看站点介绍"
-            aria-label={`翻转${site.name}，查看介绍`}
-            aria-controls={detailsId}
-            aria-expanded={flipped}
-            onClick={() => turn(true)}
-          ><ArrowsClockwise size={18} aria-hidden="true" /></button>
         </div>
 
-        <div className="site-card-face site-card-back" id={detailsId} aria-hidden={!flipped} inert={!flipped}>
+        <div
+          className="site-card-face site-card-back"
+          id={detailsId}
+          aria-hidden={!flipped}
+          inert={!flipped}
+          onClick={(event) => {
+            if (event.target instanceof Element && !event.target.closest("a")) turn(false);
+          }}
+          onKeyDown={(event) => {
+            if (event.key === "Escape") {
+              event.preventDefault();
+              event.stopPropagation();
+              turn(false);
+            }
+          }}
+        >
+          {/* 卡面承接点击，键盘和读屏通过原生按钮翻回封面。 */}
+          <button ref={backControl} className="sr-only" type="button" aria-label={`翻回${site.name}封面`} />
           <div className="site-card-back-heading">
             <SiteIcon name={site.icon} size={25} aria-hidden="true" />
             <h3 title={site.name}>{site.name}</h3>
           </div>
-          <button
-            ref={backControl}
-            className="site-card-turn site-card-return"
-            type="button"
-            title="返回封面"
-            aria-label={`翻回${site.name}封面`}
-            onClick={() => turn(false)}
-          ><ArrowCounterClockwise size={18} aria-hidden="true" /></button>
           {/* 长介绍在背面内部滚动，不撑高卡片，也不裁掉访问入口。 */}
           <div className="site-card-back-description" tabIndex={0} role="region" aria-label={`${site.name}介绍`}>{site.description || "一个值得发现的入口，准备好就出发吧。"}</div>
           <a className="site-card-back-visit" href={href} target={target} rel={rel} aria-label={visitLabel}>前往站点<ArrowRight size={17} aria-hidden="true" /></a>

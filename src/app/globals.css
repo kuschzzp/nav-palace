@@ -175,7 +175,7 @@ body:has(.portal-about[open]) { overflow: hidden; }
   .departure-actions { flex-direction: column; width: min(100%,300px); margin-inline: auto; }
   .site-grid, .site-grid[data-columns='3'], .site-grid[data-columns='2'] { grid-template-columns: minmax(0,1fr); }
   .portal-page { --portal-card-height: 430px; }
-  .site-card .site-card-art { height: 205px; }
+  .site-card .site-card-cover { height: 205px; }
   .hero-intro h1 { font-size: 42px; }
 }
 @media (min-width:1051px) and (max-height:900px) {
@@ -187,7 +187,7 @@ body:has(.portal-about[open]) { overflow: hidden; }
   .site-grid[data-columns='4'] > .portal-card-enter:nth-child(2), .site-grid[data-columns='3'] > .portal-card-enter:nth-child(2) { --card-offset: 17px; }
   .site-grid[data-columns='4'] > .portal-card-enter:nth-child(3), .site-grid[data-columns='3'] > .portal-card-enter:nth-child(3) { --card-offset: 34px; }
   .site-grid[data-columns='4'] > .portal-card-enter:nth-child(4) { --card-offset: 50px; }
-  .site-card .site-card-art { height: 180px; margin-bottom: 17px; }
+  .site-card .site-card-cover { height: 180px; margin-bottom: 17px; }
   .portal-page .site-card h3 { font-size: 24px; }
   .portal-page .site-card-front-copy > p { margin-top: 15px; font-size: 12px; }
   .portal-backdrop { width: min(72vw, 1100px); height: min(30vw, 458px); }

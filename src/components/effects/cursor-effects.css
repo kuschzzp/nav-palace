@@ -15,13 +15,13 @@
   :where(.portal-page, .cursor-preview)[data-pointer-style]:not([data-pointer-style="system"]) {
     cursor: var(--portal-cursor, auto);
   }
-  /* 可点击元素使用同一款指针的标记版，选字和禁用控件仍保留原有反馈。 */
+  /* 可点击元素和点按翻面的卡片背面使用同一款指针的标记版。 */
   :where([data-pointer-style]:not([data-pointer-style="system"])) :where(h1, h2, h3, p, input, textarea, [contenteditable="true"]) { cursor: text; }
-  :where([data-pointer-style]:not([data-pointer-style="system"])) :is(a[href], button:enabled, summary):not([aria-disabled="true"]) {
+  :where([data-pointer-style]:not([data-pointer-style="system"])) :is(a[href], button:enabled, summary, .site-card-back):not([aria-disabled="true"]) {
     cursor: var(--portal-cursor-action, pointer);
   }
   :where([data-pointer-style]:not([data-pointer-style="system"])) :where(select:enabled) { cursor: pointer; }
-  :where([data-pointer-style]:not([data-pointer-style="system"])) :where(a[href], button, summary) :where(h1, h2, h3, p) { cursor: inherit; }
+  :where([data-pointer-style]:not([data-pointer-style="system"])) :where(a[href], button, summary, .site-card-back) :where(h1, h2, h3, p) { cursor: inherit; }
   :where([data-pointer-style]:not([data-pointer-style="system"])) dialog { cursor: auto; }
 }
 

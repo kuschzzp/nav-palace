@@ -12,17 +12,18 @@
 | --- | --- |
 | 页面与服务端 | Next.js App Router、React、TypeScript |
 | 样式和基础控件 | Tailwind CSS、shadcn 风格组件、Radix Dialog/Slot、Phosphor 图标 |
-| 数据访问 | Drizzle ORM + better-sqlite3 |
+| 数据访问 | Drizzle ORM，本地使用 better-sqlite3，Cloudflare 使用 D1 |
 | 认证 | Better Auth，邮箱密码、服务端会话、关闭公开注册 |
-| 存储 | 单个 SQLite 数据库，本地持久磁盘，WAL 模式 |
-| 交付 | Next.js standalone、Node.js 22、Docker Compose 单服务 |
+| 存储 | 本地 SQLite 与上传目录，或 Cloudflare D1 与 R2 |
+| 交付 | Next.js standalone、Node.js 22、Docker Compose，或 OpenNext + Workers |
 
-采用全栈单应用是为了减少部署和维护步骤。SQLite 避免另设数据库服务，适合低频管理写入、公开读取的导航站。PostgreSQL 适合后续明确需要多实例时重新评估；当前不提供数据库切换开关。
+采用全栈单应用是为了减少部署和维护步骤。Node 和 Docker 使用本地 SQLite。Cloudflare 构建通过 Webpack 替换数据库与图片存储模块，使用 D1、R2 和 Images，并在请求中读取绑定。
 
 ## 数据与请求
 
 - `src/lib/types.ts` 定义公开站点与设置结构。
 - `src/lib/schema.ts` 定义 Drizzle 数据表；`src/lib/db.ts` 按需建立连接、执行事务迁移、创建初始设置与演示站点，并提供数据操作。
+- `src/lib/cloudflare/db.ts` 提供 D1 异步实现，`cloudflare/migrations/` 在部署前建表。D1 的单管理员创建、完整排序和配置替换通过原子 batch 执行，限流通过条件 UPSERT 原子递增。两端共用公开设置默认值与兼容规则。
 - SQLite `user_version` 标记迁移版本。更高版本数据库不会被旧应用静默降级。
 - `sites.visible` 决定网站是否展示，`sites.requiresPassword` 决定是否还需要私密访问凭据。匿名首页只读取 `visible=true` 且 `requiresPassword=false` 的站点；解锁后读取全部 `visible=true` 的站点。后台可以读取所有站点；隐藏项不因解锁而出现。
 - `portal_access` 单行保存私密访问密码的 scrypt 哈希及随机版本，不混入 `portal_settings`。公开设置仅按当前字段白名单读取，密码或内部字段不会传给客户端。
@@ -33,7 +34,7 @@
 - 点击站点进入 `/go/[id]`，服务端验证私密访问 Cookie 后，仅按允许访问的可见站点 ID 查询已保存的目标 URL；无权访问的私密项返回 404，不接受任意查询参数作为跳转目的地。自动跳转默认等待 3 秒，可在「站点设置 → 页面效果」调整为 1–15 秒。访客可以立即前往、取消自动跳转或返回首页。
 - 自定义鼠标指针使用随应用发布的 SVG，链接和按钮有对应的悬停样式。点击散落和首页飘落物可独立配置，并遵循系统减少动态效果的偏好。
 - 后台指定的操作按钮使用共享 Specular 动效管理器和作用域 CSS，保留原控件的表单提交、焦点及禁用语义。
-- 管理员通过 `/api/admin/uploads` 上传图片，同源与会话校验后限制请求流、文件大小和像素，使用 Sharp 真实解码并转存为随机 UUID 文件名的 WebP。`/uploads/[filename]` 仅公开读取合规文件名，提供 MIME、缓存和 nosniff 响应头。
+- 管理员通过 `/api/admin/uploads` 上传图片，同源与会话校验后限制请求流、文件大小和像素。本地使用 Sharp 解码，Cloudflare 使用 Images 解码、压缩，并把原图和缩略图存入 R2。`/uploads/[filename]` 仅公开读取合规 UUID 文件名，提供 MIME、缓存和 nosniff 响应头。
 
 ## 初始化与认证
 
@@ -41,7 +42,9 @@
 
 Better Auth 负责密码哈希验证与 Cookie 会话。后台页面和写接口在服务端检查管理员身份，认证与初始化请求使用 SQLite 中的限流记录。认证密钥和令牌只从运行环境读取，不包含默认口令。
 
-`BETTER_AUTH_URL` 是同源检查和认证的来源基准，必须与实际访问地址一致。正式公网部署在前置反向代理上启用 HTTPS，应用在容器内使用 HTTP。
+Cloudflare 通过 secrets 配置密钥和初始化令牌，通过 D1 保存会话与限流记录。认证实例按请求创建；密码使用可移植 scrypt，参数与已有管理员、私密访问密码哈希保持兼容。Workers 配置预留 30 秒 CPU，需要 Workers Paid。
+
+`BETTER_AUTH_URL` 是同源检查和认证的来源基准，必须与实际访问地址一致。Docker 正式公网部署在前置反向代理上启用 HTTPS，Cloudflare 则使用 Worker 的实际 HTTPS 访问地址。
 
 ## 私密访问
 
@@ -60,6 +63,7 @@ Docker 只运行应用容器，数据库、上传文件和运行凭据都位于 
 ## 当前限制
 
 - 单应用实例、本地持久卷；不适用于多个实例共享网络文件系统中的 SQLite 文件。
+- Cloudflare 使用平台管理的 D1、R2 和 Images，资源 ID、桶名、域名和 secrets 需按部署账号配置。部署步骤和迁移说明见 [Cloudflare 文档](cloudflare.md)。
 - 外部图片由其来源提供可用性，不在数据库快照中。
 - 未提供邮件找回密码或多管理员功能。
 - 上传支持 JPG、PNG、WebP、AVIF，单张 8MB、2400 万像素以内，统一转成最长边不超过 2400px 的静态 WebP；不接收 SVG 或 GIF。

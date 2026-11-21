@@ -1,6 +1,9 @@
 # 依赖与构建产物在镜像内生成，不使用宿主机的版本。
 node_modules
 .next
+.open-next
+.wrangler
+.dev.vars*
 next-env.d.ts
 .git
 # 密钥和运行数据通过环境变量与持久卷提供，禁止打入镜像。

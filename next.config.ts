@@ -1,13 +1,38 @@
 import type { NextConfig } from "next";
+import { resolve } from "node:path";
+
+const cloudflare = process.env.NAV_PALACE_RUNTIME === "cloudflare";
 
 const nextConfig: NextConfig = {
   // 生成可独立运行的生产目录，供 Docker 和启动脚本使用。
   output: "standalone",
+  // 编译时选择运行环境，Worker 产物不携带 SQLite、sharp 或本地文件存储实现。
+  env: { NAV_PALACE_RUNTIME: cloudflare ? "cloudflare" : "node" },
+  // Node 开发与构建沿用 Turbopack，Cloudflare 脚本显式选择 Webpack。
+  turbopack: {},
+  webpack(config, { webpack }) {
+    if (cloudflare) {
+      const replacements = {
+        db: resolve("src/lib/cloudflare/db.ts"),
+        uploads: resolve("src/lib/cloudflare/uploads.ts"),
+      };
+      config.plugins.push(new webpack.NormalModuleReplacementPlugin(
+        /^(?:@\/lib\/|\.\/)(db|uploads)$/,
+        (resource: { request: string; context: string }) => {
+          if (resource.request.startsWith("@/lib/") || resource.context === resolve("src/lib")) {
+            const name = resource.request.split("/").at(-1) as keyof typeof replacements;
+            resource.request = replacements[name];
+          }
+        },
+      ));
+    }
+    return config;
+  },
   // SQLite 使用原生扩展，保留 Node.js 的模块加载方式。
   serverExternalPackages: ["better-sqlite3"],
   // 运行数据、密钥和开发资料不应进入自动追踪的服务端产物。
   outputFileTracingExcludes: {
-    "/*": ["./data/**/*", "./backups/**/*", "./.env*", "./docs/**/*", "./tests/**/*", "./public/images/*.png"],
+    "/*": ["./data/**/*", "./backups/**/*", "./.env*", "./.dev.vars*", "./.wrangler/**/*", "./.open-next/**/*", "./docs/**/*", "./tests/**/*", "./public/images/*.png"],
   },
   poweredByHeader: false,
   async redirects() {

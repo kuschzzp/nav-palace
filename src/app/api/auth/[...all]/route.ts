@@ -37,10 +37,10 @@ export async function POST(request: Request) {
     // 单管理员站点额外设置共享的数据库限流；保留认证库按 IP 限流，但不将其作为唯一防线，
     // 避免未配置可信反向代理时因来源 IP 判断不可靠而失去保护。
     if (authPath(request) === "/sign-in/email") {
-      enforcePersistentRateLimit("nav-palace:sign-in", 12, "登录尝试过于频繁，请一分钟后重试");
+      await enforcePersistentRateLimit("nav-palace:sign-in", 12, "登录尝试过于频繁，请一分钟后重试");
     }
     if (authPath(request) === "/change-password") {
-      enforcePersistentRateLimit("nav-palace:change-password", 5, "修改密码过于频繁，请一分钟后重试");
+      await enforcePersistentRateLimit("nav-palace:change-password", 5, "修改密码过于频繁，请一分钟后重试");
     }
     // 先限制并解析请求体，再交给认证库；重新序列化后不能沿用原来的 Content-Length。
     const input = request.body ? await readJson(request) : {};

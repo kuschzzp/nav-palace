@@ -67,7 +67,7 @@ test("falling atmosphere styles persist and survive export and import without ch
     assert.equal(exported.settings.atmosphereStyle, atmosphereStyle);
     assert.equal(validateImportConfig({ ...exported, settings: { ...exported.settings, atmosphereStyle: previousStyle } }).settings.atmosphereStyle, atmosphereStyle);
     store.updateSettings({ ...store.getSettings(), atmosphereStyle: "none", atmosphereIntensity: "vivid" });
-    importConfig(exported, false);
+    await importConfig(exported, false);
     assert.equal(store.getSettings().atmosphereStyle, atmosphereStyle);
     assert.equal(store.getSettings().atmosphereIntensity, "gentle");
   }
@@ -90,7 +90,7 @@ test("pointer styles and the independent scatter switch survive saving and confi
     assert.equal(exported.settings.pointerStyle, pointerStyle);
     assert.equal(exported.settings.pointerScatter, pointerScatter);
     store.updateSettings({ ...store.getSettings(), pointerStyle: "system", pointerScatter: !pointerScatter });
-    importConfig(exported, false);
+    await importConfig(exported, false);
     assert.equal(store.getSettings().pointerStyle, pointerStyle);
     assert.equal(store.getSettings().pointerScatter, pointerScatter);
   }
@@ -113,7 +113,7 @@ test("departure delay defaults for old settings and survives saving and config t
   const exported = createExportConfig(store.getAdminData());
   assert.equal(exported.settings.departureDelaySeconds, 8);
   store.updateSettings(settingsSchema.parse(legacy));
-  importConfig(exported, false);
+  await importConfig(exported, false);
   assert.equal(store.getSettings().departureDelaySeconds, 8);
 }));
 
@@ -122,23 +122,23 @@ test("v1 preview never writes; commit replaces content, restores built-in images
   const access = await import("../src/lib/private-access");
   store.createAdministrator({ name: "已有账号", email: "retained@example.com", passwordHash: "retained-admin-hash" });
   await access.setAccessPassword("retained-access-password-123");
-  const token = access.issueAccessToken();
+  const token = await access.issueAccessToken();
   const sqlite = store.getDatabase().sqlite;
   const tables = ["user", "account", "administrators", "portal_access"];
   const beforeCredentials = tables.map((table) => sqlite.prepare(`SELECT * FROM ${table} ORDER BY rowid`).all());
   const beforeContent = store.getAdminData();
   const beforeChanges = sqlite.prepare("SELECT total_changes()").pluck().get();
   const config = configFixture();
-  const preview = importConfig(config, true);
+  const preview = await importConfig(config, true);
   assert.equal(sqlite.prepare("SELECT total_changes()").pluck().get(), beforeChanges);
   assert.deepEqual(store.getAdminData(), beforeContent);
   assert.deepEqual({ siteCount: preview.siteCount, publicCount: preview.publicCount, privateCount: preview.privateCount, categories: preview.categories }, { siteCount: 2, publicCount: 1, privateCount: 1, categories: ["阅读", "工具"] });
   assert.ok(preview.warnings.length >= 2);
   assert.equal(JSON.stringify(preview).includes("retained-admin-hash"), false);
-  assert.deepEqual(importConfig(config, false), preview);
+  assert.deepEqual(await importConfig(config, false), preview);
   tables.forEach((table, index) => assert.deepEqual(sqlite.prepare(`SELECT * FROM ${table} ORDER BY rowid`).all(), beforeCredentials[index]));
   assert.equal(await access.verifyAccessPassword("retained-access-password-123"), true);
-  assert.equal(access.verifyAccessToken(token), true);
+  assert.equal(await access.verifyAccessToken(token), true);
   const imported = store.getAdminData();
   assert.equal(imported.sites.length, 2);
   assert.equal(imported.settings.name, "迁移后的导航");
@@ -171,14 +171,14 @@ test("invalid configurations are rejected before any write and SQL failure rolls
     { ...configFixture(), settings: { atmosphereIntensity: "unlimited" } },
   ];
   for (const config of badCases) {
-    assert.throws(() => importConfig(config, true));
-    assert.throws(() => importConfig(config, false));
+    await assert.rejects(() => importConfig(config, true));
+    await assert.rejects(() => importConfig(config, false));
     assert.deepEqual(store.getAdminData(), before);
   }
   const sqlite = store.getDatabase().sqlite;
   sqlite.exec("CREATE TRIGGER reject_import_settings BEFORE UPDATE ON portal_settings BEGIN SELECT RAISE(ABORT, 'test rollback'); END");
   try {
-    assert.throws(() => importConfig(configFixture(), false), /test rollback/);
+    await assert.rejects(() => importConfig(configFixture(), false), /test rollback/);
     assert.deepEqual(store.getAdminData(), before);
   } finally { sqlite.exec("DROP TRIGGER reject_import_settings"); }
 }));
@@ -245,7 +245,7 @@ test("old configurations default to balanced intensity and all intensity levels 
     assert.equal(store.getSettings().atmosphereIntensity, atmosphereIntensity);
     const exported = createExportConfig(store.getAdminData());
     assert.equal(exported.settings.atmosphereIntensity, atmosphereIntensity);
-    importConfig(exported, false);
+    await importConfig(exported, false);
     store.closeDatabase();
     assert.equal(store.getSettings().atmosphereIntensity, atmosphereIntensity);
   }

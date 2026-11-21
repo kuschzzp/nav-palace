@@ -8,13 +8,13 @@ import { getPrivateAccess, isAccessConfigured } from "@/lib/private-access";
 export const dynamic = "force-dynamic";
 export const runtime = "nodejs";
 
-export function generateMetadata(): Metadata {
-  const settings = getSettings();
+export async function generateMetadata(): Promise<Metadata> {
+  const settings = await getSettings();
   return { title: `${settings.name} · ${settings.headline}`, description: settings.subtitle };
 }
 
 export default async function HomePage() {
   const accessUnlocked = await getPrivateAccess();
-  const data = getPortalData(accessUnlocked);
-  return <Portal {...data} accessUnlocked={accessUnlocked} accessConfigured={isAccessConfigured()} />;
+  const data = await getPortalData(accessUnlocked);
+  return <Portal {...data} accessUnlocked={accessUnlocked} accessConfigured={await isAccessConfigured()} />;
 }

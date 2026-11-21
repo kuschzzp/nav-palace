@@ -12,7 +12,7 @@ export const metadata: Metadata = { title: "即将抵达", robots: { index: fals
 export default async function DeparturePage({ params }: { params: Promise<{ id: string }> }) {
   const { id } = await params;
   // 只按数据库中的公开站点 ID 解析目标，不接受查询参数指定任意跳转地址。
-  const site = getPublicSite(id, await getPrivateAccess());
+  const site = await getPublicSite(id, await getPrivateAccess());
   if (!site || !webUrlSchema.safeParse(site.url).success) notFound();
-  return <Departure site={site} settings={getSettings()} />;
+  return <Departure site={site} settings={await getSettings()} />;
 }

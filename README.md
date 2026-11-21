@@ -2,7 +2,7 @@
 
 让热爱，有处可达。
 
-Nav Palace 是一个可自行部署的水墨风导航站，用来集中展示自己的项目和网站。在后台添加入口、调整顺序和可见性，首页会读取最新配置。数据保存在本地 SQLite 文件中。
+Nav Palace 是一个可自行部署的水墨风导航站，用来集中展示自己的项目和网站。在后台添加入口、调整顺序和可见性，首页会读取最新配置。支持本地 SQLite、Docker，以及 Cloudflare Workers + D1 + R2 部署。
 
 ## 页面预览
 
@@ -19,7 +19,7 @@ Nav Palace 是一个可自行部署的水墨风导航站，用来集中展示自
 - 管理网站链接、简介、封面和图标，支持隐藏入口和设置独立访问密码。
 - 自定义站点文案与 Logo，内置 20 张水墨封面和 10 款水墨 Logo。
 - 上传时自动压缩并生成缩略图，页面按需加载图片和字体。
-- 支持 JSON 配置导入导出、SQLite 备份和 Docker 部署。
+- 支持 JSON 配置导入导出、SQLite 备份，以及 Docker 和 Cloudflare 部署。
 
 ## 本地启动
 
@@ -79,6 +79,14 @@ npm run dev
 docker build -t registry.example.com/your-org/nav-palace:1.0.0 .
 docker push registry.example.com/your-org/nav-palace:1.0.0
 ```
+
+## Cloudflare 部署
+
+Cloudflare 版本使用 Workers 运行页面和后台，D1 保存数据，R2 保存上传图片，Cloudflare Images 生成压缩图与缩略图。使用 Workers Paid，为密码运算提供足够的 CPU 时间。Images 可使用免费方案，每月包含 5,000 次独立转换，超额时新转换会被拒绝；付费方案可按量扩展。
+
+创建数据库和存储桶、配置域名与密钥后，执行 `npm run cf:migrate` 和 `npm run cf:deploy`。完整步骤、本地预览和数据迁移见 [Cloudflare 部署说明](docs/cloudflare.md)。
+
+Cloudflare 专项检查使用 `npm run test:cloudflare`，会构建 Worker 并通过隔离数据验证登录、网站管理、私密访问和图片上传。
 
 ## 数据与备份
 

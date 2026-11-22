@@ -1,6 +1,0 @@
-/_next/static/*
-  Cache-Control: public, max-age=31536000, immutable
-/images/optimized/*
-  Cache-Control: public, max-age=31536000, immutable
-/fonts/calligraphy/*
-  Cache-Control: public, max-age=31536000, immutable

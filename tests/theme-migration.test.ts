@@ -27,7 +27,7 @@ test("v5 to v6 changes only retired visual settings and known covers, preserving
     const access = await import("../src/lib/private-access");
     store.createAdministrator({ name: "保留管理员", email: "ink-retained@example.com", passwordHash: "retained-password-hash" });
     await access.setAccessPassword("retained-private-password-123");
-    const token = await access.issueAccessToken();
+    const token = access.issueAccessToken();
     store.updateSite("journal", { name: "旧封面手记", description: "完整保留介绍", category: "保留分类", sortOrder: 9, image: "/images/site-blog.webp" });
     store.updateSite("studio", { requiresPassword: true, visible: false, image: "https://nav.example/images/site-relay.webp" });
     store.updateSite("gallery", { image: "https://cdn.example/images/site-gallery.webp" });
@@ -55,7 +55,7 @@ test("v5 to v6 changes only retired visual settings and known covers, preserving
     for (const key of ["cursorStyle", "heroImage", "musicEnabled"]) delete expected[key];
     const saved = migrated.prepare("SELECT value FROM portal_settings WHERE id=1").pluck().get();
     assert.deepEqual(JSON.parse(saved as string), expected);
-    assert.equal(await access.verifyAccessToken(token), true);
+    assert.equal(access.verifyAccessToken(token), true);
     assert.equal(await access.verifyAccessPassword("retained-private-password-123"), true);
     store.closeDatabase();
     const reopened = store.getDatabase().sqlite;

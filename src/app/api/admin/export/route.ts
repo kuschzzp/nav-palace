@@ -9,7 +9,7 @@ export async function GET() {
   try {
     await requireAdmin();
     // 仅迁移网站和公开设置，图片地址、账号和访问凭据不会进入导出文件。
-    const data = createExportConfig(await getAdminData());
+    const data = createExportConfig(getAdminData());
     return Response.json(data, {
       headers: {
         "Cache-Control": "no-store",

@@ -109,29 +109,13 @@ test("Better Auth signs in the initialized administrator, persists a session, an
     const { enforcePersistentRateLimit, getAuth, verifySetupToken } = await import("../src/lib/auth");
     assert.doesNotThrow(() => verifySetupToken(process.env.SETUP_TOKEN!));
     assert.throws(() => verifySetupToken("incorrect-token"));
-    await enforcePersistentRateLimit("test:limit", 2, "Too many requests");
-    await enforcePersistentRateLimit("test:limit", 2, "Too many requests");
-    await assert.rejects(() => enforcePersistentRateLimit("test:limit", 2, "Too many requests"), (error) => error instanceof ApiError && error.status === 429);
+    enforcePersistentRateLimit("test:limit", 2, "Too many requests");
+    enforcePersistentRateLimit("test:limit", 2, "Too many requests");
+    assert.throws(() => enforcePersistentRateLimit("test:limit", 2, "Too many requests"), (error) => error instanceof ApiError && error.status === 429);
     const auth = getAuth();
     const context = await auth.$context;
     const password = "integration-password-1234";
-    const passwordHash = await context.password.hash(password);
-    const previousRuntime = process.env.NAV_PALACE_RUNTIME;
-    try {
-      // 两种运行环境必须互认密码哈希，避免迁移或回滚后管理员无法登录。
-      process.env.NAV_PALACE_RUNTIME = "cloudflare";
-      const cloudflareAuth = getAuth();
-      assert.notEqual(cloudflareAuth, getAuth());
-      const cloudflarePassword = (await cloudflareAuth.$context).password;
-      assert.equal(await cloudflarePassword.verify({ hash: passwordHash, password }), true);
-      assert.equal(await cloudflarePassword.verify({ hash: passwordHash, password: "incorrect-password" }), false);
-      const cloudflareHash = await cloudflarePassword.hash(password);
-      assert.equal(await context.password.verify({ hash: cloudflareHash, password }), true);
-    } finally {
-      if (previousRuntime === undefined) delete process.env.NAV_PALACE_RUNTIME;
-      else process.env.NAV_PALACE_RUNTIME = previousRuntime;
-    }
-    store.createAdministrator({ name: "Admin", email: "admin@example.com", passwordHash });
+    store.createAdministrator({ name: "Admin", email: "admin@example.com", passwordHash: await context.password.hash(password) });
     const login = await auth.handler(new Request("http://localhost:3000/api/auth/sign-in/email", {
       method: "POST",
       headers: { origin: "http://localhost:3000", "content-type": "application/json" },

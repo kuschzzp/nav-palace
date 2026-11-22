@@ -1,6 +1,6 @@
 import { randomUUID } from "node:crypto";
 import { z } from "zod";
-import { defaultSettings, replaceConfig } from "./db";
+import { defaultSettings, getDatabase } from "./db";
 import { coverPresets } from "./media-presets";
 import { normalizeLegacyAtmosphere } from "./ambient-presets";
 import { ApiError, settingsSchema, siteInputSchema } from "./validation";
@@ -94,12 +94,18 @@ export function validateImportConfig(input: unknown): PortalData & { summary: Im
   };
 }
 
-export async function importConfig(input: unknown, preview: boolean): Promise<ImportSummary> {
+export function importConfig(input: unknown, preview: boolean): ImportSummary {
   // 确认导入时重新完整校验，预览结果不是写入凭据，也不在服务器保存待导入状态。
   const { settings, sites, summary } = validateImportConfig(input);
   if (preview) return summary;
-  // 由当前数据库驱动原子替换，SQLite 与 D1 都不能留下部分导入的内容。
-  await replaceConfig(settings, sites);
+  const { sqlite } = getDatabase();
+  sqlite.transaction(() => {
+    // 删除和插入共用一个事务，任何 SQL 错误都会回滚，避免只写入部分网站。
+    sqlite.prepare("DELETE FROM sites").run();
+    const insert = sqlite.prepare("INSERT INTO sites (id, name, url, description, image, icon, category, sortOrder, visible, requiresPassword) VALUES (@id, @name, @url, @description, @image, @icon, @category, @sortOrder, @visible, @requiresPassword)");
+    for (const site of sites) insert.run({ ...site, visible: Number(site.visible), requiresPassword: Number(site.requiresPassword) });
+    sqlite.prepare("UPDATE portal_settings SET value = ? WHERE id = 1").run(JSON.stringify(settings));
+  }).immediate();
   return summary;
 }
 

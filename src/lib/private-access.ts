@@ -1,45 +1,40 @@
-import { createHmac, randomBytes, randomUUID, timingSafeEqual } from "node:crypto";
-import { scryptAsync } from "@noble/hashes/scrypt.js";
+import { createHmac, randomBytes, randomUUID, scrypt, timingSafeEqual } from "node:crypto";
+import { promisify } from "node:util";
 import { cookies } from "next/headers";
 import { z } from "zod";
-import { getAccessState, writeAccessState } from "./db";
+import { getDatabase } from "./db";
 import { ApiError } from "./validation";
 
-async function deriveKey(password: string, salt: string) {
-  // 保留 Node.js scrypt 的旧默认参数，不对已有私密访问密码做 Unicode 规范化。
-  if (process.env.NAV_PALACE_RUNTIME === "cloudflare") {
-    return Buffer.from(await scryptAsync(password, salt, { N: 16384, r: 8, p: 1, dkLen: 64, maxmem: 32 * 1024 * 1024 }));
-  }
-  // Node.js 继续使用工作线程中的原生实现，避免增加本地和 Docker 登录的 CPU 开销。
-  const { scrypt } = await import("node:crypto");
-  return new Promise<Buffer>((resolve, reject) => {
-    scrypt(password, salt, 64, (error, key) => error ? reject(error) : resolve(key));
-  });
-}
+const deriveKey = promisify(scrypt);
 export const ACCESS_COOKIE = "nav-palace.private-access";
 export const ACCESS_DURATION_SECONDS = 60 * 60 * 24 * 7;
 export const accessPasswordSchema = z.string().min(8, "访问密码至少需要 8 位").max(128, "访问密码最多 128 位");
 export const accessPasswordInputSchema = z.object({ password: accessPasswordSchema }).strict();
 type AccessState = { passwordHash: string; version: string };
 
-export async function isAccessConfigured() { return Boolean(await getAccessState()); }
+function getAccessState(): AccessState | undefined {
+  return getDatabase().sqlite.prepare("SELECT passwordHash, version FROM portal_access WHERE id = 1").get() as AccessState | undefined;
+}
+
+export function isAccessConfigured() { return Boolean(getAccessState()); }
 
 export async function setAccessPassword(password: string) {
   const validPassword = accessPasswordSchema.parse(password);
   const salt = randomBytes(16).toString("hex");
-  const key = await deriveKey(validPassword, salt);
+  const key = await deriveKey(validPassword, salt, 64) as Buffer;
   // 只保存带随机盐的 scrypt 哈希；随机版本用于立即撤销所有旧浏览器的解锁状态。
-  await writeAccessState(`scrypt:${salt}:${key.toString("hex")}`, randomUUID());
+  getDatabase().sqlite.prepare("INSERT INTO portal_access (id, passwordHash, version) VALUES (1, ?, ?) ON CONFLICT(id) DO UPDATE SET passwordHash = excluded.passwordHash, version = excluded.version")
+    .run(`scrypt:${salt}:${key.toString("hex")}`, randomUUID());
 }
 
 async function verifyPasswordState(password: string): Promise<AccessState | false> {
-  const state = await getAccessState();
+  const state = getAccessState();
   if (!state || !accessPasswordSchema.safeParse(password).success) return false;
   const parts = /^scrypt:([a-f0-9]{32}):([a-f0-9]{128})$/.exec(state.passwordHash);
   if (!parts) return false;
-  const provided = await deriveKey(password, parts[1]);
+  const provided = await deriveKey(password, parts[1], 64) as Buffer;
   // 密码校验期间若管理员换了密码，旧校验结果不能获得新版本的解锁凭据。
-  return timingSafeEqual(provided, Buffer.from(parts[2], "hex")) && (await getAccessState())?.version === state.version ? state : false;
+  return timingSafeEqual(provided, Buffer.from(parts[2], "hex")) && getAccessState()?.version === state.version ? state : false;
 }
 
 export async function verifyAccessPassword(password: string) { return Boolean(await verifyPasswordState(password)); }
@@ -60,22 +55,22 @@ function tokenForVersion(version: string, nowMs: number) {
   return `${payload}.${signature(payload, secret).toString("base64url")}`;
 }
 
-export async function issueAccessToken(nowMs = Date.now()) {
-  const state = await getAccessState();
+export function issueAccessToken(nowMs = Date.now()) {
+  const state = getAccessState();
   if (!state) throw new ApiError(503, "暂未配置私密访问密码，请联系站长");
   return tokenForVersion(state.version, nowMs);
 }
 
 export async function authenticateAccessPassword(password: string): Promise<string | false> {
   const verified = await verifyPasswordState(password);
-  if (!verified || (await getAccessState())?.version !== verified.version) return false;
+  if (!verified || getAccessState()?.version !== verified.version) return false;
   // 必须签发“被验证的密码版本”，不能在验证后重读新版本并给旧密码授予新权限。
   // 即便另一个进程紧接着修改密码，这个旧版本令牌也会立即被验证函数拒绝。
   return tokenForVersion(verified.version, Date.now());
 }
 
-export async function verifyAccessToken(token: string | undefined, nowMs = Date.now()) {
-  const state = await getAccessState();
+export function verifyAccessToken(token: string | undefined, nowMs = Date.now()) {
+  const state = getAccessState();
   const secret = signingSecret();
   if (!token || token.length > 1024 || !state || !secret) return false;
   const parts = /^([A-Za-z0-9_-]+)\.([A-Za-z0-9_-]{43})$/.exec(token);

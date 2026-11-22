@@ -7,11 +7,25 @@ import { drizzle } from "drizzle-orm/better-sqlite3";
 import * as schema from "./schema";
 import { migrateLegacyCover } from "./theme-migration";
 import type { AdminData, PortalData, PortalSettings, Site } from "./types";
-import { ApiError } from "./validation";
-import { ambientStyleNames, normalizeLegacyAtmosphere } from "./ambient-presets";
-import { defaultSettings, normalizeSettings } from "./db-defaults";
+import { ApiError, departureDelaySchema } from "./validation";
+import { ambientIntensityNames, ambientStyleNames, normalizeLegacyAtmosphere } from "./ambient-presets";
+import { pointerStyleNames } from "./pointer-presets";
+import { departureCountdown } from "./departure-settings";
 
-export { defaultSettings } from "./db-defaults";
+export const defaultSettings: PortalSettings = {
+  name: "NAV PALACE",
+  headline: "让热爱，有处可达。",
+  subtitle: "我的网站与作品，都从这里出发。",
+  footer: "每一个入口，都通往热爱",
+  logoUrl: "",
+  aboutTitle: "关于这里",
+  aboutText: "一个收藏作品、记录热爱的小小入口。",
+  atmosphereStyle: "none",
+  atmosphereIntensity: "balanced",
+  pointerStyle: "system",
+  pointerScatter: true,
+  departureDelaySeconds: departureCountdown.defaultSeconds,
+};
 
 const exampleSites: Site[] = [
   { id: "journal", name: "拾光手记", url: "https://journal.example.com", description: "记录生活，收藏沿途的灵感。", image: "/images/ink/writing.webp", icon: "leaf", category: "", sortOrder: 0, visible: true, requiresPassword: false },
@@ -120,7 +134,16 @@ export function getDatabase() {
 export function getSettings(): PortalSettings {
   const row = getDatabase().db.select().from(schema.settingsTable).where(eq(schema.settingsTable.id, 1)).get();
   // 仅返回当前公开配置白名单，旧字段或误存的内部字段不会随页面数据下发。
-  return normalizeSettings(row!.value);
+  const stored = JSON.parse(row!.value) as Record<string, unknown>;
+  const settings = Object.fromEntries(Object.entries(defaultSettings).map(([key, fallback]) => [key, typeof stored[key] === typeof fallback ? stored[key] : fallback])) as PortalSettings;
+  const style = normalizeLegacyAtmosphere(settings.atmosphereStyle);
+  settings.atmosphereStyle = ambientStyleNames.includes(style as typeof ambientStyleNames[number]) ? style as PortalSettings["atmosphereStyle"] : "none";
+  // 旧数据库缺少强度时只补读取默认值，无需迁移或改写现有配置。
+  if (!ambientIntensityNames.includes(settings.atmosphereIntensity)) settings.atmosphereIntensity = "balanced";
+  if (!pointerStyleNames.includes(settings.pointerStyle)) settings.pointerStyle = defaultSettings.pointerStyle;
+  const departureDelay = departureDelaySchema.safeParse(settings.departureDelaySeconds);
+  settings.departureDelaySeconds = departureDelay.success ? departureDelay.data : defaultSettings.departureDelaySeconds;
+  return settings;
 }
 
 export function getAdminData(): AdminData {
@@ -199,37 +222,4 @@ export function reorderSites(ids: string[]) {
 export function closeDatabase() {
   for (const connection of databaseGlobal.navPalaceDatabase!.values()) connection.sqlite.close();
   databaseGlobal.navPalaceDatabase!.clear();
-}
-
-export function getAccessState(): { passwordHash: string; version: string } | undefined {
-  return getDatabase().sqlite.prepare("SELECT passwordHash, version FROM portal_access WHERE id = 1").get() as { passwordHash: string; version: string } | undefined;
-}
-
-export function writeAccessState(passwordHash: string, version: string) {
-  getDatabase().sqlite.prepare("INSERT INTO portal_access (id, passwordHash, version) VALUES (1, ?, ?) ON CONFLICT(id) DO UPDATE SET passwordHash = excluded.passwordHash, version = excluded.version")
-    .run(passwordHash, version);
-}
-
-export function consumeRateLimit(key: string, maximum: number, message: string) {
-  const { sqlite } = getDatabase();
-  sqlite.transaction(() => {
-    const now = Date.now();
-    const row = sqlite.prepare("SELECT count, lastRequest FROM rateLimit WHERE key = ?").get(key) as { count: number; lastRequest: number } | undefined;
-    if (row && now - row.lastRequest < 60000) {
-      if (row.count >= maximum) throw new ApiError(429, message);
-      sqlite.prepare("UPDATE rateLimit SET count = count + 1 WHERE key = ?").run(key);
-    } else {
-      sqlite.prepare("INSERT INTO rateLimit (id, key, count, lastRequest) VALUES (?, ?, 1, ?) ON CONFLICT(key) DO UPDATE SET count = 1, lastRequest = excluded.lastRequest").run(key, key, now);
-    }
-  }).immediate();
-}
-
-export function replaceConfig(settings: PortalSettings, sites: Site[]) {
-  const { sqlite } = getDatabase();
-  sqlite.transaction(() => {
-    sqlite.prepare("DELETE FROM sites").run();
-    const insert = sqlite.prepare("INSERT INTO sites (id, name, url, description, image, icon, category, sortOrder, visible, requiresPassword) VALUES (@id, @name, @url, @description, @image, @icon, @category, @sortOrder, @visible, @requiresPassword)");
-    for (const site of sites) insert.run({ ...site, visible: Number(site.visible), requiresPassword: Number(site.requiresPassword) });
-    sqlite.prepare("UPDATE portal_settings SET value = ? WHERE id = 1").run(JSON.stringify(settings));
-  }).immediate();
 }

@@ -13,8 +13,8 @@ import "./optimized-backgrounds.css";
 export const dynamic = "force-dynamic";
 export const runtime = "nodejs";
 
-export async function generateMetadata(): Promise<Metadata> {
-  const { logoUrl } = await getSettings();
+export function generateMetadata(): Metadata {
+  const { logoUrl } = getSettings();
   return {
     title: { default: "NAV PALACE · 让热爱，有处可达", template: "%s · NAV PALACE" },
     description: "一个收藏作品、记录热爱的小小入口。",

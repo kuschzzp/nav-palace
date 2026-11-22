@@ -3,7 +3,6 @@ import { mkdtempSync, rmSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
 import Database from "better-sqlite3";
-import { scryptSync } from "node:crypto";
 import { test } from "node:test";
 
 async function isolatedDatabase(run: (path: string) => Promise<void>) {
@@ -48,7 +47,7 @@ test("v1 migration keeps existing sites and account rows, defaults sites to publ
   assert.equal("heroImage" in stored, false);
   assert.equal("musicTitle" in stored, false);
   assert.equal("musicUrl" in stored, false);
-  assert.equal(await (await import("../src/lib/private-access")).isAccessConfigured(), false);
+  assert.equal((await import("../src/lib/private-access")).isAccessConfigured(), false);
 }));
 
 test("v2 migration removes retired feature settings and preserves accounts, private sites and live access tokens", async () => isolatedDatabase(async () => {
@@ -57,7 +56,7 @@ test("v2 migration removes retired feature settings and preserves accounts, priv
   store.createAdministrator({ name: "已有管理员", email: "existing@example.com", passwordHash: "existing-account-hash" });
   store.updateSite("studio", { name: "已有私密网站", url: "https://private.example/existing", requiresPassword: true });
   await access.setAccessPassword("existing-private-password-123");
-  const token = await access.issueAccessToken();
+  const token = access.issueAccessToken();
   const legacySettings: Record<string, unknown> = {
     ...store.getSettings(), heroImage: "/images/old-hero.webp", name: "已有站点名称", cursorStyle: "ocean", petalsEnabled: false,
     companionEnabled: true, musicEnabled: true, musicTitle: "旧曲目", musicUrl: "/audio/old.mp3",
@@ -81,7 +80,7 @@ test("v2 migration removes retired feature settings and preserves accounts, priv
   assert.deepEqual(saved, expected);
   assert.equal(store.getPublicSite("studio"), undefined);
   assert.equal(store.getPublicSite("studio", true)?.url, "https://private.example/existing");
-  assert.equal(await access.verifyAccessToken(token), true);
+  assert.equal(access.verifyAccessToken(token), true);
   assert.equal(await access.verifyAccessPassword("existing-private-password-123"), true);
   assert.equal("companionEnabled" in store.getSettings(), false);
 }));
@@ -110,8 +109,8 @@ test("locked portal and departure lookups omit every private field while hidden 
 test("access password hashes, signed tokens, seven-day expiry, tampering and immediate password-change revocation", async () => isolatedDatabase(async () => {
   const store = await import("../src/lib/db");
   const access = await import("../src/lib/private-access");
-  assert.equal(await access.isAccessConfigured(), false);
-  assert.equal(await access.verifyAccessToken("anything"), false);
+  assert.equal(access.isAccessConfigured(), false);
+  assert.equal(access.verifyAccessToken("anything"), false);
   await access.setAccessPassword("private-password-test-123");
   assert.equal(await access.verifyAccessPassword("private-password-test-123"), true);
   assert.equal(await access.verifyAccessPassword("incorrect-password"), false);
@@ -120,15 +119,15 @@ test("access password hashes, signed tokens, seven-day expiry, tampering and imm
   assert.ok(hash.startsWith("scrypt:"));
   assert.equal(hash.includes("private-password-test-123"), false);
   const now = Date.now();
-  const token = await access.issueAccessToken(now);
+  const token = access.issueAccessToken(now);
   const sevenDays = 7 * 24 * 60 * 60 * 1000;
-  assert.equal(await access.verifyAccessToken(token, now), true);
-  assert.equal(await access.verifyAccessToken(token, now + sevenDays - 1), true);
-  assert.equal(await access.verifyAccessToken(token, now + sevenDays), false);
+  assert.equal(access.verifyAccessToken(token, now), true);
+  assert.equal(access.verifyAccessToken(token, now + sevenDays - 1), true);
+  assert.equal(access.verifyAccessToken(token, now + sevenDays), false);
   const [payload, signature] = token.split(".");
-  assert.equal(await access.verifyAccessToken(payload + "." + (signature[0] === "A" ? "B" : "A") + signature.slice(1), now), false);
-  assert.equal(await access.verifyAccessToken(token + ".extra", now), false);
-  assert.equal(await access.getRequestPrivateAccess(new Request("http://localhost:3000", { headers: { cookie: `${access.ACCESS_COOKIE}=${token}` } })), true);
+  assert.equal(access.verifyAccessToken(payload + "." + (signature[0] === "A" ? "B" : "A") + signature.slice(1), now), false);
+  assert.equal(access.verifyAccessToken(token + ".extra", now), false);
+  assert.equal(access.getRequestPrivateAccess(new Request("http://localhost:3000", { headers: { cookie: `${access.ACCESS_COOKIE}=${token}` } })), true);
   const options = access.accessCookieOptions(now);
   assert.equal(options.httpOnly, true);
   assert.equal(options.sameSite, "lax");
@@ -139,30 +138,9 @@ test("access password hashes, signed tokens, seven-day expiry, tampering and imm
   process.env.BETTER_AUTH_URL = "https://nav.example.com";
   assert.equal(access.accessCookieOptions(now).secure, true);
   await access.setAccessPassword("new-password-test-456");
-  assert.equal(await access.verifyAccessToken(token, now), false);
+  assert.equal(access.verifyAccessToken(token, now), false);
   assert.equal(await access.verifyAccessPassword("private-password-test-123"), false);
   assert.equal(await access.verifyAccessPassword("new-password-test-456"), true);
-}));
-
-test("portable private-password verification accepts existing native scrypt hashes without normalizing passwords", async () => isolatedDatabase(async () => {
-  const store = await import("../src/lib/db");
-  const access = await import("../src/lib/private-access");
-  const password = "legacy-e\u0301-password-123";
-  const salt = "0123456789abcdef0123456789abcdef";
-  const key = scryptSync(password, salt, 64).toString("hex");
-  store.getDatabase().sqlite.prepare("INSERT INTO portal_access (id,passwordHash,version) VALUES (1,?,?)")
-    .run(`scrypt:${salt}:${key}`, "legacy-version");
-  const previousRuntime = process.env.NAV_PALACE_RUNTIME;
-  try {
-    process.env.NAV_PALACE_RUNTIME = "cloudflare";
-    assert.equal(await access.verifyAccessPassword(password), true);
-    assert.equal(await access.verifyAccessPassword(password.normalize("NFKC")), false);
-    const token = await access.authenticateAccessPassword(password);
-    assert.ok(token && await access.verifyAccessToken(token));
-  } finally {
-    if (previousRuntime === undefined) delete process.env.NAV_PALACE_RUNTIME;
-    else process.env.NAV_PALACE_RUNTIME = previousRuntime;
-  }
 }));
 
 test("portal access API validates origin, rejects wrong password, issues private seven-day cookie, relocks and rate limits", async () => isolatedDatabase(async () => {
@@ -207,11 +185,11 @@ test("concurrent password changes cannot turn an old-password check into a new-v
   const attempts = Array.from({ length: 4 }, () => access.authenticateAccessPassword("old-private-password-123"));
   await access.setAccessPassword("new-private-password-456");
   for (const token of await Promise.all(attempts)) {
-    if (token) assert.equal(await access.verifyAccessToken(token), false);
+    if (token) assert.equal(access.verifyAccessToken(token), false);
   }
   assert.equal(await access.authenticateAccessPassword("old-private-password-123"), false);
   const current = await access.authenticateAccessPassword("new-private-password-456");
-  assert.ok(current && await access.verifyAccessToken(current));
+  assert.ok(current && access.verifyAccessToken(current));
 }));
 
 for (const atmosphereStyle of [undefined, "snow"] as const) {
@@ -221,7 +199,7 @@ for (const atmosphereStyle of [undefined, "snow"] as const) {
     store.createAdministrator({ name: "保留管理员", email: "retained@example.com", passwordHash: "unchanged-admin-password-hash" });
     store.updateSite("studio", { requiresPassword: true, category: "私密工具", sortOrder: 7 });
     await access.setAccessPassword("retained-private-password-123");
-    const token = await access.issueAccessToken();
+    const token = access.issueAccessToken();
     const before = store.getDatabase().sqlite;
     const legacy: Record<string, unknown> = { ...store.getSettings(), heroImage: "/images/old-hero.webp", petalsEnabled: false };
     delete legacy.atmosphereStyle;
@@ -246,7 +224,7 @@ for (const atmosphereStyle of [undefined, "snow"] as const) {
     assert.equal(store.getPublicSite("studio"), undefined);
     assert.equal(store.getPublicSite("studio", true)?.category, "私密工具");
     assert.equal(await access.verifyAccessPassword("retained-private-password-123"), true);
-    assert.equal(await access.verifyAccessToken(token), true);
+    assert.equal(access.verifyAccessToken(token), true);
   }));
 }
 
@@ -256,7 +234,7 @@ test("v4 to v6 retires visual fields, preserves every other table and keeps exis
   store.createAdministrator({ name: "保留管理员", email: "v4-retained@example.com", passwordHash: "v4-retained-admin-hash" });
   store.updateSite("studio", { requiresPassword: true, category: "保留分类", image: "/uploads/retained-cover.webp" });
   await access.setAccessPassword("v4-retained-private-password-123");
-  const token = await access.issueAccessToken();
+  const token = access.issueAccessToken();
   const before = store.getDatabase().sqlite;
   const userId = before.prepare("SELECT userId FROM administrators WHERE singleton=1").pluck().get() as string;
   const now = Date.now();
@@ -287,5 +265,5 @@ test("v4 to v6 retires visual fields, preserves every other table and keeps exis
   assert.equal(store.getPublicSite("studio"), undefined);
   assert.equal(store.getPublicSite("studio", true)?.image, "/uploads/retained-cover.webp");
   assert.equal(await access.verifyAccessPassword("v4-retained-private-password-123"), true);
-  assert.equal(await access.verifyAccessToken(token), true);
+  assert.equal(access.verifyAccessToken(token), true);
 }));

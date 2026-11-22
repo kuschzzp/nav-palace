@@ -4,6 +4,7 @@ import { cookies } from "next/headers";
 import { z } from "zod";
 import { getDatabase } from "./db";
 import { ApiError } from "./validation";
+import { getAllowedOrigins, getRequestOrigin } from "./request-origin";
 
 const deriveKey = promisify(scrypt);
 export const ACCESS_COOKIE = "nav-palace.private-access";
@@ -84,10 +85,12 @@ export function verifyAccessToken(token: string | undefined, nowMs = Date.now())
   } catch { return false; }
 }
 
-export function accessCookieOptions(nowMs = Date.now()) {
+export function accessCookieOptions(nowMs = Date.now(), source?: Request | Headers) {
+  const origin = source ? getRequestOrigin(source) : getAllowedOrigins()[0];
+  if (!origin) throw new ApiError(403, "请求地址未被允许，请使用配置的站点地址访问");
   return {
     httpOnly: true,
-    secure: process.env.BETTER_AUTH_URL?.startsWith("https://") ?? false,
+    secure: origin.startsWith("https://"),
     sameSite: "lax" as const,
     path: "/",
     maxAge: ACCESS_DURATION_SECONDS,

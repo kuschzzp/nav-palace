@@ -20,7 +20,7 @@ export async function POST(request: Request) {
     const token = await authenticateAccessPassword(password);
     if (!token) throw new ApiError(403, "访问密码不正确");
     const response = NextResponse.json({ ok: true }, { headers });
-    response.cookies.set(ACCESS_COOKIE, token, accessCookieOptions());
+    response.cookies.set(ACCESS_COOKIE, token, accessCookieOptions(Date.now(), request));
     return response;
   } catch (error) {
     const response = apiErrorResponse(error);
@@ -33,7 +33,7 @@ export async function DELETE(request: Request) {
   try {
     assertSameOrigin(request);
     const response = NextResponse.json({ ok: true }, { headers });
-    response.cookies.set(ACCESS_COOKIE, "", { ...accessCookieOptions(), maxAge: 0, expires: new Date(0) });
+    response.cookies.set(ACCESS_COOKIE, "", { ...accessCookieOptions(Date.now(), request), maxAge: 0, expires: new Date(0) });
     return response;
   } catch (error) {
     const response = apiErrorResponse(error);

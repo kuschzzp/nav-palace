@@ -20,7 +20,7 @@ export async function GET(request: Request) {
     if (!allowedGetPaths.has(authPath(request))) {
       return Response.json({ error: "该认证接口未开放" }, { status: 404 });
     }
-    const response = await toNextJsHandler(getAuth()).GET(request);
+    const response = await toNextJsHandler(getAuth(request)).GET(request);
     response.headers.set("Cache-Control", "no-store");
     return response;
   } catch (error) {
@@ -48,7 +48,7 @@ export async function POST(request: Request) {
     headers.delete("content-length");
     headers.set("content-type", "application/json");
     const boundedRequest = new Request(request.url, { method: "POST", headers, body: JSON.stringify(input) });
-    return await toNextJsHandler(getAuth()).POST(boundedRequest);
+    return await toNextJsHandler(getAuth(request)).POST(boundedRequest);
   } catch (error) {
     return apiErrorResponse(error);
   }

@@ -6,19 +6,19 @@ import { createHash, timingSafeEqual } from "node:crypto";
 import { getDatabase, hasAdmin, isAdmin } from "./db";
 import * as schema from "./schema";
 import { ApiError } from "./validation";
+import { getAllowedOrigins, getRequestOrigin } from "./request-origin";
 
 // 认证配置在首次使用时初始化，构建页面时无需连接真实运行数据库。
-function createAuth() {
+function createAuth(baseURL: string) {
   const secret = process.env.BETTER_AUTH_SECRET;
   if (!secret || secret.length < 32) {
     throw new ApiError(503, "请先配置至少 32 位的 BETTER_AUTH_SECRET 并重启应用");
   }
-  const baseURL = process.env.BETTER_AUTH_URL;
-  if (!baseURL) throw new ApiError(503, "请先配置 BETTER_AUTH_URL 并重启应用");
   return betterAuth({
     appName: "Nav Palace",
     secret,
     baseURL,
+    trustedOrigins: [baseURL],
     database: drizzleAdapter(getDatabase().db, { provider: "sqlite", schema }),
     emailAndPassword: {
       enabled: true,
@@ -53,17 +53,26 @@ function createAuth() {
   });
 }
 
-let instance: ReturnType<typeof createAuth> | undefined;
+const instances = new Map<string, ReturnType<typeof createAuth>>();
 
-export function getAuth() {
-  instance ??= createAuth();
+export function getAuth(source?: Request | Headers) {
+  if (!process.env.BETTER_AUTH_URL) throw new ApiError(503, "请先配置 BETTER_AUTH_URL 并重启应用");
+  const origin = source ? getRequestOrigin(source) : getAllowedOrigins()[0];
+  if (!origin) throw new ApiError(403, "请求地址未被允许，请使用配置的站点地址访问");
+  // 每个允许入口独立生成协议匹配的 Cookie，共享账号、数据库和签名密钥。
+  let instance = instances.get(origin);
+  if (!instance) {
+    instance = createAuth(origin);
+    instances.set(origin, instance);
+  }
   return instance;
 }
 
 // 登录有效不等于具备管理权限，必须同时命中管理员绑定记录。
 export async function getAdminSession() {
   if (!hasAdmin()) return null;
-  const session = await getAuth().api.getSession({ headers: await headers() });
+  const requestHeaders = await headers();
+  const session = await getAuth(requestHeaders).api.getSession({ headers: requestHeaders });
   return session && isAdmin(session.user.id) ? session : null;
 }
 

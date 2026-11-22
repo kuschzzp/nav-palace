@@ -3,6 +3,7 @@ import { siteIconNames } from "./site-icons";
 import { ambientIntensityNames, ambientStyleNames } from "./ambient-presets";
 import { pointerStyleNames } from "./pointer-presets";
 import { departureCountdown } from "./departure-settings";
+import { getRequestOrigin } from "./request-origin";
 
 export class ApiError extends Error {
   constructor(public readonly status: number, message: string) {
@@ -96,8 +97,9 @@ export const reorderSchema = z.object({
 // 写接口除校验登录态外，还校验浏览器来源，防止跨站借用管理员 Cookie 提交操作。
 export function assertSameOrigin(request: Request) {
   const origin = request.headers.get("origin");
-  const expected = new URL(process.env.BETTER_AUTH_URL || request.url).origin;
-  if (!origin || origin !== expected) {
+  const expected = getRequestOrigin(request);
+  // 允许多个入口，但写请求仍必须来自当前入口，不能在两个已允许地址间跨站提交。
+  if (!expected || origin !== expected) {
     throw new ApiError(403, "请求来源无效，请从本站页面操作");
   }
 }

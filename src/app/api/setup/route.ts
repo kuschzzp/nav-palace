@@ -12,7 +12,7 @@ export async function POST(request: Request) {
     const input = setupSchema.parse(await readJson(request));
     verifySetupToken(input.token);
     // 保持公开注册关闭；复用 Better Auth 的密码哈希，再由事务原子创建唯一管理员和登录账号。
-    const context = await getAuth().$context;
+    const context = await getAuth(request).$context;
     const passwordHash = await context.password.hash(input.password);
     createAdministrator({ name: input.name, email: input.email, passwordHash });
     return Response.json({ ok: true }, { status: 201 });

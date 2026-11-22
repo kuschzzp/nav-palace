@@ -9,8 +9,9 @@ services:
       - "${HOST_IP:-127.0.0.1}:${PORT:-30010}:3000"
     environment:
       NODE_ENV: production
-      # 应填写浏览器实际访问的地址，供会话与同源校验使用。
+      # 主访问地址自动加入白名单；额外入口以逗号分隔，包含协议及对外端口。
       BETTER_AUTH_URL: "${BETTER_AUTH_URL:-http://127.0.0.1:${PORT:-30010}}"
+      ALLOWED_ORIGINS: "${ALLOWED_ORIGINS:-}"
       # 兼容旧部署显式传入的凭据；留空时使用数据卷里的值，首次启动自动生成。
       BETTER_AUTH_SECRET: "${BETTER_AUTH_SECRET:-}"
       SETUP_TOKEN: "${SETUP_TOKEN:-}"

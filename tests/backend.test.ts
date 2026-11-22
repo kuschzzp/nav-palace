@@ -45,7 +45,7 @@ test("mutation requests require the configured origin", () => {
   const before = process.env.BETTER_AUTH_URL;
   process.env.BETTER_AUTH_URL = "https://nav.example.com";
   try {
-    assert.doesNotThrow(() => assertSameOrigin(new Request("http://internal:3000/api/admin/sites", { headers: { origin: "https://nav.example.com" } })));
+    assert.doesNotThrow(() => assertSameOrigin(new Request("http://internal:3000/api/admin/sites", { headers: { host: "nav.example.com", origin: "https://nav.example.com" } })));
     assert.throws(() => assertSameOrigin(new Request("http://internal:3000/api/admin/sites", { headers: { origin: "https://other.example.com" } })));
     assert.throws(() => assertSameOrigin(new Request("http://internal:3000/api/admin/sites")));
   } finally {

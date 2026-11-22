@@ -48,16 +48,21 @@ npm run dev
    cd ~/nav-palace
    ```
 
-2. 在 `compose.yaml` 同目录手动创建 `.env`，将镜像地址和域名换成你的实际值。Compose 会自动读取这个文件。
+2. 在 `compose.yaml` 同目录手动创建 `.env`，将镜像地址、域名和示例 IP 换成你的实际值。以下配置同时支持 HTTPS 域名与 HTTP IP 入口，Compose 会自动读取这个文件。
 
    ```dotenv
    NAV_PALACE_IMAGE=registry.example.com/your-org/nav-palace:1.0.0
    BETTER_AUTH_URL=https://nav.example.com
-   HOST_IP=127.0.0.1
+   ALLOWED_ORIGINS=http://198.51.100.10:30010
+   HOST_IP=0.0.0.0
    PORT=30010
    ```
 
-   Docker 默认将宿主机的 `30010` 端口映射到容器内的 `3000` 端口。`BETTER_AUTH_URL` 是浏览器实际访问的完整地址。反向代理与应用在同一台服务器时，可以保留 `HOST_IP=127.0.0.1`，让代理转发到 `127.0.0.1:30010`。如果直接通过服务器 IP 访问，把 `HOST_IP` 改为 `0.0.0.0`，并在 `BETTER_AUTH_URL` 中填入实际 IP 和映射端口，例如 `http://10.211.55.10:30010`。已有部署也需将 `.env` 中的 `PORT` 更新为 `30010`，再运行 `docker compose up -d` 应用变更。
+   Docker 默认将宿主机的 `30010` 端口映射到容器内的 `3000` 端口。`BETTER_AUTH_URL` 是主地址，自动加入白名单；`ALLOWED_ORIGINS` 填写额外允许的完整地址，多个地址以逗号分隔。仅允许精确地址，不能包含路径、查询参数、通配符或账号密码，同一主机和端口只配置一种协议。
+
+   反向代理与应用同机时，让 Nginx 转发到 `127.0.0.1:30010`，并保留原始 `Host` 请求头。公网 IP 直连需要 `HOST_IP=0.0.0.0`，并在安全组中放行 TCP `30010`。若只通过域名访问，可将 `HOST_IP` 改回 `127.0.0.1`，并将 `ALLOWED_ORIGINS` 留空。若只通过 IP 访问，将该 IP 的完整地址填入 `BETTER_AUTH_URL` 即可。
+
+   两个入口都支持初始化、后台管理和私密解锁，共用账号与数据，但各自保留登录和解锁状态。HTTP 入口不加密密码传输，日常管理建议使用 HTTPS 域名。修改配置后运行 `docker compose up -d` 应用变更；从旧版本升级还需使用包含本次适配的新镜像。
 
 3. 拉取镜像并启动容器，然后检查状态和启动日志。
 

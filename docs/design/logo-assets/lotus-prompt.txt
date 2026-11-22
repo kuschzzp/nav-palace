@@ -1,9 +1,0 @@
-Use case: logo-brand
-Asset type: original square website logo icon, lotus / 莲心一瓣.
-Primary request: A single original minimal Oriental ink and woodcut lotus emblem, exactly five simple broad petals forming a low, serene lotus bloom: one upright center petal, two paired petals on each side. Use bold shapes and clean negative gaps. The central petal has a small integrated cinnabar red shape; outer petals warm near-black. No stalk, no leaves, no lake.
-Scene/backdrop: genuinely transparent alpha background.
-Style/medium: flat hand-cut woodblock silhouette with subtle organic brush-shaped contours, clean strong icon.
-Composition/framing: centered compact standalone lotus symbol, filling 75–85 percent of a square canvas, balanced negative space, highly legible at 32px.
-Color palette: warm near-black #211f1a and small cinnabar #b83224 accent only.
-Constraints: original design, five petals, broad silhouettes, minimal internal detail, actual transparent background, no background objects.
-Avoid: text, letters, writing, Chinese characters, pseudo-calligraphy, seals, stamps, extra petals, lines of veins, thin outlines, scenery, borders, paper texture, solid background, gradients, glow, shadow, 3D.

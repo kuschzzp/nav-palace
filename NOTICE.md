@@ -4,9 +4,9 @@ Nav Palace 的项目代码按仓库中的 [Apache License 2.0](LICENSE) 提供�
 
 ## 当前主题插画与字体
 
-`public/images/ink/` 中的宣纸、朱砂松枝、梅枝山石、二十张独立水墨封面、印章头像及落英，通过内置 OpenAI 图像生成工具为本项目制作。原 PNG 与完整提示词保存在 `docs/design/ink-assets/`；运行时使用优化 WebP。它们不包含指定动漫角色、第三方品牌或真实管理员肖像。
+`public/images/ink/` 中的宣纸、朱砂松枝、梅枝山石、二十张独立水墨封面、印章头像及落英，通过内置 OpenAI 图像生成工具为本项目制作。原始 PNG 保存在 `docs/design/ink-assets/`，供图片优化脚本重新生成 WebP 和 AVIF。它们不包含指定动漫角色、第三方品牌或真实管理员肖像。
 
-`public/images/logos/` 中的十款独立水墨 Logo 通过内置 OpenAI 图像生成工具为本项目制作，原始 PNG 与完整提示词归档于 `docs/design/logo-assets/`。运行时为保留透明通道的 256×256 WebP，不包含文字或第三方品牌标志。
+`public/images/logos/` 中的十款独立水墨 Logo 通过内置 OpenAI 图像生成工具为本项目制作，原始 PNG 保存在 `docs/design/logo-assets/`，供图片优化脚本重新生成 WebP 和 AVIF。运行时根据显示尺寸使用保留透明通道的优化图片，不包含文字或第三方品牌标志。
 
 本地书法字体 Ma Shan Zheng 来自 Google Fonts 官方分发，按 SIL Open Font License 1.1 提供，完整许可为 `public/fonts/OFL-MaShanZheng.txt`。原始完整 WOFF2 留存，运行时按 Unicode 字符范围拆分为 `public/fonts/calligraphy/` 中的小文件，保留原字库完整字符覆盖及轮廓；原作者与上游来源见 https://github.com/googlefonts/mashanzheng 。Noto Sans SC / Noto Serif SC 由相应 Fontsource 包分发并保留其许可证。
 

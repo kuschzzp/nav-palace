@@ -1,8 +1,0 @@
-Use case: logo-brand
-Asset type: original standalone website logo, square transparent PNG.
-Primary request: An original minimalist Eastern ink and woodcut symbol for "mountain-moon": two bold mountain peak brush silhouettes and a single small vermilion circular moon, an abstract balanced mountain-and-moon emblem. No enclosing frame.
-Style/medium: simple confident thick brush-cut silhouette, sophisticated restrained Chinese ink sensibility, vector-friendly edges with tiny organic variation. Recognizable at 32px.
-Composition/framing: centered isolated mark, fills 75-85 percent of square canvas, generous even transparent margin, few large shapes only.
-Color palette: near-black ink #211f1a with a small vermilion #b83224 moon accent.
-Background: genuinely fully transparent alpha outside the subject.
-Constraints: original design; no words, no letters, no characters, no calligraphy, no fake seal writing, no decorative stamp text, no paper texture, no background color, no gradients, no shadow, no scene, no watermark; do not depict a logo on a physical object.

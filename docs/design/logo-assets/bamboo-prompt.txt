@@ -1,8 +1,0 @@
-Use case: logo-brand
-Asset type: original standalone website logo, square transparent PNG.
-Primary request: An original minimalist Eastern ink and woodcut emblem of bamboo: exactly five broad bold lance-shaped bamboo leaves arranged in one compact graceful rising cluster, attached to one short thick curved stem with a single visible node. Focus on the five leaves, no spindly branches. Simple and balanced.
-Style/medium: thick confident brush-cut silhouette, refined restrained Chinese ink sensibility, vector-friendly edges with tiny organic variation. Strong logo recognizable at 32px.
-Composition/framing: centered isolated mark filling 75-85 percent of square canvas; compact nearly square balanced silhouette, generous transparent margin. Few large simple shapes only.
-Color palette: near-black ink #211f1a only.
-Background: genuinely fully transparent alpha outside the subject.
-Constraints: original design; exactly five leaves, no fine branches or leaf veins, no words, no letters, no characters, no calligraphy, no seals or fake seal writing, no decorative stamp text, no paper texture, no colored background, no gradients, no shadow, no scene, no watermark, no physical mockup.

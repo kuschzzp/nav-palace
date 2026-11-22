@@ -26,7 +26,7 @@ pngs.forEach((png, index) => {
 // 默认图标放在 public，避免 App Router 文件元数据覆盖后台配置的 Logo。
 await writeFile("public/favicon.ico", Buffer.concat([header, ...pngs]));
 
-// 主题原图与提示词归档在 docs/design/ink-assets；运行时仅携带优化后的水墨 WebP。
+// 主题原图保留在 docs/design/ink-assets，供优化脚本生成 WebP 和 AVIF；此处校验基础 WebP。
 const names = ["paper", "sun-pine", "plum-stone", "writing", "choice", "mail", "knowledge", "tools", "landscape", "tea", "sailing", "astronomy", "rain", "guqin", "go", "koi", "crane", "lotus", "incense", "lantern", "camera", "maple", "pavilion", "avatar", "petal"];
 for (const name of names) {
   const metadata = await sharp(`public/images/ink/${name}.webp`).metadata();

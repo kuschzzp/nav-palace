@@ -6,11 +6,11 @@ services:
     init: true
     # 默认仅监听本机；需要公网预览时通过 HOST_IP 和 PORT 指定绑定地址。
     ports:
-      - "${HOST_IP:-127.0.0.1}:${PORT:-3000}:3000"
+      - "${HOST_IP:-127.0.0.1}:${PORT:-30010}:3000"
     environment:
       NODE_ENV: production
       # 应填写浏览器实际访问的地址，供会话与同源校验使用。
-      BETTER_AUTH_URL: "${BETTER_AUTH_URL:-http://127.0.0.1:${PORT:-3000}}"
+      BETTER_AUTH_URL: "${BETTER_AUTH_URL:-http://127.0.0.1:${PORT:-30010}}"
       # 兼容旧部署显式传入的凭据；留空时使用数据卷里的值，首次启动自动生成。
       BETTER_AUTH_SECRET: "${BETTER_AUTH_SECRET:-}"
       SETUP_TOKEN: "${SETUP_TOKEN:-}"

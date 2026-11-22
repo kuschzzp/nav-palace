@@ -54,10 +54,10 @@ npm run dev
    NAV_PALACE_IMAGE=registry.example.com/your-org/nav-palace:1.0.0
    BETTER_AUTH_URL=https://nav.example.com
    HOST_IP=127.0.0.1
-   PORT=3000
+   PORT=30010
    ```
 
-   `BETTER_AUTH_URL` 是浏览器实际访问的完整地址。反向代理与应用在同一台服务器时，可以保留 `HOST_IP=127.0.0.1`，让代理转发到 `127.0.0.1:3000`。如果直接通过服务器 IP 访问，把 `HOST_IP` 改为 `0.0.0.0`，并在 `BETTER_AUTH_URL` 中填入实际 IP 和映射端口，例如 `http://10.211.55.10:3000`。
+   Docker 默认将宿主机的 `30010` 端口映射到容器内的 `3000` 端口。`BETTER_AUTH_URL` 是浏览器实际访问的完整地址。反向代理与应用在同一台服务器时，可以保留 `HOST_IP=127.0.0.1`，让代理转发到 `127.0.0.1:30010`。如果直接通过服务器 IP 访问，把 `HOST_IP` 改为 `0.0.0.0`，并在 `BETTER_AUTH_URL` 中填入实际 IP 和映射端口，例如 `http://10.211.55.10:30010`。已有部署也需将 `.env` 中的 `PORT` 更新为 `30010`，再运行 `docker compose up -d` 应用变更。
 
 3. 拉取镜像并启动容器，然后检查状态和启动日志。
 

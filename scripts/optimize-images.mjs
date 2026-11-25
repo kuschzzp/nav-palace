@@ -14,7 +14,8 @@ const digest = (data) => createHash("sha256").update(data).digest("hex");
 const transparent = { r: 0, g: 0, b: 0, alpha: 0 };
 const presets = await readFile(at("src/lib/media-presets.ts"), "utf8");
 const urls = [...new Set(presets.match(/\/images\/(?:ink|logos)\/[\w-]+\.webp/g))];
-for (const name of ["paper", "sun-pine", "plum-stone", "avatar", "petal"]) urls.push(`/images/ink/${name}.webp`);
+const reliefWidths = { "relief-sun": [384, 768, 1152], "relief-pine": [320, 640, 960], "relief-plum": [240, 480] };
+for (const name of ["paper", "sun-pine", "plum-stone", "avatar", "petal", ...Object.keys(reliefWidths)]) urls.push(`/images/ink/${name}.webp`);
 const oldManifest = await readFile(at(manifestPath), "utf8").then(JSON.parse).catch((error) => {
   if (error.code === "ENOENT") return {};
   throw error;
@@ -27,7 +28,7 @@ for (const directory of [outputDirectory, "src/lib/generated", "docs/qa"]) await
 const manifest = {};
 const measurements = [];
 const owned = new Set();
-const paddedScales = { writing: 0.92, camera: 0.8, crane: 0.8, go: 0.8, guqin: 0.8, koi: 0.8, lotus: 0.8, pavilion: 0.8, rain: 0.85, sailing: 0.88 };
+const paddedScales = { writing: 0.88, tools: 0.87, landscape: 0.86, camera: 0.8, crane: 0.8, go: 0.8, guqin: 0.8, koi: 0.8, lotus: 0.8, pavilion: 0.8, rain: 0.85, sailing: 0.88 };
 
 function alphaStats(data, channels) {
   if (channels !== 4) return null;
@@ -74,8 +75,8 @@ for (const url of urls) {
   const source = await readFile(at(sourcePath));
   const sourceSha256 = digest(source);
   const composition = await originalComposition(source, name, logo, originalMetadata.width, originalMetadata.height);
-  const widths = logo ? [96, 256] : name === "sun-pine" ? [480, 960, 1440] : name === "plum-stone" ? [240, 500]
-    : name === "paper" ? [384, 768] : name === "avatar" ? [64, 128, 256] : name === "petal" ? [32, 64] : [240, 480, 800];
+  const widths = reliefWidths[name] ?? (logo ? [96, 256] : name === "sun-pine" ? [480, 960, 1440] : name === "plum-stone" ? [240, 500]
+    : name === "paper" ? [384, 768] : name === "avatar" ? [64, 128, 256] : name === "petal" ? [32, 64] : [240, 480, 800]);
   const fingerprint = digest(Buffer.concat([composition, original, Buffer.from(JSON.stringify({ sourceSha256, widths, webp: 80, alpha: 100, avif: 58, effort: 5, versions: sharp.versions }))]));
   const cached = oldMetrics.assets.find((asset) => asset.url === url && asset.fingerprint === fingerprint);
   if (cached && oldManifest[url]) {

@@ -3,6 +3,7 @@ import { siteIconNames } from "./site-icons";
 import { ambientIntensityNames, ambientStyleNames } from "./ambient-presets";
 import { pointerStyleNames } from "./pointer-presets";
 import { departureCountdown } from "./departure-settings";
+import { portalDepth } from "./depth-settings";
 import { getRequestOrigin } from "./request-origin";
 
 export class ApiError extends Error {
@@ -67,6 +68,11 @@ export const departureDelaySchema = z.number().int()
   .max(departureCountdown.maxSeconds)
   .default(departureCountdown.defaultSeconds);
 
+export const depthStrengthSchema = z.number().int()
+  .min(portalDepth.minStrength)
+  .max(portalDepth.maxStrength)
+  .default(portalDepth.defaultStrength);
+
 export const settingsSchema = z.object({
   name: z.string().trim().min(1, "请填写站点名称").max(80),
   headline: z.string().trim().min(1, "请填写首页标题").max(120),
@@ -78,6 +84,8 @@ export const settingsSchema = z.object({
   // 装饰项使用有限预设，不能注入任意 CSS 或脚本。
   atmosphereStyle: z.enum(ambientStyleNames).default("none"),
   atmosphereIntensity: z.enum(ambientIntensityNames).default("balanced"),
+  depthEnabled: z.boolean().default(true),
+  depthStrength: depthStrengthSchema,
   pointerStyle: z.enum(pointerStyleNames).default("system"),
   pointerScatter: z.boolean().default(true),
   departureDelaySeconds: departureDelaySchema,

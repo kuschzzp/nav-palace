@@ -1,7 +1,10 @@
 import assert from "node:assert/strict";
-import { access } from "node:fs/promises";
+import { createHash } from "node:crypto";
+import { access, readFile } from "node:fs/promises";
+import { basename } from "node:path";
 import { test } from "node:test";
 import { getImageSources } from "../src/lib/image-sources";
+import assets from "../src/lib/generated/image-assets.json";
 import { coverPresets, logoPresets } from "../src/lib/media-presets";
 
 test("built-in cover and logo choices resolve to existing versioned images without changing stored values", async () => {
@@ -18,6 +21,25 @@ test("built-in cover and logo choices resolve to existing versioned images witho
       assert.deepEqual(avif.map(([, width]) => width), candidates.map(([, width]) => width));
       await Promise.all(avif.map(([url]) => access(`public${url}`)));
     }
+  }
+});
+
+test("every built-in cover serves the current source at picker and homepage sizes", async () => {
+  const manifest: Record<string, { variants: { width: number; src: string }[]; avifVariants?: { width: number; src: string }[] }> = assets;
+  for (const { image } of coverPresets) {
+    const name = basename(image, ".webp");
+    const original = await readFile(`docs/design/ink-assets/${name}-source.png`);
+    const sourceHash = createHash("sha256").update(original).digest("hex").slice(0, 10);
+    const entry = manifest[image];
+    assert.ok(entry, `Missing asset manifest entry for ${image}`);
+    assert.deepEqual(entry.variants.map(({ width }) => width), [240, 480, 800]);
+    for (const { width, src } of [...entry.variants, ...entry.avifVariants ?? []]) {
+      const bytes = await readFile(`public${src}`);
+      const contentHash = createHash("sha256").update(bytes).digest("hex").slice(0, 12);
+      assert.ok(src.startsWith(`/images/optimized/ink-${name}-${width}-${sourceHash}-${contentHash}.`), src);
+    }
+    assert.ok(getImageSources(image, 240).src.includes(sourceHash));
+    assert.ok(getImageSources(image).src.includes(sourceHash));
   }
 });
 

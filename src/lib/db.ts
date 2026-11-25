@@ -7,10 +7,11 @@ import { drizzle } from "drizzle-orm/better-sqlite3";
 import * as schema from "./schema";
 import { migrateLegacyCover } from "./theme-migration";
 import type { AdminData, PortalData, PortalSettings, Site } from "./types";
-import { ApiError, departureDelaySchema } from "./validation";
+import { ApiError, departureDelaySchema, depthStrengthSchema } from "./validation";
 import { ambientIntensityNames, ambientStyleNames, normalizeLegacyAtmosphere } from "./ambient-presets";
 import { pointerStyleNames } from "./pointer-presets";
 import { departureCountdown } from "./departure-settings";
+import { portalDepth } from "./depth-settings";
 
 export const defaultSettings: PortalSettings = {
   name: "NAV PALACE",
@@ -22,6 +23,8 @@ export const defaultSettings: PortalSettings = {
   aboutText: "一个收藏作品、记录热爱的小小入口。",
   atmosphereStyle: "none",
   atmosphereIntensity: "balanced",
+  depthEnabled: true,
+  depthStrength: portalDepth.defaultStrength,
   pointerStyle: "system",
   pointerScatter: true,
   departureDelaySeconds: departureCountdown.defaultSeconds,
@@ -140,6 +143,8 @@ export function getSettings(): PortalSettings {
   settings.atmosphereStyle = ambientStyleNames.includes(style as typeof ambientStyleNames[number]) ? style as PortalSettings["atmosphereStyle"] : "none";
   // 旧数据库缺少强度时只补读取默认值，无需迁移或改写现有配置。
   if (!ambientIntensityNames.includes(settings.atmosphereIntensity)) settings.atmosphereIntensity = "balanced";
+  const depthStrength = depthStrengthSchema.safeParse(settings.depthStrength);
+  settings.depthStrength = depthStrength.success ? depthStrength.data : defaultSettings.depthStrength;
   if (!pointerStyleNames.includes(settings.pointerStyle)) settings.pointerStyle = defaultSettings.pointerStyle;
   const departureDelay = departureDelaySchema.safeParse(settings.departureDelaySeconds);
   settings.departureDelaySeconds = departureDelay.success ? departureDelay.data : defaultSettings.departureDelaySeconds;

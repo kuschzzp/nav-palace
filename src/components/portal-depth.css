@@ -1,0 +1,42 @@
+/* 纸面固定，三张透明装饰图独立叠放，移动效果无需改变首页内容流。 */
+.portal-page {
+  --depth-x: 0;
+  --depth-y: 0;
+  --relief-sun-width: clamp(320px, 59vw, 880px);
+}
+.portal-header, .portal-main, .portal-footer { position: relative; z-index: 2; }
+
+.portal-depth-art { position: absolute; inset: 0; z-index: -1; pointer-events: none; }
+.portal-depth-art img { position: absolute; display: block; height: auto; max-width: none; }
+.portal-depth-sun {
+  width: var(--relief-sun-width);
+  top: calc(var(--relief-sun-width) * -.75);
+  right: clamp(-240px, -12.6vw, -50px);
+}
+.portal-depth-art .portal-depth-pine { width: min(34vw, 510px); height: min(8.6vw, 144px); right: -16px; top: clamp(24px, 2.2vw, 37px); }
+.portal-depth-plum {
+  width: clamp(118px, 12.1vw, 218px);
+  left: 0;
+  top: clamp(102px, 8.37vw, 149px);
+}
+
+@media (max-width: 720px) { .portal-depth-art .portal-depth-pine { width: min(47vw, 240px); height: auto; } }
+
+@media (max-width: 700px) {
+  .portal-depth-sun { right: -54px; }
+  .portal-depth-art .portal-depth-pine { right: -22px; }
+  .portal-depth-plum { top: 107px; left: -36px; width: 105px; opacity: .86; }
+}
+
+@media (hover: hover) and (pointer: fine) and (min-width: 701px) and (prefers-reduced-motion: no-preference) {
+  /* 红日移动较少，松枝和梅枝移动较多。文字和可点击区域固定在原位。 */
+  .portal-page[data-depth-active="true"] .portal-depth-sun {
+    transform: translate3d(calc(var(--depth-x) * -8px), calc(var(--depth-y) * -6px), 0);
+  }
+  .portal-page[data-depth-active="true"] .portal-depth-pine {
+    transform: translate3d(calc(var(--depth-x) * 17px), calc(var(--depth-y) * 13px), 0);
+  }
+  .portal-page[data-depth-active="true"] .portal-depth-plum {
+    transform: translate3d(calc(var(--depth-x) * 24px), calc(var(--depth-y) * 16px), 0);
+  }
+}

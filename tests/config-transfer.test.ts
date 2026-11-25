@@ -117,6 +117,36 @@ test("departure delay defaults for old settings and survives saving and config t
   assert.equal(store.getSettings().departureDelaySeconds, 8);
 }));
 
+test("depth settings upgrade old records and retain the slider value even when disabled", async () => isolatedDatabase(async () => {
+  const store = await import("../src/lib/db");
+  const { settingsSchema } = await import("../src/lib/validation");
+  const legacy: Partial<typeof store.defaultSettings> = { ...store.getSettings() };
+  delete legacy.depthEnabled;
+  delete legacy.depthStrength;
+  const write = store.getDatabase().sqlite.prepare("UPDATE portal_settings SET value = ? WHERE id = 1");
+  write.run(JSON.stringify(legacy));
+  assert.equal(store.getSettings().depthEnabled, true);
+  assert.equal(store.getSettings().depthStrength, 60);
+  assert.equal(validateImportConfig(configFixture()).settings.depthStrength, 60);
+
+  write.run(JSON.stringify({ ...legacy, depthStrength: 200 }));
+  assert.equal(store.getSettings().depthStrength, 60);
+  for (const value of [19, 101, 60.5, "60"]) {
+    assert.equal(settingsSchema.safeParse({ ...legacy, depthStrength: value }).success, false);
+  }
+  assert.equal(settingsSchema.safeParse({ ...legacy, depthEnabled: "false" }).success, false);
+
+  store.updateSettings(settingsSchema.parse({ ...legacy, depthEnabled: false, depthStrength: 85 }));
+  store.closeDatabase();
+  const exported = createExportConfig(store.getAdminData());
+  assert.equal(exported.settings.depthEnabled, false);
+  assert.equal(exported.settings.depthStrength, 85);
+  store.updateSettings(settingsSchema.parse(legacy));
+  importConfig(exported, false);
+  assert.equal(store.getSettings().depthEnabled, false);
+  assert.equal(store.getSettings().depthStrength, 85);
+}));
+
 test("v1 preview never writes; commit replaces content, restores built-in images and preserves account/password versions", async () => isolatedDatabase(async () => {
   const store = await import("../src/lib/db");
   const access = await import("../src/lib/private-access");

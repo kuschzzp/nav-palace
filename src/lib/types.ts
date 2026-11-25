@@ -12,6 +12,8 @@ export type PortalSettings = {
   // 装饰配置不包含私密访问凭据，可以安全传给访客页面。
   atmosphereStyle: AmbientStyle;
   atmosphereIntensity: AmbientIntensity;
+  depthEnabled: boolean;
+  depthStrength: number;
   pointerStyle: PointerStyle;
   pointerScatter: boolean;
   departureDelaySeconds: number;

@@ -6,6 +6,8 @@ Nav Palace 的项目代码按仓库中的 [Apache License 2.0](LICENSE) 提供�
 
 `public/images/ink/` 中的宣纸、朱砂松枝、梅枝山石、二十张独立水墨封面、印章头像及落英，通过内置 OpenAI 图像生成工具为本项目制作。原始 PNG 保存在 `docs/design/ink-assets/`，供图片优化脚本重新生成 WebP 和 AVIF。它们不包含指定动漫角色、第三方品牌或真实管理员肖像。
 
+首页书架使用 `public/images/bookshelf/` 中的窗光宣纸、木搁板、题签和五种线装书底模，并叠加站点选用的纸雕插画。朱砂日轮、松枝和梅枝是独立的景深图层。书架素材由内置 OpenAI 图像生成工具为本项目制作。
+
 `public/images/logos/` 中的十款独立水墨 Logo 通过内置 OpenAI 图像生成工具为本项目制作，原始 PNG 保存在 `docs/design/logo-assets/`，供图片优化脚本重新生成 WebP 和 AVIF。运行时根据显示尺寸使用保留透明通道的优化图片，不包含文字或第三方品牌标志。
 
 本地书法字体 Ma Shan Zheng 来自 Google Fonts 官方分发，按 SIL Open Font License 1.1 提供，完整许可为 `public/fonts/OFL-MaShanZheng.txt`。原始完整 WOFF2 留存，运行时按 Unicode 字符范围拆分为 `public/fonts/calligraphy/` 中的小文件，保留原字库完整字符覆盖及轮廓；原作者与上游来源见 https://github.com/googlefonts/mashanzheng 。Noto Sans SC / Noto Serif SC 由相应 Fontsource 包分发并保留其许可证。
@@ -150,7 +152,7 @@ OTHER DEALINGS IN THE FONT SOFTWARE.
 
 ## 第三方代码
 
-本项目导航卡片的三维翻转，以及标题和内容的入场节奏，参考 [React Bits Flip Card](https://www.reactbits.dev/micro/flip-card)、[Split Text](https://www.reactbits.dev/text-animations/split-text) 和 [Animated Content](https://www.reactbits.dev/animations/animated-content) 的交互思路。上述卡片和入场组件为本项目独立实现，未复制这些组件的 React Bits 源码。
+书封的三维翻转和书架入场动效参考了 [React Bits Flip Card](https://www.reactbits.dev/micro/flip-card) 和 [Animated Content](https://www.reactbits.dev/animations/animated-content) 的交互思路，由本项目独立实现。
 
 Next.js、React、Tailwind CSS、Better Auth、Drizzle ORM、better-sqlite3、Radix UI、Phosphor Icons、Fontsource 及其他依赖按各自随包附带的许可证提供。直接和间接依赖的精确版本以 `package-lock.json` 为准，各包许可证不会被本项目的 Apache-2.0 许可替代。
 

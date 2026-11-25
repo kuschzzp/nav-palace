@@ -1,34 +1,147 @@
-/* 独立入口以画册分栏呈现；保留双面介绍，但不再使用满幅背景海报。 */
-.site-card { position: relative; width: 100%; min-width: 0; height: calc(var(--portal-card-height, 470px) - var(--card-offset, 0px) * .75); border-left: 1px solid var(--line); perspective: 1100px; }
+/* 正反两面共用转轴。书的宽高取参考图比例，题签两个方向都跟随书封缩放。 */
+.site-card {
+  position: relative;
+  width: min(100%, calc(var(--book-height) * .92));
+  height: var(--book-height);
+  margin-inline: auto;
+  perspective: 1100px;
+}
+
+/* 书立在墙前，主要掠影从右上书角向右下投射，靠书的一侧更加紧实。 */
+.site-card-shadow {
+  position: absolute;
+  inset: 0 -68% -4% 93%;
+  z-index: -1;
+  overflow: hidden;
+  mask-image: linear-gradient(#000 84%, transparent);
+  pointer-events: none;
+}
+
+.site-card-shadow::before {
+  content: "";
+  position: absolute;
+  inset: 0 0 -42% 5%;
+  background: linear-gradient(to right, #553018a0 6%, #5b341d63 51%, #7a502312 86%, transparent);
+  transform: skewY(35deg);
+  transform-origin: left top;
+  filter: blur(clamp(4px, .55vw, 9px));
+}
+
 .site-card-rotor { position: relative; width: 100%; height: 100%; transform-style: preserve-3d; transition: transform 650ms cubic-bezier(.2,.8,.25,1); }
 .site-card[data-flipped="true"] .site-card-rotor { transform: rotateY(180deg); }
 .site-card-face { position: absolute; inset: 0; backface-visibility: hidden; -webkit-backface-visibility: hidden; }
 .site-card-face[inert] { pointer-events: none; }
-.site-card-front { display: flex; flex-direction: column; padding: 38px 19px 16px; transform: translateZ(.1px); }
-.site-card-back { transform: rotateY(180deg); }
-/* 文案按实际行数保留高度，必要时先收缩插画，避免把最后一行文字切成半行。 */
-.site-card-cover { width: 100%; height: calc(clamp(270px, 30vw, 450px) - var(--card-offset, 0px) * .55); min-height: 100px; margin: 0 0 22px; padding: 0; border: 0; background: transparent; }
-.site-card-art { display: block; width: 100%; height: 100%; object-fit: contain; pointer-events: none; transition: transform 380ms ease; }
-.site-card-art[data-ink-art="true"] { width: calc(100% + 80px); max-width: none; margin-inline: -40px; }
-.site-card-front-copy { display: flex; flex-direction: column; align-items: flex-start; flex: 1 0 auto; min-height: 0; min-width: 0; }
-.site-card h3 { margin: 0; font-family: var(--font-display); font-size: clamp(28px, 2.8vw, 42px); font-weight: 650; line-height: 1.5; letter-spacing: -.035em; overflow-wrap: anywhere; }
-.site-card-front-copy h3 { display: flex; align-items: center; gap: 7px; flex-shrink: 0; }
-.site-card-front-copy h3 > span { display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 2; min-width: 0; overflow: hidden; }
-.site-card-private { flex-shrink: 0; color: var(--accent); }
-.site-card-front-copy > p { flex-shrink: 0; display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 3; overflow: hidden; margin: 19px 0 20px; max-width: 27em; font-size: 16px; line-height: 1.75; color: #5c554b; }
-.site-card-action { display: grid; place-items: center; flex-shrink: 0; width: 50px; height: 50px; margin-top: auto; border: 1px solid var(--accent); border-radius: 50%; color: #fffaf1; background: var(--accent); transition: background-color 180ms ease, transform 180ms ease; }
-.site-card-action > svg { transition: transform 180ms ease; }
-.site-card-front-copy:is(:hover, :focus-visible) .site-card-action { background: #94261c; }
-.site-card-front-copy:is(:hover, :focus-visible) .site-card-action > svg { transform: translateX(3px); }
-.site-card:focus-within { outline: 1px solid var(--accent); outline-offset: 5px; }
-.site-card-back { display: grid; grid-template-rows: auto minmax(0,1fr) auto; gap: 20px; padding: 38px 22px 20px; background: var(--paper); border: 1px solid var(--line); border-left: 0; cursor: pointer; }
-.site-card-back-heading { display: flex; align-items: center; gap: 10px; min-width: 0; }
-.site-card-back-heading > svg { color: var(--accent); flex-shrink: 0; }
-.site-card-back-heading h3 { display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 2; min-width: 0; overflow: hidden; font-size: 22px; }
-.site-card-back-description { min-height: 0; overflow-y: auto; overscroll-behavior: contain; scrollbar-width: thin; font-size: 13px; line-height: 2; color: #665d50; overflow-wrap: anywhere; }
+
+.site-card-front {
+  background: var(--book-cover) center / 100% 100% no-repeat;
+  filter: drop-shadow(3px 3px 2px #4c2b1770);
+  transform: translateZ(.1px);
+  transform-origin: center bottom;
+  transition: transform 300ms ease, filter 300ms ease;
+}
+
+.site-card-cover { position: absolute; inset: 0; width: 100%; height: 100%; padding: 0; border: 0; background: transparent; }
+
+/* 插画安放在题签的左下方，书脊、纸条和右侧页缘各自留出空间。 */
+.site-card-art {
+  position: absolute;
+  inset: auto auto 1% 8%;
+  width: 86%;
+  height: 84%;
+  object-fit: contain;
+  object-position: center bottom;
+  pointer-events: none;
+  filter: drop-shadow(2px 4px 3px #3e210f4f);
+}
+
+.site-card-art[data-ink-art="false"] { inset: auto auto 6% 14%; width: 72%; height: 67%; }
+
+.site-card-front-copy {
+  --title-font-size: clamp(15px, calc(var(--book-height) * .105), 32px);
+  position: absolute;
+  z-index: 1;
+  inset: 6.3% 10.2% auto auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: clamp(3px, .32vw, 5px);
+  width: max(25%, 44px);
+  min-height: 62%;
+  padding: 5.4% 2.3% 4.3%;
+  color: #251710;
+  text-align: center;
+  background: url("/images/bookshelf/title-slip.webp") center / 100% 100% no-repeat;
+  filter: drop-shadow(2px 2px 1px #41221335);
+}
+
+.site-card-front-copy[data-wide="true"] { width: max(33%, 47px); }
+
+.site-card-title-slip {
+  display: grid;
+  width: 100%;
+  margin: 0;
+  font: 400 var(--title-font-size)/1.02 var(--font-calligraphy, var(--font-display));
+}
+
+.site-card-title-slip > span[data-latin-length] {
+  overflow: hidden;
+  font: 600 .83em/1.19 Georgia, serif;
+  letter-spacing: -.045em;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.site-card-title-slip > span[data-latin-length="3"] { font-size: .74em; }
+.site-card-title-slip > span[data-latin-length="4"],
+.site-card-title-slip > span[data-latin-length="5"] { font-size: .71em; }
+
+.site-card-title-slip[data-horizontal="true"] > span {
+  display: -webkit-box;
+  overflow: hidden;
+  font: 620 .65em/1.18 var(--font-display);
+  white-space: normal;
+  overflow-wrap: anywhere;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 4;
+}
+
+.site-card-title-icons { display: flex; align-items: center; justify-content: center; gap: 2px; color: #9f2419; }
+.site-card-title-icons > svg { width: clamp(12px, 1.25vw, 21px); height: auto; }
+.site-card-title-icons > svg:only-child { margin-inline: auto; }
+
+.site-card-back {
+  display: grid;
+  grid-template-rows: auto minmax(0,1fr) auto;
+  gap: 7px;
+  padding: clamp(9px, 1.3vw, 17px);
+  border: 1px solid #b8a88f;
+  border-radius: 3px;
+  background: var(--paper) var(--paper-image) repeat;
+  box-shadow: 4px 5px 10px #4329142b;
+  transform: rotateY(180deg);
+  cursor: pointer;
+}
+
+.site-card-back-heading { display: flex; align-items: center; gap: 5px; min-width: 0; }
+.site-card-back-heading > svg { width: 17px; height: 17px; color: var(--accent); flex-shrink: 0; }
+.site-card-back-heading h3 {
+  display: -webkit-box;
+  min-width: 0;
+  overflow: hidden;
+  margin: 0;
+  font: 650 clamp(14px, 1.95vw, 21px)/1.15 var(--font-display);
+  overflow-wrap: anywhere;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+}
+.site-card-back-description { min-height: 0; overflow-y: auto; overscroll-behavior: contain; scrollbar-width: thin; font-size: 13px; line-height: 1.65; color: #665d50; overflow-wrap: anywhere; }
 .site-card-back-visit { display: inline-flex; align-items: center; justify-self: end; gap: 8px; min-height: 44px; border-bottom: 1px solid var(--accent); color: var(--accent); font-size: 12px; }
-@media (hover:hover) and (pointer:fine) { .site-card-cover:hover .site-card-art { transform: translateY(-5px) rotate(-1deg); } }
-@media (min-width:1500px) { .site-card-front { padding-inline: 24px; } .site-card-action { width: 48px; height: 48px; } }
-@media (max-width:1050px) { .site-card-cover { height: 190px; } .site-card-front-copy > p { font-size: 13px; -webkit-line-clamp: 3; } }
-@media (max-width:600px) { .site-card-front { padding: 32px 17px 14px; } .site-card-cover { height: 180px; margin-bottom: 14px; } .site-card h3 { font-size: 23px; } .site-card-front-copy > p { margin-block: 13px 17px; } .site-card-action { width: 44px; height: 44px; } .site-card-back { padding: 35px 18px 19px; } }
-@media (prefers-reduced-motion:reduce) { .site-card-rotor, .site-card-art, .site-card-action, .site-card-action > svg { transition: none; } .site-card-cover:hover .site-card-art, .site-card-front-copy:is(:hover, :focus-visible) .site-card-action > svg { transform: none; } }
+.site-card-back:has(> .sr-only:focus-visible) { outline: 2px solid var(--accent); outline-offset: 3px; }
+
+@media (hover: hover) and (pointer: fine) and (prefers-reduced-motion: no-preference) {
+  .site-card-front:has(:is(.site-card-cover, .site-card-front-copy):is(:hover, :focus-visible)) {
+    transform: translate3d(0, -4px, .1px) rotate(-.75deg);
+    filter: drop-shadow(5px 7px 4px #4c2b1775);
+  }
+}

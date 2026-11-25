@@ -1,0 +1,152 @@
+/* 窗光铺在整面宣纸上，书、题签和搁板分别绘制。 */
+.portal-page {
+  background: #ead0ac url("/images/bookshelf/lit-wall.webp") center top / cover no-repeat;
+}
+
+.portal-page .portal-container { width: min(89%, 1490px); }
+.portal-page .portal-header { min-height: clamp(63px, 4.46vw, 76px); }
+.portal-page .portal-brand > span { font-size: clamp(11px, .93vw, 16px); }
+.portal-page .portal-nav { gap: clamp(14px, 2.15vw, 36px); font-size: clamp(12px, 1vw, 16px); }
+.portal-page .portal-footer { padding-top: clamp(18px, 2.4vw, 41px); }
+
+.portal-main {
+  flex: 1;
+  padding-block: clamp(8px, 1.08vw, 18px) 12px;
+}
+
+.hero-intro { margin-bottom: clamp(24px, 3.08vw, 56px); }
+
+.hero-intro h1 {
+  max-width: 78%;
+  margin: 0;
+  font-family: var(--font-calligraphy, var(--font-display));
+  font-size: clamp(35px, 4.13vw, 72px);
+  font-weight: 400;
+  line-height: 1.13;
+  letter-spacing: -.045em;
+  overflow-wrap: anywhere;
+  text-wrap: pretty;
+}
+
+.hero-intro[data-long="true"] h1 { font-size: clamp(29px, 3.5vw, 53px); }
+.portal-sites {
+  --plank-height: clamp(21px, 1.85vw, 31px);
+  --plank-space: calc(var(--plank-height) * .76);
+  --shelf-row-gap: clamp(18px, 1.83vw, 33px);
+  min-width: 0;
+  scroll-margin-top: 25px;
+}
+.sites-empty { display: flex; flex-direction: column; align-items: center; justify-content: center; min-height: 250px; padding: 30px; text-align: center; color: var(--muted); }
+.sites-empty h3 { margin: 18px 0 8px; color: var(--ink); font-family: var(--font-display); font-size: 25px; font-weight: 500; }
+.sites-empty p { margin: 0; font-size: 13px; line-height: 1.8; }
+
+.bookshelf-grid {
+  --book-height: clamp(146px, min(17.25vw, calc((100svh - 20vw) / 2)), 302px);
+  --shelf-inset: clamp(28px, 3.95vw, 66px);
+  container-type: inline-size;
+  isolation: isolate;
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  row-gap: var(--shelf-row-gap);
+  margin-inline: auto;
+  padding-inline: var(--shelf-inset);
+}
+
+.bookshelf-grid[data-count="1"] { grid-template-columns: minmax(0, 1fr); max-width: 440px; }
+.bookshelf-grid[data-count="2"] { grid-template-columns: repeat(2, minmax(0, 1fr)); max-width: 800px; }
+.bookshelf-grid[data-count="3"] { grid-template-columns: repeat(3, minmax(0, 1fr)); max-width: 1150px; }
+
+.bookshelf-slot {
+  --book-cover: url("/images/bookshelf/folio-ink.webp");
+  position: relative;
+  min-width: 0;
+  padding-bottom: var(--plank-space);
+}
+
+.bookshelf-slot:is(:nth-child(8n + 2), :nth-child(8n + 5), :nth-child(8n + 7)) {
+  --book-cover: url("/images/bookshelf/folio-rice.webp");
+}
+.bookshelf-slot:is(:nth-child(8n + 3), :nth-child(8n + 6)) { --book-cover: url("/images/bookshelf/folio-pine.webp"); }
+.bookshelf-slot:nth-child(8n + 4) { --book-cover: url("/images/bookshelf/folio-red.webp"); }
+.bookshelf-slot:nth-child(8n) { --book-cover: url("/images/bookshelf/folio-indigo.webp"); }
+
+/* 每层首个入口画一整块木板，木板的投影与书封朝同一方向。 */
+.bookshelf-slot::before {
+  position: absolute;
+  z-index: -1;
+  inset-inline-start: calc(-1 * var(--shelf-inset));
+  bottom: 0;
+  width: calc(100cqw + 2 * var(--shelf-inset));
+  height: var(--plank-height);
+  background: url("/images/bookshelf/sunlit-plank.webp") center / 100% 100% no-repeat;
+  filter: drop-shadow(17px 23px 9px #60391666) drop-shadow(0 3px 2px #4b2a1540);
+  pointer-events: none;
+}
+
+@media (min-width: 1051px) {
+  .portal-page[data-screen-shelves] {
+    --shelf-rows: 1;
+    --min-book-height: 146px;
+    block-size: 100svh;
+    min-block-size: min-content;
+  }
+  .portal-page[data-screen-shelves="2"] { --shelf-rows: 2; }
+  .portal-page[data-screen-shelves] .portal-main { display: flex; flex-direction: column; padding-bottom: 8px; }
+  .portal-page[data-screen-shelves] .portal-footer { padding-block: 8px 10px; }
+
+  /* 先让标题和页脚按实际内容排版，书架再衡量剩余高度。过矮时按书的最小尺寸自然溢出到下一屏。 */
+  .portal-page[data-screen-shelves] .portal-sites {
+    --shelf-gaps: calc((var(--shelf-rows) - 1) * var(--shelf-row-gap));
+    flex: 1;
+    container-type: size;
+    min-block-size: calc(var(--shelf-rows) * (var(--min-book-height) + var(--plank-space)) + var(--shelf-gaps));
+  }
+
+  .portal-page[data-screen-shelves] .bookshelf-grid {
+    --available-book-height: calc((100cqh - var(--shelf-gaps)) / var(--shelf-rows) - var(--plank-space));
+    --book-height: clamp(var(--min-book-height), min(17.25vw, var(--available-book-height)), 302px);
+  }
+
+  .bookshelf-slot:nth-child(4n + 1)::before { content: ""; }
+  .bookshelf-slot:not(:nth-child(4n)):not(:last-child)::after {
+    content: "";
+    position: absolute;
+    z-index: 1;
+    inset-inline-end: -10px;
+    bottom: calc(var(--plank-space) - 3px);
+    width: clamp(15px, 1.62vw, 27px);
+    height: clamp(10px, .92vw, 16px);
+    background: url("/images/ink/petal.webp") center / 100% 100% no-repeat;
+    filter: drop-shadow(1px 2px 1px #69331467);
+    transform: rotate(24deg);
+    pointer-events: none;
+  }
+  .bookshelf-slot:nth-child(even)::after { transform: rotate(-10deg); }
+}
+
+@media (min-width: 721px) and (max-width: 1050px) {
+  .bookshelf-grid { --book-height: clamp(174px, 24vw, 254px); grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  .bookshelf-slot:nth-child(3n + 1)::before { content: ""; }
+}
+
+@media (max-width: 720px) {
+  .portal-page { background-position: left top; }
+  .portal-page .portal-container { width: calc(100% - 36px); }
+  .portal-page .portal-header { min-height: 69px; }
+  .hero-intro h1 { max-width: 95%; }
+  .sites-empty { min-height: 300px; }
+  .portal-sites { --plank-height: 17px; --shelf-row-gap: 15px; }
+  .bookshelf-grid, .bookshelf-grid[data-count="3"] {
+    --book-height: clamp(135px, 43vw, 247px);
+    --shelf-inset: clamp(5px, 2vw, 15px);
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    column-gap: 8px;
+  }
+  .bookshelf-grid[data-count="1"] { grid-template-columns: minmax(0, 1fr); }
+  .bookshelf-slot:nth-child(2n + 1)::before { content: ""; }
+  .bookshelf-slot::before { filter: drop-shadow(7px 12px 5px #60391659) drop-shadow(0 2px 1px #4b2a1538); }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .bookshelf-slot > .site-card { animation: content-arrive 450ms ease-out backwards; animation-delay: inherit; }
+}

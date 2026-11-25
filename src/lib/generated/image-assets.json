@@ -1,661 +1,661 @@
 {
   "/images/ink/writing.webp": {
-    "src": "/images/optimized/ink-writing-800-caa2ce5909-f14cb7bf1860.webp",
+    "src": "/images/optimized/ink-writing-800-445ad87b49-7826e5aedec9.webp",
     "width": 800,
     "height": 700,
     "variants": [
       {
         "width": 240,
-        "src": "/images/optimized/ink-writing-240-caa2ce5909-b99afd1d180f.webp"
+        "src": "/images/optimized/ink-writing-240-445ad87b49-5ca15ffb8231.webp"
       },
       {
         "width": 480,
-        "src": "/images/optimized/ink-writing-480-caa2ce5909-a40c5ae8bbf7.webp"
+        "src": "/images/optimized/ink-writing-480-445ad87b49-01b052d7d76d.webp"
       },
       {
         "width": 800,
-        "src": "/images/optimized/ink-writing-800-caa2ce5909-f14cb7bf1860.webp"
+        "src": "/images/optimized/ink-writing-800-445ad87b49-7826e5aedec9.webp"
       }
     ],
     "avifVariants": [
       {
         "width": 240,
-        "src": "/images/optimized/ink-writing-240-caa2ce5909-9399a61504b9.avif"
+        "src": "/images/optimized/ink-writing-240-445ad87b49-75e722ee4b41.avif"
       },
       {
         "width": 480,
-        "src": "/images/optimized/ink-writing-480-caa2ce5909-e79917630c07.avif"
+        "src": "/images/optimized/ink-writing-480-445ad87b49-b0441a7c01c5.avif"
       },
       {
         "width": 800,
-        "src": "/images/optimized/ink-writing-800-caa2ce5909-15c53812773f.avif"
+        "src": "/images/optimized/ink-writing-800-445ad87b49-95de49077477.avif"
       }
     ]
   },
   "/images/ink/choice.webp": {
-    "src": "/images/optimized/ink-choice-800-08724b6c34-2fc628c45b22.webp",
+    "src": "/images/optimized/ink-choice-800-f85284f628-4f2a994e5356.webp",
     "width": 800,
     "height": 700,
     "variants": [
       {
         "width": 240,
-        "src": "/images/optimized/ink-choice-240-08724b6c34-7c3ff9cef9aa.webp"
+        "src": "/images/optimized/ink-choice-240-f85284f628-8f19e32c2bf9.webp"
       },
       {
         "width": 480,
-        "src": "/images/optimized/ink-choice-480-08724b6c34-4a671088b0ac.webp"
+        "src": "/images/optimized/ink-choice-480-f85284f628-0356964da362.webp"
       },
       {
         "width": 800,
-        "src": "/images/optimized/ink-choice-800-08724b6c34-2fc628c45b22.webp"
+        "src": "/images/optimized/ink-choice-800-f85284f628-4f2a994e5356.webp"
       }
     ],
     "avifVariants": [
       {
         "width": 240,
-        "src": "/images/optimized/ink-choice-240-08724b6c34-a3147d08136d.avif"
+        "src": "/images/optimized/ink-choice-240-f85284f628-412c7a7fe5e4.avif"
       },
       {
         "width": 480,
-        "src": "/images/optimized/ink-choice-480-08724b6c34-e32a32c4f8b7.avif"
+        "src": "/images/optimized/ink-choice-480-f85284f628-24b9f239d05c.avif"
       },
       {
         "width": 800,
-        "src": "/images/optimized/ink-choice-800-08724b6c34-910065790ef9.avif"
+        "src": "/images/optimized/ink-choice-800-f85284f628-033f9e558032.avif"
       }
     ]
   },
   "/images/ink/mail.webp": {
-    "src": "/images/optimized/ink-mail-800-c4d049ebb8-8b630dd84eed.webp",
+    "src": "/images/optimized/ink-mail-800-d7d5a88dcc-fb062d801795.webp",
     "width": 800,
     "height": 700,
     "variants": [
       {
         "width": 240,
-        "src": "/images/optimized/ink-mail-240-c4d049ebb8-b141ee9667fc.webp"
+        "src": "/images/optimized/ink-mail-240-d7d5a88dcc-1c480940ad31.webp"
       },
       {
         "width": 480,
-        "src": "/images/optimized/ink-mail-480-c4d049ebb8-5f7607d56a35.webp"
+        "src": "/images/optimized/ink-mail-480-d7d5a88dcc-5e7acf48ed5d.webp"
       },
       {
         "width": 800,
-        "src": "/images/optimized/ink-mail-800-c4d049ebb8-8b630dd84eed.webp"
+        "src": "/images/optimized/ink-mail-800-d7d5a88dcc-fb062d801795.webp"
       }
     ],
     "avifVariants": [
       {
         "width": 240,
-        "src": "/images/optimized/ink-mail-240-c4d049ebb8-4efe1ae1f7be.avif"
+        "src": "/images/optimized/ink-mail-240-d7d5a88dcc-844f822f6f33.avif"
       },
       {
         "width": 480,
-        "src": "/images/optimized/ink-mail-480-c4d049ebb8-56029e1f9242.avif"
+        "src": "/images/optimized/ink-mail-480-d7d5a88dcc-12b789cdcfac.avif"
       },
       {
         "width": 800,
-        "src": "/images/optimized/ink-mail-800-c4d049ebb8-061ec8061924.avif"
+        "src": "/images/optimized/ink-mail-800-d7d5a88dcc-20a775c72a82.avif"
       }
     ]
   },
   "/images/ink/knowledge.webp": {
-    "src": "/images/optimized/ink-knowledge-800-46383bb183-0de1a1e60c93.webp",
+    "src": "/images/optimized/ink-knowledge-800-4421426bf4-dcb0e789e670.webp",
     "width": 800,
     "height": 700,
     "variants": [
       {
         "width": 240,
-        "src": "/images/optimized/ink-knowledge-240-46383bb183-9a04bec4e5b7.webp"
+        "src": "/images/optimized/ink-knowledge-240-4421426bf4-ee5d4b465f5a.webp"
       },
       {
         "width": 480,
-        "src": "/images/optimized/ink-knowledge-480-46383bb183-8c8de9bc8ea1.webp"
+        "src": "/images/optimized/ink-knowledge-480-4421426bf4-5905c0737371.webp"
       },
       {
         "width": 800,
-        "src": "/images/optimized/ink-knowledge-800-46383bb183-0de1a1e60c93.webp"
+        "src": "/images/optimized/ink-knowledge-800-4421426bf4-dcb0e789e670.webp"
       }
     ],
     "avifVariants": [
       {
         "width": 240,
-        "src": "/images/optimized/ink-knowledge-240-46383bb183-8e0d6fab9f49.avif"
+        "src": "/images/optimized/ink-knowledge-240-4421426bf4-7c75b1f98bc2.avif"
       },
       {
         "width": 480,
-        "src": "/images/optimized/ink-knowledge-480-46383bb183-49453d538266.avif"
+        "src": "/images/optimized/ink-knowledge-480-4421426bf4-acc6eb06ff15.avif"
       },
       {
         "width": 800,
-        "src": "/images/optimized/ink-knowledge-800-46383bb183-ae575c1ebc9f.avif"
+        "src": "/images/optimized/ink-knowledge-800-4421426bf4-300277eff6d9.avif"
       }
     ]
   },
   "/images/ink/tools.webp": {
-    "src": "/images/optimized/ink-tools-800-1744f3c552-f9c3a6aab7e4.webp",
+    "src": "/images/optimized/ink-tools-800-d31b8e3493-47d7324ff3b6.webp",
     "width": 800,
     "height": 700,
     "variants": [
       {
         "width": 240,
-        "src": "/images/optimized/ink-tools-240-1744f3c552-94b23872e773.webp"
+        "src": "/images/optimized/ink-tools-240-d31b8e3493-8c255aa42716.webp"
       },
       {
         "width": 480,
-        "src": "/images/optimized/ink-tools-480-1744f3c552-36c0ef87138f.webp"
+        "src": "/images/optimized/ink-tools-480-d31b8e3493-e4595a014b9a.webp"
       },
       {
         "width": 800,
-        "src": "/images/optimized/ink-tools-800-1744f3c552-f9c3a6aab7e4.webp"
+        "src": "/images/optimized/ink-tools-800-d31b8e3493-47d7324ff3b6.webp"
       }
     ],
     "avifVariants": [
       {
         "width": 240,
-        "src": "/images/optimized/ink-tools-240-1744f3c552-b9948c6dc07e.avif"
+        "src": "/images/optimized/ink-tools-240-d31b8e3493-7448f8f89b8c.avif"
       },
       {
         "width": 480,
-        "src": "/images/optimized/ink-tools-480-1744f3c552-cc975c9b33a9.avif"
+        "src": "/images/optimized/ink-tools-480-d31b8e3493-3f6a04acffc4.avif"
       },
       {
         "width": 800,
-        "src": "/images/optimized/ink-tools-800-1744f3c552-a9c3ca07f048.avif"
+        "src": "/images/optimized/ink-tools-800-d31b8e3493-eda17f2ea129.avif"
       }
     ]
   },
   "/images/ink/landscape.webp": {
-    "src": "/images/optimized/ink-landscape-800-97754e7c9b-073d095b379f.webp",
+    "src": "/images/optimized/ink-landscape-800-83a584907d-9248deffe449.webp",
     "width": 800,
     "height": 700,
     "variants": [
       {
         "width": 240,
-        "src": "/images/optimized/ink-landscape-240-97754e7c9b-7ff08f75474f.webp"
+        "src": "/images/optimized/ink-landscape-240-83a584907d-93906f5f1904.webp"
       },
       {
         "width": 480,
-        "src": "/images/optimized/ink-landscape-480-97754e7c9b-b190d2644998.webp"
+        "src": "/images/optimized/ink-landscape-480-83a584907d-a18c2c6ad2b3.webp"
       },
       {
         "width": 800,
-        "src": "/images/optimized/ink-landscape-800-97754e7c9b-073d095b379f.webp"
+        "src": "/images/optimized/ink-landscape-800-83a584907d-9248deffe449.webp"
       }
     ],
     "avifVariants": [
       {
         "width": 240,
-        "src": "/images/optimized/ink-landscape-240-97754e7c9b-a36a62a6cab7.avif"
+        "src": "/images/optimized/ink-landscape-240-83a584907d-9499f533d383.avif"
       },
       {
         "width": 480,
-        "src": "/images/optimized/ink-landscape-480-97754e7c9b-8f2f7329e141.avif"
+        "src": "/images/optimized/ink-landscape-480-83a584907d-042442a97ee3.avif"
       },
       {
         "width": 800,
-        "src": "/images/optimized/ink-landscape-800-97754e7c9b-e24d85e707b1.avif"
+        "src": "/images/optimized/ink-landscape-800-83a584907d-4c6a903656e1.avif"
       }
     ]
   },
   "/images/ink/tea.webp": {
-    "src": "/images/optimized/ink-tea-800-5d5c3f41b4-1dfe0f8394d4.webp",
+    "src": "/images/optimized/ink-tea-800-b108f96084-c66ae4444885.webp",
     "width": 800,
     "height": 700,
     "variants": [
       {
         "width": 240,
-        "src": "/images/optimized/ink-tea-240-5d5c3f41b4-1c42d7782367.webp"
+        "src": "/images/optimized/ink-tea-240-b108f96084-03067138df79.webp"
       },
       {
         "width": 480,
-        "src": "/images/optimized/ink-tea-480-5d5c3f41b4-e6be2405c2e7.webp"
+        "src": "/images/optimized/ink-tea-480-b108f96084-ec336eb7e79f.webp"
       },
       {
         "width": 800,
-        "src": "/images/optimized/ink-tea-800-5d5c3f41b4-1dfe0f8394d4.webp"
+        "src": "/images/optimized/ink-tea-800-b108f96084-c66ae4444885.webp"
       }
     ],
     "avifVariants": [
       {
         "width": 240,
-        "src": "/images/optimized/ink-tea-240-5d5c3f41b4-7ffb159aefd5.avif"
+        "src": "/images/optimized/ink-tea-240-b108f96084-dfe73993f15d.avif"
       },
       {
         "width": 480,
-        "src": "/images/optimized/ink-tea-480-5d5c3f41b4-0aef19b94ed3.avif"
+        "src": "/images/optimized/ink-tea-480-b108f96084-6a4e69467060.avif"
       },
       {
         "width": 800,
-        "src": "/images/optimized/ink-tea-800-5d5c3f41b4-ed5629a8653d.avif"
+        "src": "/images/optimized/ink-tea-800-b108f96084-a1a017c407fd.avif"
       }
     ]
   },
   "/images/ink/sailing.webp": {
-    "src": "/images/optimized/ink-sailing-800-981f368889-1ebbeace2fce.webp",
+    "src": "/images/optimized/ink-sailing-800-ba0c94cee1-ddc49976a19b.webp",
     "width": 800,
     "height": 700,
     "variants": [
       {
         "width": 240,
-        "src": "/images/optimized/ink-sailing-240-981f368889-afdb640a3fda.webp"
+        "src": "/images/optimized/ink-sailing-240-ba0c94cee1-80f1e0748946.webp"
       },
       {
         "width": 480,
-        "src": "/images/optimized/ink-sailing-480-981f368889-a3a3dc8e7070.webp"
+        "src": "/images/optimized/ink-sailing-480-ba0c94cee1-800d338f8939.webp"
       },
       {
         "width": 800,
-        "src": "/images/optimized/ink-sailing-800-981f368889-1ebbeace2fce.webp"
+        "src": "/images/optimized/ink-sailing-800-ba0c94cee1-ddc49976a19b.webp"
       }
     ],
     "avifVariants": [
       {
         "width": 240,
-        "src": "/images/optimized/ink-sailing-240-981f368889-1e4c82444e0d.avif"
+        "src": "/images/optimized/ink-sailing-240-ba0c94cee1-6710641baa95.avif"
       },
       {
         "width": 480,
-        "src": "/images/optimized/ink-sailing-480-981f368889-77fd6c38abf8.avif"
+        "src": "/images/optimized/ink-sailing-480-ba0c94cee1-587b2ac69dd0.avif"
       },
       {
         "width": 800,
-        "src": "/images/optimized/ink-sailing-800-981f368889-a43df35ecdb1.avif"
+        "src": "/images/optimized/ink-sailing-800-ba0c94cee1-93a978af7175.avif"
       }
     ]
   },
   "/images/ink/astronomy.webp": {
-    "src": "/images/optimized/ink-astronomy-800-146d41a68d-360fadc20ff0.webp",
+    "src": "/images/optimized/ink-astronomy-800-a8a4dbac91-8592891d3691.webp",
     "width": 800,
     "height": 700,
     "variants": [
       {
         "width": 240,
-        "src": "/images/optimized/ink-astronomy-240-146d41a68d-c236457881b6.webp"
+        "src": "/images/optimized/ink-astronomy-240-a8a4dbac91-166270b3e652.webp"
       },
       {
         "width": 480,
-        "src": "/images/optimized/ink-astronomy-480-146d41a68d-ada0888f94d4.webp"
+        "src": "/images/optimized/ink-astronomy-480-a8a4dbac91-2dfeac0fba20.webp"
       },
       {
         "width": 800,
-        "src": "/images/optimized/ink-astronomy-800-146d41a68d-360fadc20ff0.webp"
+        "src": "/images/optimized/ink-astronomy-800-a8a4dbac91-8592891d3691.webp"
       }
     ],
     "avifVariants": [
       {
         "width": 240,
-        "src": "/images/optimized/ink-astronomy-240-146d41a68d-a6c94b947936.avif"
+        "src": "/images/optimized/ink-astronomy-240-a8a4dbac91-88688c83db97.avif"
       },
       {
         "width": 480,
-        "src": "/images/optimized/ink-astronomy-480-146d41a68d-d959f521dace.avif"
+        "src": "/images/optimized/ink-astronomy-480-a8a4dbac91-a31467bcf4fc.avif"
       },
       {
         "width": 800,
-        "src": "/images/optimized/ink-astronomy-800-146d41a68d-84e05fe4b8b5.avif"
+        "src": "/images/optimized/ink-astronomy-800-a8a4dbac91-66f67cb73836.avif"
       }
     ]
   },
   "/images/ink/rain.webp": {
-    "src": "/images/optimized/ink-rain-800-2ac531321e-f25fb2e66d8b.webp",
+    "src": "/images/optimized/ink-rain-800-489cbaf84b-e5fc8b7f3751.webp",
     "width": 800,
     "height": 700,
     "variants": [
       {
         "width": 240,
-        "src": "/images/optimized/ink-rain-240-2ac531321e-28e18fe4cf63.webp"
+        "src": "/images/optimized/ink-rain-240-489cbaf84b-d3fc5e81982f.webp"
       },
       {
         "width": 480,
-        "src": "/images/optimized/ink-rain-480-2ac531321e-0b99589451fa.webp"
+        "src": "/images/optimized/ink-rain-480-489cbaf84b-dfd9e7fb08f0.webp"
       },
       {
         "width": 800,
-        "src": "/images/optimized/ink-rain-800-2ac531321e-f25fb2e66d8b.webp"
+        "src": "/images/optimized/ink-rain-800-489cbaf84b-e5fc8b7f3751.webp"
       }
     ],
     "avifVariants": [
       {
         "width": 240,
-        "src": "/images/optimized/ink-rain-240-2ac531321e-6d761a94876e.avif"
+        "src": "/images/optimized/ink-rain-240-489cbaf84b-920305e1b34f.avif"
       },
       {
         "width": 480,
-        "src": "/images/optimized/ink-rain-480-2ac531321e-11a2ca0dbff4.avif"
+        "src": "/images/optimized/ink-rain-480-489cbaf84b-633f1b17cdb4.avif"
       },
       {
         "width": 800,
-        "src": "/images/optimized/ink-rain-800-2ac531321e-c2b3a21fad1c.avif"
+        "src": "/images/optimized/ink-rain-800-489cbaf84b-e390ee036f3c.avif"
       }
     ]
   },
   "/images/ink/guqin.webp": {
-    "src": "/images/optimized/ink-guqin-800-f21d00dc72-633167b76600.webp",
+    "src": "/images/optimized/ink-guqin-800-10242ba949-4742da53fbea.webp",
     "width": 800,
     "height": 700,
     "variants": [
       {
         "width": 240,
-        "src": "/images/optimized/ink-guqin-240-f21d00dc72-01a370f54cf1.webp"
+        "src": "/images/optimized/ink-guqin-240-10242ba949-3204e507e417.webp"
       },
       {
         "width": 480,
-        "src": "/images/optimized/ink-guqin-480-f21d00dc72-3cbbcbb378cd.webp"
+        "src": "/images/optimized/ink-guqin-480-10242ba949-645cdc49b62d.webp"
       },
       {
         "width": 800,
-        "src": "/images/optimized/ink-guqin-800-f21d00dc72-633167b76600.webp"
+        "src": "/images/optimized/ink-guqin-800-10242ba949-4742da53fbea.webp"
       }
     ],
     "avifVariants": [
       {
         "width": 240,
-        "src": "/images/optimized/ink-guqin-240-f21d00dc72-3d3c37890d41.avif"
+        "src": "/images/optimized/ink-guqin-240-10242ba949-46b9e26260cd.avif"
       },
       {
         "width": 480,
-        "src": "/images/optimized/ink-guqin-480-f21d00dc72-a7385385845e.avif"
+        "src": "/images/optimized/ink-guqin-480-10242ba949-07d663f5e4ce.avif"
       },
       {
         "width": 800,
-        "src": "/images/optimized/ink-guqin-800-f21d00dc72-23b444ea7c0a.avif"
+        "src": "/images/optimized/ink-guqin-800-10242ba949-cafb70aec8a5.avif"
       }
     ]
   },
   "/images/ink/go.webp": {
-    "src": "/images/optimized/ink-go-800-69198235b0-5f9633650fa8.webp",
+    "src": "/images/optimized/ink-go-800-6a2140e559-55834547f59a.webp",
     "width": 800,
     "height": 700,
     "variants": [
       {
         "width": 240,
-        "src": "/images/optimized/ink-go-240-69198235b0-c633b24aae1e.webp"
+        "src": "/images/optimized/ink-go-240-6a2140e559-b1470523e361.webp"
       },
       {
         "width": 480,
-        "src": "/images/optimized/ink-go-480-69198235b0-105283c66160.webp"
+        "src": "/images/optimized/ink-go-480-6a2140e559-73e013b49989.webp"
       },
       {
         "width": 800,
-        "src": "/images/optimized/ink-go-800-69198235b0-5f9633650fa8.webp"
+        "src": "/images/optimized/ink-go-800-6a2140e559-55834547f59a.webp"
       }
     ],
     "avifVariants": [
       {
         "width": 240,
-        "src": "/images/optimized/ink-go-240-69198235b0-b033cbd4b214.avif"
+        "src": "/images/optimized/ink-go-240-6a2140e559-f0f6875790df.avif"
       },
       {
         "width": 480,
-        "src": "/images/optimized/ink-go-480-69198235b0-e56199c550bb.avif"
+        "src": "/images/optimized/ink-go-480-6a2140e559-33238a1d969a.avif"
       },
       {
         "width": 800,
-        "src": "/images/optimized/ink-go-800-69198235b0-398862301ee9.avif"
+        "src": "/images/optimized/ink-go-800-6a2140e559-596de4dea0f3.avif"
       }
     ]
   },
   "/images/ink/koi.webp": {
-    "src": "/images/optimized/ink-koi-800-a27b997823-5e32ff82c196.webp",
+    "src": "/images/optimized/ink-koi-800-f1d38e8e66-6eeb798cf549.webp",
     "width": 800,
     "height": 700,
     "variants": [
       {
         "width": 240,
-        "src": "/images/optimized/ink-koi-240-a27b997823-672118415fd1.webp"
+        "src": "/images/optimized/ink-koi-240-f1d38e8e66-4d1044514f20.webp"
       },
       {
         "width": 480,
-        "src": "/images/optimized/ink-koi-480-a27b997823-b76c67feb159.webp"
+        "src": "/images/optimized/ink-koi-480-f1d38e8e66-7102dc5ee086.webp"
       },
       {
         "width": 800,
-        "src": "/images/optimized/ink-koi-800-a27b997823-5e32ff82c196.webp"
+        "src": "/images/optimized/ink-koi-800-f1d38e8e66-6eeb798cf549.webp"
       }
     ],
     "avifVariants": [
       {
         "width": 240,
-        "src": "/images/optimized/ink-koi-240-a27b997823-948ba161c5fe.avif"
+        "src": "/images/optimized/ink-koi-240-f1d38e8e66-13eb3ba99e3c.avif"
       },
       {
         "width": 480,
-        "src": "/images/optimized/ink-koi-480-a27b997823-85e8d2341070.avif"
+        "src": "/images/optimized/ink-koi-480-f1d38e8e66-224c488d6d4e.avif"
       },
       {
         "width": 800,
-        "src": "/images/optimized/ink-koi-800-a27b997823-4e0ad4702a67.avif"
+        "src": "/images/optimized/ink-koi-800-f1d38e8e66-c0f6c6616853.avif"
       }
     ]
   },
   "/images/ink/crane.webp": {
-    "src": "/images/optimized/ink-crane-800-6bd9a6736d-905f2c074c51.webp",
+    "src": "/images/optimized/ink-crane-800-393b9cb5aa-151c3d68aa53.webp",
     "width": 800,
     "height": 700,
     "variants": [
       {
         "width": 240,
-        "src": "/images/optimized/ink-crane-240-6bd9a6736d-2c4f953c1226.webp"
+        "src": "/images/optimized/ink-crane-240-393b9cb5aa-0d27e98e3251.webp"
       },
       {
         "width": 480,
-        "src": "/images/optimized/ink-crane-480-6bd9a6736d-237abc741797.webp"
+        "src": "/images/optimized/ink-crane-480-393b9cb5aa-d90370c55d12.webp"
       },
       {
         "width": 800,
-        "src": "/images/optimized/ink-crane-800-6bd9a6736d-905f2c074c51.webp"
+        "src": "/images/optimized/ink-crane-800-393b9cb5aa-151c3d68aa53.webp"
       }
     ],
     "avifVariants": [
       {
         "width": 240,
-        "src": "/images/optimized/ink-crane-240-6bd9a6736d-0af7c95ae79b.avif"
+        "src": "/images/optimized/ink-crane-240-393b9cb5aa-e42bb45bd977.avif"
       },
       {
         "width": 480,
-        "src": "/images/optimized/ink-crane-480-6bd9a6736d-9f642e5bf49b.avif"
+        "src": "/images/optimized/ink-crane-480-393b9cb5aa-9980be48f3a5.avif"
       },
       {
         "width": 800,
-        "src": "/images/optimized/ink-crane-800-6bd9a6736d-2cb9b5f08e4c.avif"
+        "src": "/images/optimized/ink-crane-800-393b9cb5aa-4fabc34d5804.avif"
       }
     ]
   },
   "/images/ink/lotus.webp": {
-    "src": "/images/optimized/ink-lotus-800-2e357c2708-372ff0618723.webp",
+    "src": "/images/optimized/ink-lotus-800-684c1f60a3-ebc6b9991991.webp",
     "width": 800,
     "height": 700,
     "variants": [
       {
         "width": 240,
-        "src": "/images/optimized/ink-lotus-240-2e357c2708-1109ca64547a.webp"
+        "src": "/images/optimized/ink-lotus-240-684c1f60a3-647d119b2236.webp"
       },
       {
         "width": 480,
-        "src": "/images/optimized/ink-lotus-480-2e357c2708-150b543e7e80.webp"
+        "src": "/images/optimized/ink-lotus-480-684c1f60a3-b9742c9c7920.webp"
       },
       {
         "width": 800,
-        "src": "/images/optimized/ink-lotus-800-2e357c2708-372ff0618723.webp"
+        "src": "/images/optimized/ink-lotus-800-684c1f60a3-ebc6b9991991.webp"
       }
     ],
     "avifVariants": [
       {
         "width": 240,
-        "src": "/images/optimized/ink-lotus-240-2e357c2708-331d3d62804e.avif"
+        "src": "/images/optimized/ink-lotus-240-684c1f60a3-798cd661c575.avif"
       },
       {
         "width": 480,
-        "src": "/images/optimized/ink-lotus-480-2e357c2708-c377aaae404a.avif"
+        "src": "/images/optimized/ink-lotus-480-684c1f60a3-b62cb94bf2d9.avif"
       },
       {
         "width": 800,
-        "src": "/images/optimized/ink-lotus-800-2e357c2708-0d72129e4241.avif"
+        "src": "/images/optimized/ink-lotus-800-684c1f60a3-d06d5c88a151.avif"
       }
     ]
   },
   "/images/ink/incense.webp": {
-    "src": "/images/optimized/ink-incense-800-9c3f97c186-e1703855881b.webp",
+    "src": "/images/optimized/ink-incense-800-0aa66d0b4d-9646a9e1b318.webp",
     "width": 800,
     "height": 700,
     "variants": [
       {
         "width": 240,
-        "src": "/images/optimized/ink-incense-240-9c3f97c186-d5c624bd9140.webp"
+        "src": "/images/optimized/ink-incense-240-0aa66d0b4d-f2121d0fb874.webp"
       },
       {
         "width": 480,
-        "src": "/images/optimized/ink-incense-480-9c3f97c186-6254e4a11df4.webp"
+        "src": "/images/optimized/ink-incense-480-0aa66d0b4d-1d6c1a7cfee6.webp"
       },
       {
         "width": 800,
-        "src": "/images/optimized/ink-incense-800-9c3f97c186-e1703855881b.webp"
+        "src": "/images/optimized/ink-incense-800-0aa66d0b4d-9646a9e1b318.webp"
       }
     ],
     "avifVariants": [
       {
         "width": 240,
-        "src": "/images/optimized/ink-incense-240-9c3f97c186-0d6f55901d9b.avif"
+        "src": "/images/optimized/ink-incense-240-0aa66d0b4d-2e2a192958d6.avif"
       },
       {
         "width": 480,
-        "src": "/images/optimized/ink-incense-480-9c3f97c186-59aeeda0d498.avif"
+        "src": "/images/optimized/ink-incense-480-0aa66d0b4d-da1b64da8dca.avif"
       },
       {
         "width": 800,
-        "src": "/images/optimized/ink-incense-800-9c3f97c186-47b1d7602b6a.avif"
+        "src": "/images/optimized/ink-incense-800-0aa66d0b4d-c05924233e62.avif"
       }
     ]
   },
   "/images/ink/lantern.webp": {
-    "src": "/images/optimized/ink-lantern-800-dbace77d66-c4dfed36752a.webp",
+    "src": "/images/optimized/ink-lantern-800-296b9fa951-a24b29b0cdff.webp",
     "width": 800,
     "height": 700,
     "variants": [
       {
         "width": 240,
-        "src": "/images/optimized/ink-lantern-240-dbace77d66-44abf6b6dd79.webp"
+        "src": "/images/optimized/ink-lantern-240-296b9fa951-6029929686b7.webp"
       },
       {
         "width": 480,
-        "src": "/images/optimized/ink-lantern-480-dbace77d66-3886eb551da6.webp"
+        "src": "/images/optimized/ink-lantern-480-296b9fa951-0176b05cd2d3.webp"
       },
       {
         "width": 800,
-        "src": "/images/optimized/ink-lantern-800-dbace77d66-c4dfed36752a.webp"
+        "src": "/images/optimized/ink-lantern-800-296b9fa951-a24b29b0cdff.webp"
       }
     ],
     "avifVariants": [
       {
         "width": 240,
-        "src": "/images/optimized/ink-lantern-240-dbace77d66-829a75c7e9a7.avif"
+        "src": "/images/optimized/ink-lantern-240-296b9fa951-c98cc437e61a.avif"
       },
       {
         "width": 480,
-        "src": "/images/optimized/ink-lantern-480-dbace77d66-ea1a7df8d8aa.avif"
+        "src": "/images/optimized/ink-lantern-480-296b9fa951-ac6ce77562db.avif"
       },
       {
         "width": 800,
-        "src": "/images/optimized/ink-lantern-800-dbace77d66-83e620a2f34e.avif"
+        "src": "/images/optimized/ink-lantern-800-296b9fa951-6c659c69ba8f.avif"
       }
     ]
   },
   "/images/ink/camera.webp": {
-    "src": "/images/optimized/ink-camera-800-71cede46a5-85581382613f.webp",
+    "src": "/images/optimized/ink-camera-800-ff2232d16b-efe6921b4c88.webp",
     "width": 800,
     "height": 700,
     "variants": [
       {
         "width": 240,
-        "src": "/images/optimized/ink-camera-240-71cede46a5-10067a8023fb.webp"
+        "src": "/images/optimized/ink-camera-240-ff2232d16b-005dff2e6f01.webp"
       },
       {
         "width": 480,
-        "src": "/images/optimized/ink-camera-480-71cede46a5-5e2ad211666e.webp"
+        "src": "/images/optimized/ink-camera-480-ff2232d16b-601349124bc2.webp"
       },
       {
         "width": 800,
-        "src": "/images/optimized/ink-camera-800-71cede46a5-85581382613f.webp"
+        "src": "/images/optimized/ink-camera-800-ff2232d16b-efe6921b4c88.webp"
       }
     ],
     "avifVariants": [
       {
         "width": 240,
-        "src": "/images/optimized/ink-camera-240-71cede46a5-9a88a3d66b4f.avif"
+        "src": "/images/optimized/ink-camera-240-ff2232d16b-ceb9e3f78734.avif"
       },
       {
         "width": 480,
-        "src": "/images/optimized/ink-camera-480-71cede46a5-03bde1e11e41.avif"
+        "src": "/images/optimized/ink-camera-480-ff2232d16b-2ce24b4cacc3.avif"
       },
       {
         "width": 800,
-        "src": "/images/optimized/ink-camera-800-71cede46a5-7c959ddea770.avif"
+        "src": "/images/optimized/ink-camera-800-ff2232d16b-b2e8930a8709.avif"
       }
     ]
   },
   "/images/ink/maple.webp": {
-    "src": "/images/optimized/ink-maple-800-49e43d2562-8eabca0079be.webp",
+    "src": "/images/optimized/ink-maple-800-34fd4f46fb-93a33425a025.webp",
     "width": 800,
     "height": 700,
     "variants": [
       {
         "width": 240,
-        "src": "/images/optimized/ink-maple-240-49e43d2562-52cb66282051.webp"
+        "src": "/images/optimized/ink-maple-240-34fd4f46fb-d77353b9237f.webp"
       },
       {
         "width": 480,
-        "src": "/images/optimized/ink-maple-480-49e43d2562-50c313549bc6.webp"
+        "src": "/images/optimized/ink-maple-480-34fd4f46fb-27d49f2a8bb5.webp"
       },
       {
         "width": 800,
-        "src": "/images/optimized/ink-maple-800-49e43d2562-8eabca0079be.webp"
+        "src": "/images/optimized/ink-maple-800-34fd4f46fb-93a33425a025.webp"
       }
     ],
     "avifVariants": [
       {
         "width": 240,
-        "src": "/images/optimized/ink-maple-240-49e43d2562-f8e0bd315251.avif"
+        "src": "/images/optimized/ink-maple-240-34fd4f46fb-ee91c9af7739.avif"
       },
       {
         "width": 480,
-        "src": "/images/optimized/ink-maple-480-49e43d2562-78855720e687.avif"
+        "src": "/images/optimized/ink-maple-480-34fd4f46fb-45e55b945a9c.avif"
       },
       {
         "width": 800,
-        "src": "/images/optimized/ink-maple-800-49e43d2562-df1eef514819.avif"
+        "src": "/images/optimized/ink-maple-800-34fd4f46fb-73ef0ea23458.avif"
       }
     ]
   },
   "/images/ink/pavilion.webp": {
-    "src": "/images/optimized/ink-pavilion-800-7e864cd4a9-d8269b006add.webp",
+    "src": "/images/optimized/ink-pavilion-800-29da6b8320-318513d2abd6.webp",
     "width": 800,
     "height": 700,
     "variants": [
       {
         "width": 240,
-        "src": "/images/optimized/ink-pavilion-240-7e864cd4a9-e4e1c6a812d6.webp"
+        "src": "/images/optimized/ink-pavilion-240-29da6b8320-ca50e34932c1.webp"
       },
       {
         "width": 480,
-        "src": "/images/optimized/ink-pavilion-480-7e864cd4a9-f175e7a7006a.webp"
+        "src": "/images/optimized/ink-pavilion-480-29da6b8320-9741b0958d77.webp"
       },
       {
         "width": 800,
-        "src": "/images/optimized/ink-pavilion-800-7e864cd4a9-d8269b006add.webp"
+        "src": "/images/optimized/ink-pavilion-800-29da6b8320-318513d2abd6.webp"
       }
     ],
     "avifVariants": [
       {
         "width": 240,
-        "src": "/images/optimized/ink-pavilion-240-7e864cd4a9-930476d839ff.avif"
+        "src": "/images/optimized/ink-pavilion-240-29da6b8320-55c8145133f0.avif"
       },
       {
         "width": 480,
-        "src": "/images/optimized/ink-pavilion-480-7e864cd4a9-ab5e300f9075.avif"
+        "src": "/images/optimized/ink-pavilion-480-29da6b8320-dcbd8aac6616.avif"
       },
       {
         "width": 800,
-        "src": "/images/optimized/ink-pavilion-800-7e864cd4a9-646394b4a4db.avif"
+        "src": "/images/optimized/ink-pavilion-800-29da6b8320-0c97feaf9bef.avif"
       }
     ]
   },
@@ -1039,6 +1039,97 @@
       {
         "width": 64,
         "src": "/images/optimized/ink-petal-64-37363ba34a-1a9a24efd0d8.avif"
+      }
+    ]
+  },
+  "/images/ink/relief-sun.webp": {
+    "src": "/images/optimized/ink-relief-sun-1152-8f7303eed7-6138d6f49930.webp",
+    "width": 1152,
+    "height": 1109,
+    "variants": [
+      {
+        "width": 384,
+        "src": "/images/optimized/ink-relief-sun-384-8f7303eed7-767b13803374.webp"
+      },
+      {
+        "width": 768,
+        "src": "/images/optimized/ink-relief-sun-768-8f7303eed7-15a665adec1c.webp"
+      },
+      {
+        "width": 1152,
+        "src": "/images/optimized/ink-relief-sun-1152-8f7303eed7-6138d6f49930.webp"
+      }
+    ],
+    "avifVariants": [
+      {
+        "width": 384,
+        "src": "/images/optimized/ink-relief-sun-384-8f7303eed7-c435245d0b2d.avif"
+      },
+      {
+        "width": 768,
+        "src": "/images/optimized/ink-relief-sun-768-8f7303eed7-5d3a3be53e0e.avif"
+      },
+      {
+        "width": 1152,
+        "src": "/images/optimized/ink-relief-sun-1152-8f7303eed7-137ec5193660.avif"
+      }
+    ]
+  },
+  "/images/ink/relief-pine.webp": {
+    "src": "/images/optimized/ink-relief-pine-960-b0796fd3d8-23ef3313f682.webp",
+    "width": 960,
+    "height": 320,
+    "variants": [
+      {
+        "width": 320,
+        "src": "/images/optimized/ink-relief-pine-320-b0796fd3d8-30b496995ae5.webp"
+      },
+      {
+        "width": 640,
+        "src": "/images/optimized/ink-relief-pine-640-b0796fd3d8-e7916a066bba.webp"
+      },
+      {
+        "width": 960,
+        "src": "/images/optimized/ink-relief-pine-960-b0796fd3d8-23ef3313f682.webp"
+      }
+    ],
+    "avifVariants": [
+      {
+        "width": 320,
+        "src": "/images/optimized/ink-relief-pine-320-b0796fd3d8-da458992d44f.avif"
+      },
+      {
+        "width": 640,
+        "src": "/images/optimized/ink-relief-pine-640-b0796fd3d8-ad95fc2e0b38.avif"
+      },
+      {
+        "width": 960,
+        "src": "/images/optimized/ink-relief-pine-960-b0796fd3d8-9578dd1cc2b7.avif"
+      }
+    ]
+  },
+  "/images/ink/relief-plum.webp": {
+    "src": "/images/optimized/ink-relief-plum-480-1d7cd64c22-75e9e8bd23f3.webp",
+    "width": 480,
+    "height": 320,
+    "variants": [
+      {
+        "width": 240,
+        "src": "/images/optimized/ink-relief-plum-240-1d7cd64c22-1cd1faab5cc9.webp"
+      },
+      {
+        "width": 480,
+        "src": "/images/optimized/ink-relief-plum-480-1d7cd64c22-75e9e8bd23f3.webp"
+      }
+    ],
+    "avifVariants": [
+      {
+        "width": 240,
+        "src": "/images/optimized/ink-relief-plum-240-1d7cd64c22-add641d2777b.avif"
+      },
+      {
+        "width": 480,
+        "src": "/images/optimized/ink-relief-plum-480-1d7cd64c22-65d0bcf522d6.avif"
       }
     ]
   }

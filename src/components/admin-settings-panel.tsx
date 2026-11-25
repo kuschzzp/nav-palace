@@ -9,6 +9,7 @@ import { Button } from "@/components/ui/button";
 import { PasswordInput } from "@/components/ui/password-input";
 import { logoPresets } from "@/lib/media-presets";
 import { departureCountdown } from "@/lib/departure-settings";
+import { portalDepth } from "@/lib/depth-settings";
 import type { PortalSettings } from "@/lib/types";
 import "./admin-settings-panel.css";
 
@@ -54,6 +55,8 @@ export function AdminSettingsPanel({ settings, accessConfigured, busy, section, 
   const dirty = JSON.stringify(draft) !== JSON.stringify(saved);
   const { minSeconds, maxSeconds } = departureCountdown;
   const countdownFill = (draft.departureDelaySeconds - minSeconds) / (maxSeconds - minSeconds) * 100;
+  const { minStrength, maxStrength } = portalDepth;
+  const depthFill = (draft.depthStrength - minStrength) / (maxStrength - minStrength) * 100;
 
   function update<K extends keyof PortalSettings>(key: K, value: PortalSettings[K]) {
     setDraft((current) => ({ ...current, [key]: value }));
@@ -151,10 +154,35 @@ export function AdminSettingsPanel({ settings, accessConfigured, busy, section, 
     </section>
 
     <section {...panelProps("effects")} className="admin-settings-tabpanel">
-      <header className="admin-settings-heading"><h2>给小天地添一点生气</h2><p>设置首页飘落物和跳转中间页的倒计时。</p></header>
+      <header className="admin-settings-heading"><h2>给小天地添一点生气</h2><p>设置首页飘落物、景深和跳转倒计时。</p></header>
       <form className="admin-form" onSubmit={saveSettings}>
         <div className="admin-settings-effects-grid admin-settings-effects-ink">
           <div className="admin-settings-effect-block"><h3>页面氛围</h3><AmbientPicker value={draft.atmosphereStyle} onChange={(value) => update("atmosphereStyle", value)} intensity={draft.atmosphereIntensity} onIntensityChange={(value) => update("atmosphereIntensity", value)} disabled={saving} /></div>
+          <div className="admin-settings-effect-block">
+            <h3>首页景深</h3>
+            <div className="admin-settings-countdown">
+              <div className="switch-field">
+                <span id={`${id}-depth-label`}>景深动效</span>
+                <button type="button" role="switch" className="ui-switch" aria-checked={draft.depthEnabled}
+                  aria-labelledby={`${id}-depth-label`} aria-describedby={`${id}-depth-help`}
+                  disabled={saving} onClick={() => update("depthEnabled", !draft.depthEnabled)}>
+                  <span aria-hidden="true" />
+                </button>
+              </div>
+              <label htmlFor={`${id}-depth-strength`}>视差强度</label>
+              <div className="admin-settings-countdown-controls">
+                <input id={`${id}-depth-strength`} type="range" min={minStrength} max={maxStrength}
+                  value={draft.depthStrength} aria-valuetext={`${draft.depthStrength}%`}
+                  style={{ "--countdown-fill": `${depthFill}%` } as CSSProperties}
+                  onChange={(event) => update("depthStrength", event.currentTarget.valueAsNumber)}
+                  disabled={saving || !draft.depthEnabled}
+                />
+                <output htmlFor={`${id}-depth-strength`} aria-hidden="true">{draft.depthStrength}%</output>
+                <div className="admin-settings-countdown-bounds" aria-hidden="true"><span>轻柔</span><span>鲜明</span></div>
+              </div>
+              <small id={`${id}-depth-help`}>桌面上红日与枝条会随鼠标轻微移动，手机保留静态层次。</small>
+            </div>
+          </div>
           <div className="admin-settings-effect-block">
             <h3>跳转中间页</h3>
             <div className="admin-settings-countdown">

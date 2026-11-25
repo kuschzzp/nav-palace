@@ -7,8 +7,8 @@ import { AssetImage } from "@/components/asset-image";
 import type { Site } from "@/lib/types";
 import "./site-card.css";
 
-/** 点击插画翻转整张卡片，点击下方的文字或箭头访问站点。 */
-export function SiteCard({ site, index = 0, columns = 4 }: { site: Site; index?: number; columns?: number }) {
+/** 点击书封翻看介绍，点击题签访问站点。 */
+export function SiteCard({ site, priority = false }: { site: Site; priority?: boolean }) {
   const [flipped, setFlipped] = useState(false);
   const card = useRef<HTMLElement>(null);
   const frontControl = useRef<HTMLButtonElement>(null);
@@ -23,6 +23,11 @@ export function SiteCard({ site, index = 0, columns = 4 }: { site: Site; index?:
   const target = "_blank";
   const rel = "noopener noreferrer";
   const visitLabel = `访问${site.name}（在新标签页打开）`;
+  const verticalTitle = /[\p{Script=Han}\p{Script=Hiragana}\p{Script=Katakana}\p{Script=Hangul}]/u.test(site.name);
+  // 汉字逐行，连续的字母和数字保留横排，让 AI、MS365 之类的简称完整占一行。
+  const titleLines = verticalTitle ? site.name.match(/[A-Za-z0-9][A-Za-z0-9.&-]*|[^\s]/gu) ?? [] : [site.name];
+  const visibleTitle = titleLines.length > 6 ? [...titleLines.slice(0, 5), "…"] : titleLines;
+  const wideSlip = visibleTitle.some((line) => /^[A-Za-z0-9]/u.test(line) && line.length >= 4);
 
   function turn(next: boolean) {
     // 先移走旧面的焦点，再隐藏该面，避免让 aria-hidden 暂时包住焦点元素。
@@ -45,12 +50,23 @@ export function SiteCard({ site, index = 0, columns = 4 }: { site: Site; index?:
       ref={card}
       className="site-card"
       data-flipped={flipped}
-      data-site-position={index + 1}
       aria-label={site.name}
     >
+      <span className="site-card-shadow" aria-hidden="true" />
       <div className="site-card-rotor">
         {/* 隐藏面仍参与 3D 绘制，但不能接收点击、Tab 焦点或读屏访问。 */}
         <div className="site-card-face site-card-front" aria-hidden={flipped} inert={flipped}>
+          <a className="site-card-front-copy" href={href} target={target} rel={rel} title={site.name} aria-label={visitLabel} data-wide={wideSlip}>
+            <h3 className="site-card-title-slip" data-horizontal={!verticalTitle} aria-label={site.name}>
+              {visibleTitle.map((line, index) => (
+                <span key={index} data-latin-length={/^[A-Za-z0-9]/u.test(line) ? line.length : undefined} aria-hidden="true">{line}</span>
+              ))}
+            </h3>
+            <span className="site-card-title-icons">
+              {site.requiresPassword && <LockKey size={13} aria-label="私密站点" />}
+              <ArrowRight size={21} aria-hidden="true" />
+            </span>
+          </a>
           <button
             ref={frontControl}
             className="site-card-cover"
@@ -70,17 +86,13 @@ export function SiteCard({ site, index = 0, columns = 4 }: { site: Site; index?:
               alt=""
               width={720}
               height={440}
-              sizes={`(max-width: 480px) 100vw, (max-width: 700px) 50vw, (max-width: 1050px) 40vw, ${columns === 1 ? "480px" : `${Math.ceil(82 / columns)}vw`}`}
-              loading={index === 0 ? "eager" : "lazy"}
-              fetchPriority={index === 0 ? "high" : "auto"}
+              maximumWidth={480}
+              sizes="(max-width: 600px) 33vw, 220px"
+              loading={priority ? "eager" : "lazy"}
+              fetchPriority={priority ? "high" : "auto"}
               decoding="async"
             />
           </button>
-          <a className="site-card-front-copy" href={href} target={target} rel={rel} aria-label={visitLabel}>
-            <h3 title={site.name}><span>{site.name}</span>{site.requiresPassword && <LockKey className="site-card-private" size={15} aria-label="私密站点" />}</h3>
-            {site.description && <p>{site.description}</p>}
-            <span className="site-card-action"><ArrowRight size={22} aria-hidden="true" /></span>
-          </a>
         </div>
 
         <div
